@@ -1,0 +1,9 @@
+.col-md-3{
+    width: 25%;
+}
+.pull-right{
+    width:20%;
+}
+#edit,#delete,#for-ban{
+    visibility: hidden;
+}

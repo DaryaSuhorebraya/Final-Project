@@ -1,0 +1,14 @@
+.carousel-inner > .item > img, .carousel-inner > .item > a > img {
+    width:65%;
+    height:350px;
+    margin: auto;
+}
+#carousel{
+    background-image: url(/images/main/font_carousel.jpg);
+}
+#error-500{
+    width:60%;
+    height:60px;
+    margin: auto;
+    padding-left: 300px;
+}

@@ -1,0 +1,53 @@
+.row{
+ margin: 0px 0px 0px 0px;
+ padding-top: 0px;
+}
+.col-md-12{
+ padding-right: 0px;
+ padding-left: 0px;
+ padding-top: 0px;
+}
+#myModal{ 
+display: none; 
+}
+/*
+#myModal .tab-pane .row {
+margin: 3px 0; 
+width: 100%; 
+float: none; 
+padding: 0;
+ clear: both; 
+display: block; 
+} 
+#myModal .tab-pane .row label {
+display: block;
+float: left; 
+cursor: pointer; 
+width: 200px; 
+}*/
+.table-bordered{
+ width: 700px;
+ margin: auto;
+}
+td {
+ text-align: center;
+}
+th {
+ text-align: center;
+}
+.navbar {
+ margin-bottom: 0;
+ border-radius: 0!important;
+}
+/*
+.form-horizontal {
+ width: 60%;
+ margin: auto;
+}*/
+/*
+h4{
+ color: #333;
+ font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+ padding-bottom: 20px;
+ margin: 10px auto auto;
+}*/

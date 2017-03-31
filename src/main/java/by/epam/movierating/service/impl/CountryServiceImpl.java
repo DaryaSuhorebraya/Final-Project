@@ -59,4 +59,20 @@ public class CountryServiceImpl implements CountryService {
         }
         return countryList;
     }
+
+    @Override
+    public List<Country> getCountriesNotInMovie(int idMovie, String language)
+            throws ServiceException {
+        Validator.validateIntData(idMovie);
+        Validator.validateLanguage(language);
+        List<Country> countryList;
+        try {
+            DAOFactory daoFactory=DAOFactory.getInstance();
+            CountryDAO countryDAO=daoFactory.getCountryDAO();
+            countryList=countryDAO.getCountriesNotInMovie(idMovie,language);
+        } catch (DAOException e){
+            throw new ServiceException(e);
+        }
+        return countryList;
+    }
 }

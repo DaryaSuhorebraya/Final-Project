@@ -29,13 +29,17 @@ public class CountryDAOImpl implements CountryDAO {
             "INNER JOIN movie_country ON country.code= movie_country.country_code "+
             "WHERE movie_country.id_movie=? "+
             "GROUP BY country.code";
+    private static final String SQL_GET_COUNTRIES_NOT_IN_MOVIE="SELECT country.code, country.name_ FROM country " +
+            "WHERE country.code NOT IN "+
+            "( SELECT movie_country.country_code FROM movie_country WHERE movie_country.id_movie=? ) "+
+            "GROUP BY country.code";
 
     private static final Logger logger=Logger.getLogger(CountryDAOImpl.class);
     @Override
     public void updateCountry(String countryCode, String name, String language)
             throws DAOException {
-        Connection connection;
-        PreparedStatement preparedStatement;
+        Connection connection=null;
+        PreparedStatement preparedStatement=null;
         try {
             ConnectionPool connectionPool= ConnectionPool.getInstance();
             connection=connectionPool.getConnection();
@@ -43,14 +47,13 @@ public class CountryDAOImpl implements CountryDAO {
             preparedStatement.setString(1,name);
             preparedStatement.setString(2,countryCode);
             preparedStatement.executeUpdate();
-        } catch (ConnectionPoolException e){
-            logger.error(e);
-            throw new DAOException("Can not get a connection from pool",e);
-        } catch (SQLException e){
-            logger.error(e);
-            throw new DAOException("Error during updating country procedure",e);
+        } catch (ConnectionPoolException e) {
+            throw new DAOException("Can not get a connection ",e);
+        } catch (SQLException e) {
+            throw new DAOException(e);
+        } finally {
+            DAOUtil.close(connection,preparedStatement);
         }
-
     }
 
     @Override
@@ -148,6 +151,31 @@ public class CountryDAOImpl implements CountryDAO {
             DAOUtil.close(connection,preparedStatement,resultSet);
         }
     }
+
+    @Override
+    public List<Country> getCountriesNotInMovie(int idMovie, String language)
+            throws DAOException {
+        Connection connection=null;
+        PreparedStatement preparedStatement=null;
+        ResultSet resultSet=null;
+        List<Country> countryList;
+        try {
+            ConnectionPool connectionPool=ConnectionPool.getInstance();
+            connection=connectionPool.getConnection();
+            preparedStatement=connection.prepareStatement(DAOUtil.localizeStatement(SQL_GET_COUNTRIES_NOT_IN_MOVIE,language));
+            preparedStatement.setInt(1,idMovie);
+            resultSet=preparedStatement.executeQuery();
+            countryList=setCountryInfo(resultSet);
+            return countryList;
+        } catch (ConnectionPoolException e) {
+            throw new DAOException("Can not get a connection ",e);
+        } catch (SQLException e) {
+            throw new DAOException(e);
+        } finally {
+            DAOUtil.close(connection,preparedStatement,resultSet);
+        }
+    }
+
     private List<Country> setCountryInfo(ResultSet resultSet) throws SQLException{
         List<Country> countryList=new ArrayList<>();
         while (resultSet.next()){

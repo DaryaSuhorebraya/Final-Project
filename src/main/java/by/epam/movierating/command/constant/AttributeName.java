@@ -15,13 +15,19 @@ public class AttributeName {
     public static final String ADMIN="admin";
     public static final String GUEST="guest";
     public static final String MOVIE="movie";
+    public static final String REVIEW="review";
 
     public static final String USER_ID="userId";
     public static final String GENRES="genres";
+    public static final String GENRES_EN="genresEn";
+    public static final String GENRES_RU="genresRu";
     public static final String MOVIES= "movies";
     public static final String USERS="users";
     public static final String COUNTRIES="countries";
+    public static final String COUNTRIES_EN="countriesEn";
+    public static final String COUNTRIES_RU="countriesRu";
     public static final String ACTORS="actors";
+    public static final String REVIEWS="reviews";
     public static final String GENRE_ID="genreId";
     public static final String MOVIE_ID="movieId";
 

@@ -14,4 +14,5 @@ public interface GenreDAO {
     void deleteGenre(int idGenre) throws DAOException;
     void updateGenre(int idGenre, String name, String language) throws DAOException;
     List<Genre> getGenresByIdMovie(int idMovie, String language) throws DAOException;
+    List<Genre> getGenresNotInMovie(int idMovie, String language) throws DAOException;
 }

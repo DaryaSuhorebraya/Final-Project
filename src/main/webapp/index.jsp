@@ -7,7 +7,7 @@
 <head>
     <fmt:setLocale value="${sessionScope.local}"/>
     <fmt:setBundle basename="localization" var="loc"/>
-    <title>titlee</title>
+    <title>ProFilm</title>
     <meta charset="utf-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <link href="css/bootstrap.min.css" rel="stylesheet">
@@ -18,46 +18,42 @@
     <link href="css/image-style.css" rel="stylesheet">
     <script src="js/ajax.js"></script>
 
-    <link href="${pageContext.request.contextPath}/css/bootstrap-editable.css" rel="stylesheet">
-    <script src="${pageContext.request.contextPath}/js/bootstrap-editable.min.js"></script>
+    <link href="${pageContext.request.contextPath}/css/bootstrap-select.min.css" rel="stylesheet">
+    <script src="${pageContext.request.contextPath}/js/bootstrap-select.min.js"></script>
     <script src="${pageContext.request.contextPath}/js/bootstrap-editable.js"></script>
+    <link href="${pageContext.request.contextPath}/css/main-page-style.css" rel="stylesheet">
+    <script src="${pageContext.request.contextPath}/js/jquery.dotdotdot.min.js" type="text/javascript"></script>
+    <script src="${pageContext.request.contextPath}/js/main-page.js" type="text/javascript"></script>
 </head>
 <body>
 <c:import url="WEB-INF/jsp/template/user-header.jsp"/>
 <c:import url="WEB-INF/jsp/template/carousel.jsp"/>
-<div class="row">
-    <div class="col-md-4">
-        <blockquote>
-            <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.
-            </p> <small>Someone famous <cite>Source Title</cite></small>
-        </blockquote>
+<div class="container">
+<section class="review-container">
+    <div class="container">
+        <div class="row">
+            <div >
+                <h3 class="title"><fmt:message bundle="${loc}" key="review"/> </h3>
+                <div class="pull-right button-main">
+                    <a href="Controller?command=view-all-reviews-order-by-date"><fmt:message bundle="${loc}" key="view.all.reviews"/></a>
+                </div>
+            </div>
+            <c:forEach var="review" items="${requestScope.reviews}">
+                <div class="col-md-4">
+                    <blockquote class="quote">
+                        <h4 class="movie-title">
+                            <a href="Controller?command=view-movie&movieId=${review.idMovie}">${review.movieTitle}</a>
+                        </h4>
+                        <p class="review">${review.review}</p>
+                    </blockquote>
+                    <h4 class="pull-right user-login"> — ${review.userLogin}&nbsp;</h4>
+                </div>
+            </c:forEach>
+        </div>
     </div>
-    <div class="col-md-4">
-        <blockquote>
-            <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.
-            </p> <small>Someone famous <cite>Source Title</cite></small>
-        </blockquote>
-    </div>
-    <div class="col-md-4">
-        <blockquote>
-            <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.
-            </p> <small>Someone famous <cite>Source Title</cite></small>
-        </blockquote>
-    </div>
+</section>
 </div>
-<form>
-    Name <input type="text" id="fullName"/>
-    <input type="button" value="Hello" id="btnHello">
-    <br>
-    <span id="result1"></span>
-</form>
-<a href="#" id="forEdit">ghjghjgjh</a>
-<button class="btn btn-labeled edit" id="for-edit">
-    <a>
-        <span class="glyphicon glyphicon-edit"></span></a>
-</button>
+
+<c:import url="WEB-INF/jsp/template/footer.jsp"/>
 </body>
 </html>

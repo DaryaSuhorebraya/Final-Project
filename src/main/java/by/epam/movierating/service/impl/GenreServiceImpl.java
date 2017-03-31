@@ -84,5 +84,21 @@ public class GenreServiceImpl implements GenreService{
         }
         return genreList;
     }
+
+    @Override
+    public List<Genre> getGenresNotInMovie(int idMovie, String language)
+            throws ServiceException {
+        Validator.validateIntData(idMovie);
+        Validator.validateLanguage(language);
+        List<Genre> genreList;
+        try {
+            DAOFactory daoFactory=DAOFactory.getInstance();
+            GenreDAO genreDAO=daoFactory.getGenreDAO();
+            genreList=genreDAO.getGenresNotInMovie(idMovie,language);
+        } catch (DAOException e){
+            throw new ServiceException(e);
+        }
+        return genreList;
+    }
 }
 

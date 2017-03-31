@@ -26,6 +26,10 @@ public class GenreDAOImpl implements GenreDAO {
             "GROUP BY genre.id_genre";
     private static final String SQL_DELETE_GENRE= "UPDATE genre SET is_deleted=1 WHERE id_genre=?";
     private static final String SQL_UPDATE_GENRE= "UPDATE genre SET name_=? WHERE id_genre=?";
+    private static final String SQL_GET_GENRES_NOT_IN_MOVIE="SELECT genre.id_genre, genre.name_ FROM genre " +
+            "WHERE genre.is_deleted=0 and genre.id_genre NOT IN "+
+            "( SELECT movie_genre.id_genre FROM movie_genre WHERE movie_genre.id_movie=? ) "+
+            "GROUP BY genre.id_genre";
     @Override
     public List<Genre> getAllGenres(String language) throws DAOException {
         Connection connection=null;
@@ -119,6 +123,28 @@ public class GenreDAOImpl implements GenreDAO {
             ConnectionPool connectionPool=ConnectionPool.getInstance();
             connection=connectionPool.getConnection();
             preparedStatement=connection.prepareStatement(DAOUtil.localizeStatement(SQL_GET_GENRES_BY_ID_MOVIE,language));
+            preparedStatement.setInt(1,idMovie);
+            resultSet=preparedStatement.executeQuery();
+            return setGenreInfo(resultSet);
+        } catch (ConnectionPoolException e) {
+            throw new DAOException("Can not get a connection",e);
+        } catch (SQLException e) {
+            throw new DAOException(e);
+        } finally {
+            DAOUtil.close(connection,preparedStatement,resultSet);
+        }
+    }
+
+    @Override
+    public List<Genre> getGenresNotInMovie(int idMovie, String language)
+            throws DAOException {
+        Connection connection=null;
+        PreparedStatement preparedStatement=null;
+        ResultSet resultSet=null;
+        try {
+            ConnectionPool connectionPool=ConnectionPool.getInstance();
+            connection=connectionPool.getConnection();
+            preparedStatement=connection.prepareStatement(DAOUtil.localizeStatement(SQL_GET_GENRES_NOT_IN_MOVIE,language));
             preparedStatement.setInt(1,idMovie);
             resultSet=preparedStatement.executeQuery();
             return setGenreInfo(resultSet);

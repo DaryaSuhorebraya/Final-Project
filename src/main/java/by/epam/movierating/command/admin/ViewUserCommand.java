@@ -34,7 +34,6 @@ public class ViewUserCommand implements Command {
             User user=userService.getUserById(idUser);
             request.setAttribute(AttributeName.USER,user);
             request.getRequestDispatcher(JSPPageName.USER_INFO_PAGE).forward(request, response);
-            //response.sendRedirect(JSPPageName.USER_INFO_PAGE);
         } catch (ServiceException e) {
             logger.error(e);
         }

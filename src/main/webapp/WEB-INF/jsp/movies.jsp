@@ -5,14 +5,15 @@
 <fmt:setBundle basename="localization" var="loc"/>
 <html>
 <head>
-    <title>titlee</title>
+    <title>ProFilm</title>
     <meta charset="utf-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <link href="${pageContext.request.contextPath}/css/bootstrap.min.css" rel="stylesheet">
     <script src="${pageContext.request.contextPath}/js/jquery.min.js"></script>
     <script src="${pageContext.request.contextPath}/js/bootstrap.min.js"></script>
     <link href="${pageContext.request.contextPath}/css/movie-list-style.css" rel="stylesheet">
-    <script type="text/javascript" src="${pageContext.request.contextPath}/js/admin-movie.js"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/js/admin-movies.js"></script>
+    <script src="${pageContext.request.contextPath}/js/jquery.dotdotdot.min.js" type="text/javascript"></script>
 </head>
 <body>
 <c:if test="${sessionScope.role != null}">
@@ -26,23 +27,30 @@
 </c:choose>
 </c:if>
 <p></p>
-<p>Top-5 movies</p>
 
 <div class="container">
     <div class="well well-sm">
-        <strong>Category Title</strong>
+        <strong> <fmt:message bundle="${loc}" key="movies"/> </strong>
         <div class="btn-group">
-            <a href="#" id="list" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-th-list">
-            </span>List</a> <a href="#" id="grid" class="btn btn-default btn-sm"><span
-                class="glyphicon glyphicon-th"></span>Grid</a>
+            <a href="#" id="list" class="btn btn-default btn-sm">
+                <span class="glyphicon glyphicon-th-list"></span><fmt:message bundle="${loc}" key="list"/>
+            </a>
+            <a href="#" id="grid" class="btn btn-default btn-sm">
+                <span class="glyphicon glyphicon-th"></span><fmt:message bundle="${loc}" key="grid"/>
+            </a>
         </div>
+        <c:if test='${sessionScope.role eq "admin"}'>
+            <a href="Controller?command=redirect&redirectPage=addMovie" id="addMovie" class="btn btn-default btn-sm pull-right">
+            <span class="glyphicon glyphicon-plus"></span><fmt:message bundle="${loc}" key="add.movie"/>
+            </a>
+        </c:if>
     </div>
 
     <div id="products" class="row list-group">
 <c:if test="${requestScope.movies != null}">
         <c:forEach var="movie" items="${requestScope.movies}">
             <div class="item  col-xs-4 col-lg-4 col-md-4">
-                <div class="thumbnail">
+                <div class="thumbnail" >
                     <p id="id">${movie.id}</p>
                     <c:if test='${sessionScope.role eq "admin"}'>
                         <button class="btn btn-labeled delete-movie">
@@ -56,7 +64,7 @@
                 </a>
                     <img class="group list-group-image" src="./${movie.posterPath}" alt="" />
                     <div class="caption">
-                        <h4 class="group inner list-group-item-heading">${movie.title}</h4>
+                        <h4 class="group inner list-group-item-heading">${movie.title} &nbsp;(${movie.releaseYear})</h4>
                         <h4 class="group inner list-group-item-heading">${movie.rating}</h4>
                         <p class="group inner list-group-item-text">${movie.description}</p>
                         <div class="row">
@@ -71,7 +79,6 @@
     </c:if>
     </div>
 </div>
-
-
+<c:import url="template/footer.jsp"/>
 </body>
 </html>

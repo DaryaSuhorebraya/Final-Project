@@ -1,14 +1,8 @@
 package by.epam.movierating.command.user;
 
-import by.epam.movierating.bean.Country;
-import by.epam.movierating.bean.Genre;
 import by.epam.movierating.command.Command;
 import by.epam.movierating.command.constant.AttributeName;
 import by.epam.movierating.command.util.PagePathUtil;
-import by.epam.movierating.service.CountryService;
-import by.epam.movierating.service.GenreService;
-import by.epam.movierating.service.exception.ServiceException;
-import by.epam.movierating.service.factory.ServiceFactory;
 import org.apache.log4j.Logger;
 
 import javax.servlet.ServletException;
@@ -16,7 +10,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.util.List;
 
 /**
  * Created by Даша on 16.02.2017.
@@ -35,11 +28,11 @@ public class ChangeLanguageCommand implements Command {
         } else {
             session.setAttribute(AttributeName.LANGUAGE, AttributeName.RUSSIAN);
         }
-        reloadData(session);
+        //reloadData(session);
         String pagePath= PagePathUtil.getPagePath(session);
         response.sendRedirect(pagePath);
     }
-    private void reloadData(HttpSession session){
+   /* private void reloadData(HttpSession session){
         ServiceFactory serviceFactory=ServiceFactory.getInstance();
         GenreService genreService=serviceFactory.getGenreService();
         CountryService countryService=serviceFactory.getCountryService();
@@ -51,8 +44,10 @@ public class ChangeLanguageCommand implements Command {
             countryList=countryService.getAllActiveCountries(language);
         } catch (ServiceException e) {
             logger.error(e);
-        }
-        session.setAttribute(AttributeName.GENRES,genreList);
-        session.setAttribute(AttributeName.COUNTRIES,countryList);
-    }
+        ServletContext servletContext=session.getServletContext();
+        //session.setAttribute(AttributeName.GENRES,genreList);
+        //session.setAttribute(AttributeName.COUNTRIES,countryList);
+        servletContext.setAttribute(AttributeName.GENRES, genreList);
+        servletContext.setAttribute(AttributeName.COUNTRIES, countryList);
+    }*/
 }

@@ -46,22 +46,5 @@ public class EditUserCommand implements Command {
         }  catch (ServiceException e) {
         logger.error(e);
         }
-        /*DateFormat dateFormat=new SimpleDateFormat("yyyy-mm-dd");
-        try {
-            Date dateRegister=dateFormat.parse(request.getParameter(ParameterName.DATE_REGISTER));
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }*/
     }
-   /* private boolean validateParameters(int idUser,String login, String firstName, String lastName,
-                                       String email, String dateRegister, String status,
-                                       String isAdmin,String isBanned){
-        if (idUser!=0&&!login.isEmpty()&&!firstName.isEmpty()&&!lastName.isEmpty()&&
-                !email.isEmpty()&&!dateRegister.isEmpty()&&!status.isEmpty()&&!isAdmin.isEmpty()
-                &&!isBanned.isEmpty()){
-
-            return true;
-        }
-        return false;
-    }*/
 }

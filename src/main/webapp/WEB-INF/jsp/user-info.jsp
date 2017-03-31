@@ -6,14 +6,14 @@
 <fmt:setBundle basename="localization" var="loc"/>
 <html>
 <head>
-    <title>titlee</title>
+    <title>ProFilm</title>
     <meta charset="utf-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <link href="css/bootstrap.min.css" rel="stylesheet">
-    <script src="js/jquery.min.js"></script>
-    <script src="js/bootstrap.min.js"></script>
-    <script src="js/scripts.js"></script>
-    <link href="css/style.css" rel="stylesheet">
+    <link href="${pageContext.request.contextPath}/css/bootstrap.min.css" rel="stylesheet">
+    <script src="${pageContext.request.contextPath}/js/jquery.min.js"></script>
+    <script src="${pageContext.request.contextPath}/js/bootstrap.min.js"></script>
+    <script src="${pageContext.request.contextPath}/js/scripts.js"></script>
+    <link href="${pageContext.request.contextPath}/css/style.css" rel="stylesheet">
     <link href="${pageContext.request.contextPath}/css/edit-style.css" rel="stylesheet">
 </head>
 <body>
@@ -92,5 +92,6 @@
         </div>
     </form>
 </div>
+<c:import url="template/footer.jsp"/>
 </body>
 </html>

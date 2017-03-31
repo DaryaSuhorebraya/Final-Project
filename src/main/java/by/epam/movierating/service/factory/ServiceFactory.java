@@ -1,5 +1,6 @@
 package by.epam.movierating.service.factory;
 
+import by.epam.movierating.bean.Review;
 import by.epam.movierating.service.*;
 import by.epam.movierating.service.impl.*;
 
@@ -14,6 +15,7 @@ public class ServiceFactory {
     private GenreService genreService=new GenreServiceImpl();
     private CountryService countryService=new CountryServiceImpl();
     private ActorService actorService=new ActorServiceImpl();
+    private ReviewService reviewService=new ReviewServiceImpl();
 
     public ServiceFactory() {
     }
@@ -40,5 +42,9 @@ public class ServiceFactory {
 
     public ActorService getActorService() {
         return actorService;
+    }
+
+    public ReviewService getReviewService() {
+        return reviewService;
     }
 }

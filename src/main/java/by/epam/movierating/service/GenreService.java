@@ -14,4 +14,5 @@ public interface GenreService {
     void deleteGenre(int idGenre) throws ServiceException;
     void updateGenre(int idGenre, String name, String language) throws ServiceException;
     List<Genre> getGenresByIdMovie(int idMovie, String language) throws ServiceException;
+    List<Genre> getGenresNotInMovie(int idMovie, String language) throws ServiceException;
 }

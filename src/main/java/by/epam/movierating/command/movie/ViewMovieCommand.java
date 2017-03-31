@@ -28,30 +28,30 @@ import java.util.List;
  * Created by Даша on 17.03.2017.
  */
 public class ViewMovieCommand implements Command {
-    private final static Logger logger=Logger.getLogger(ViewMovieCommand.class);
+    private final static Logger logger = Logger.getLogger(ViewMovieCommand.class);
+
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         PagePathUtil.setQueryString(request);
         HttpSession session = request.getSession(true);
-        int idMovie=Integer.parseInt(request.getParameter(ParameterName.MOVIE_ID));
-        String language=(String) session.getAttribute(AttributeName.LANGUAGE);
-        ServiceFactory serviceFactory=ServiceFactory.getInstance();
-        MovieService movieService=serviceFactory.getMovieService();
-        GenreService genreService=serviceFactory.getGenreService();
-        CountryService countryService=serviceFactory.getCountryService();
-        ActorService actorService=serviceFactory.getActorService();
+        int idMovie = Integer.parseInt(request.getParameter(ParameterName.MOVIE_ID));
+        String language = (String) session.getAttribute(AttributeName.LANGUAGE);
+        ServiceFactory serviceFactory = ServiceFactory.getInstance();
+        MovieService movieService = serviceFactory.getMovieService();
+        GenreService genreService = serviceFactory.getGenreService();
+        CountryService countryService = serviceFactory.getCountryService();
+        ActorService actorService = serviceFactory.getActorService();
         try {
-            Movie movie=movieService.getMovieById(idMovie,language);
-            request.setAttribute(AttributeName.MOVIE,movie);
-            List<Genre> genreList=genreService.getGenresByIdMovie(idMovie,language);
+            Movie movie = movieService.getMovieById(idMovie, language);
+            request.setAttribute(AttributeName.MOVIE, movie);
+            List<Genre> genreList = genreService.getGenresByIdMovie(idMovie, language);
             request.setAttribute(AttributeName.GENRES, genreList);
-            List<Country> countryList=countryService.getCountriesByMovieId(idMovie,language);
-            request.setAttribute(AttributeName.COUNTRIES,countryList);
-            List<Actor> actorList=actorService.getActorsByMovieId(idMovie,language);
+            List<Country> countryList = countryService.getCountriesByMovieId(idMovie, language);
+            request.setAttribute(AttributeName.COUNTRIES, countryList);
+            List<Actor> actorList = actorService.getActorsByMovieId(idMovie, language);
             request.setAttribute(AttributeName.ACTORS, actorList);
             request.getRequestDispatcher(JSPPageName.MOVIE_INFO_PAGE).forward(request, response);
-            //response.sendRedirect(JSPPageName.USER_INFO_PAGE);
         } catch (ServiceException e) {
             logger.error(e);
         }

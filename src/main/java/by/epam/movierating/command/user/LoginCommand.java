@@ -22,7 +22,6 @@ import java.io.IOException;
  */
 public class LoginCommand implements Command {
     private static final Logger logger=Logger.getLogger(LoginCommand.class);
-    private static final String ERROR_PAGE="WEB-INF\\jsp\\error-500.jsp";
 
 
     @Override
@@ -42,7 +41,6 @@ public class LoginCommand implements Command {
                 session.setAttribute(AttributeName.USER,user);
                 if (user.isAdmin()){
                     session.setAttribute(AttributeName.ROLE,AttributeName.ADMIN);
-                    //response.sendRedirect();
                     response.sendRedirect(JSPPageName.REDIRECT_TO_WELC_PAGE);
                 } else {
                     session.setAttribute(AttributeName.ROLE,AttributeName.USER);
@@ -50,17 +48,15 @@ public class LoginCommand implements Command {
                     response.sendRedirect(pagePath);
                 }
             }
-            /*String pagePath= PagePathUtil.getPagePath(session);
-            response.sendRedirect(pagePath);*/
-           // session.setAttribute(AttributeName.USER,user);
-            //response.sendRedirect(WELCOME_PAGE);
-            //request.getRequestDispatcher().forward(request, response);
+
         } catch (ServiceWrongDataException e){
             logger.error(e);
+            response.sendRedirect(JSPPageName.ERROR_500_PAGE);
             //
         } catch (ServiceException e) {
             logger.error(e);
             response.sendRedirect(JSPPageName.ERROR_500_PAGE);
         }
+
     }
 }

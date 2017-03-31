@@ -20,7 +20,7 @@
         <div class="collapse navbar-collapse" id="myNavbar">
 
             <ul class="nav navbar-nav">
-                <li class="active"><a href="#"><fmt:message bundle="${loc}" key="home"/> </a></li>
+                <li class="active"><a href="Controller?command=welcome-page"><fmt:message bundle="${loc}" key="home"/> </a></li>
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                         <fmt:message bundle="${loc}" key="movies"/> <strong class="caret"></strong></a>
@@ -28,32 +28,50 @@
                         <li class="menu-item dropdown dropdown-submenu"> <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                             <fmt:message bundle="${loc}" key="genre"/> </a>
                             <ul class="dropdown-menu">
-                                <c:if test="${sessionScope.genres != null}">
-                                    <c:forEach items="${sessionScope.genres}" var="genre">
-                                        <li class="menu-item "><a href="Controller?command=view-movies-by-genre&genreId=${genre.id}">${genre.name} </a></li>
-                                    </c:forEach>
+                                <c:if test="${sessionScope.get('language') eq 'ru_RU'}">
+                                    <c:if test="${applicationScope.genresRu != null}">
+                                        <c:forEach items="${applicationScope.genresRu}" var="genre">
+                                            <li class="menu-item "><a href="Controller?command=view-movies-by-genre&genreId=${genre.id}">${genre.name} </a></li>
+                                        </c:forEach>
+                                    </c:if>
+                                </c:if>
+                                <c:if test="${sessionScope.get('language') eq 'en_EN' }">
+                                    <c:if test="${applicationScope.genresEn != null}">
+                                        <c:forEach items="${applicationScope.genresEn}" var="genre">
+                                            <li class="menu-item "><a href="Controller?command=view-movies-by-genre&genreId=${genre.id}">${genre.name} </a></li>
+                                        </c:forEach>
+                                    </c:if>
                                 </c:if>
                             </ul>
                         </li>
                         <li class="menu-item dropdown dropdown-submenu"> <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                             <fmt:message bundle="${loc}" key="country"/> </a>
                             <ul class="dropdown-menu">
-                                <c:if test="${sessionScope.countries != null}">
-                                    <c:forEach items="${sessionScope.countries}" var="country">
-                                        <li class="menu-item "><a href="Controller?command=view-movies-by-country&countryCode=${country.code}">${country.name} </a></li>
-                                    </c:forEach>
+                                <c:if test="${sessionScope.get('language') eq 'ru_RU' }">
+                                    <c:if test="${applicationScope.countriesRu != null}">
+                                        <c:forEach items="${applicationScope.countriesRu}" var="country">
+                                            <li class="menu-item "><a href="Controller?command=view-movies-by-country&countryCode=${country.code}">${country.name} </a></li>
+                                        </c:forEach>
+                                    </c:if>
+                                </c:if>
+                                <c:if test="${sessionScope.get('language') eq 'en_EN'}">
+                                    <c:if test="${applicationScope.countriesEn != null}">
+                                        <c:forEach items="${applicationScope.countriesEn}" var="country">
+                                            <li class="menu-item "><a href="Controller?command=view-movies-by-country&countryCode=${country.code}">${country.name} </a></li>
+                                        </c:forEach>
+                                    </c:if>
                                 </c:if>
                             </ul>
                         </li>
-                        <li><a href="#"><fmt:message bundle="${loc}" key="newest"/> </a></li>
-                        <li><a href="#"><fmt:message bundle="${loc}" key="popular"/> </a></li>
-                        <li><a href="#"><fmt:message bundle="${loc}" key="all"/> </a></li>
+                        <li><a href="Controller?command=view-newest-movies"><fmt:message bundle="${loc}" key="newest"/> </a></li>
+                        <li><a href=""><fmt:message bundle="${loc}" key="popular"/> </a></li>
+                        <li><a href="Controller?command=view-all-movies"><fmt:message bundle="${loc}" key="all"/> </a></li>
 
                     </ul>
                 </li>
-                <li><a href="#"><fmt:message bundle="${loc}" key="actors"/> </a></li>
-                <li><a href="#"><fmt:message bundle="${loc}" key="top"/> </a></li>
-                <li><a href="#"><fmt:message bundle="${loc}" key="review"/> </a></li>
+                <li><a href="Controller?command=view-all-actors"><fmt:message bundle="${loc}" key="actors"/> </a></li>
+                <li><a href="Controller?command=view-top-movies"><fmt:message bundle="${loc}" key="top"/> </a></li>
+                <li><a href="Controller?command=view-all-reviews-order-by-date"><fmt:message bundle="${loc}" key="review"/> </a></li>
                 <li><a href="Controller?command=view-all-users"><fmt:message bundle="${loc}" key="users"/> </a></li>
             </ul>
 

@@ -2,8 +2,18 @@
     width: 25%;
 }
 .pull-right{
-    width:20%;
+    width:18%;
 }
 #edit,#delete,#for-ban{
     visibility: hidden;
+}
+.col-md-9{
+    padding-left: 0px;
+}
+.well{
+    margin-left: 40px;
+    margin-top: 20px;
+}
+h4{
+    text-align: center;
 }

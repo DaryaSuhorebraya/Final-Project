@@ -1,9 +1,11 @@
 package by.epam.movierating.command.constant;
 
+
 /**
  * Created by Даша on 27.02.2017.
  */
 public class ParameterName {
+    public static final String COMMAND="command";
     public static final String LOGIN = "login";
     public static final String FIRSTNAME = "firstName";
     public static final String LASTNAME = "lastName";
@@ -20,8 +22,30 @@ public class ParameterName {
     public static final String USER_ID="userId";
     public static final String GENRE_ID="genreId";
     public static final String MOVIE_ID="movieId";
+    public static final String ACTOR_ID="actorId";
     public static final String COUNTRY_CODE="countryCode";
 
     public static final String FIELD="field";
     public static final String VALUE="value";
+    public static final String NAME="name";
+
+    public static final String GENRE_NAME="genreName";
+    public static final String COUNTRY_NAME="countryName";
+    public static final String ACTOR_FIRST_NAME="actorFName";
+    public static final String ACTOR_LAST_NAME="actorLName";
+
+    public static final String REGISTRATION="registration";
+    public static final String ADD_MOVIE="addMovie";
+    public static final String REDIRECT="redirectPage";
+
+    public static final String TITLE_EN ="titleEn";
+    public static final String TITLE_RU ="titleRu";
+    public static final String RELEASE_YEAR="releaseYear";
+    public static final String DESCRIPTION_EN="descriptionEn";
+    public static final String DESCRIPTION_RU="descriptionRu";
+
+    public static final String FIRST_NAME_EN="firstNameEn";
+    public static final String LAST_NAME_EN="lastNameEn";
+    public static final String FIRST_NAME_RU="firstNameRu";
+    public static final String LAST_NAME_RU="lastNameRu";
 }

@@ -14,6 +14,7 @@ public class DAOFactory {
     private GenreDAO genreDAO=new GenreDAOImpl();
     private UserInfoDAO userInfoDAO=new UserInfoImpl();
     private ActorDAO actorDAO=new ActorDAOImpl();
+    private ReviewDAO reviewDAO=new ReviewDAOImpl();
 
     public DAOFactory() {
     }
@@ -44,5 +45,9 @@ public class DAOFactory {
 
     public ActorDAO getActorDAO() {
         return actorDAO;
+    }
+
+    public ReviewDAO getReviewDAO() {
+        return reviewDAO;
     }
 }

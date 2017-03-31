@@ -1,6 +1,7 @@
 package by.epam.movierating.controller;
 
 import by.epam.movierating.command.Command;
+import by.epam.movierating.command.constant.ParameterName;
 import by.epam.movierating.dao.connectionpool.ConnectionPool;
 import by.epam.movierating.dao.exception.ConnectionPoolException;
 
@@ -14,17 +15,6 @@ import java.io.IOException;
  * Created by Даша on 14.02.2017.
  */
 public class Controller extends HttpServlet {
-    private static final String COMMAND = "command";
-
-    public Controller() {
-        super();
-       /* ConnectionPool connectionPool=ConnectionPool.getInstance();
-        try {
-            connectionPool.init();
-        } catch (ConnectionPoolException e) {
-            e.printStackTrace();
-        }*/
-    }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
@@ -40,7 +30,8 @@ public class Controller extends HttpServlet {
 
     private void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String commandString = request.getParameter(COMMAND);
+        Provider provider=new Provider();
+        String commandString = request.getParameter(ParameterName.COMMAND);
         Command command = CommandProvider.getInstance().getCommand(commandString);
         command.execute(request, response);
     }

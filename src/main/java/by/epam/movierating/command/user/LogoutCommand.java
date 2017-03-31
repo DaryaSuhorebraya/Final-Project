@@ -14,11 +14,10 @@ import java.io.IOException;
  * Created by Даша on 14.02.2017.
  */
 public class LogoutCommand implements Command {
-    //private static final String WELCOME_PAGE = "index.jsp";
-    //private static final String REDIRECT_TO_WELC_PAGE = "/Controller?cmd=welcome-page";
     private static final Logger logger=Logger.getLogger(LogoutCommand.class);
     @Override
-    public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    public void execute(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
         HttpSession session = request.getSession(false);
         if (session != null) {
             session.invalidate();

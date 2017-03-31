@@ -17,6 +17,7 @@ public interface CountryDAO {
     List<Country> getAllActiveCountries(String language) throws DAOException;
     Country getCountryByCode(String countryCode, String language) throws DAOException;
     List<Country> getCountriesByMovieId(int movieId, String language) throws DAOException;
+    List<Country> getCountriesNotInMovie(int idMovie, String language) throws DAOException;
 
 
 }

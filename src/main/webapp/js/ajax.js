@@ -56,4 +56,9 @@ $(document).ready(function () {
         $('#forEdit').replaceWith( "<form action=\"Controller?command=view-all-movies\" method=\"post\">" +
             " <input type=\"text\" value="+text+"><input type=\"submit\" class=\"btn btn-primary\" value=\"save\"></form> " );
     });
+    var text1 = 'Two';
+    $("select option").filter(function() {
+        //may want to use $.trim in here
+        return $(this).text() == text1;
+    }).prop('selected', true);
 });

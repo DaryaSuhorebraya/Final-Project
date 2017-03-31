@@ -11,6 +11,7 @@ import by.epam.movierating.service.exception.ServiceException;
 import by.epam.movierating.service.exception.ServiceWrongDataException;
 import by.epam.movierating.service.util.ServiceUtil;
 import by.epam.movierating.service.util.Validator;
+import org.apache.commons.codec.digest.DigestUtils;
 
 import java.util.Date;
 import java.util.List;
@@ -30,6 +31,7 @@ public class UserServiceImpl implements UserService {
             DAOFactory daoFactory=DAOFactory.getInstance();
             UserDAO userDAO=daoFactory.getUserDAO();
             user=userDAO.getUserByLogin(login);
+            System.out.println(DigestUtils.md5Hex(user.getPassword()));
             if (user==null){
                 throw new ServiceWrongDataException("Wrong login");
             }

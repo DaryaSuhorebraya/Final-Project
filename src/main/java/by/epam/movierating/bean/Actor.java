@@ -1,6 +1,7 @@
 package by.epam.movierating.bean;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * Created by Даша on 25.01.2017.
@@ -10,6 +11,9 @@ public class Actor implements Serializable {
     private int id;
     private String firstName;
     private String lastName;
+    private String imagePath;
+
+    private List<Movie> movieList;
 
     public Actor() {
     }
@@ -36,6 +40,22 @@ public class Actor implements Serializable {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
+    }
+
+    public String getImagePath() {
+        return imagePath;
+    }
+
+    public void setImagePath(String imagePath) {
+        this.imagePath = imagePath;
+    }
+
+    public List<Movie> getMovieList() {
+        return movieList;
+    }
+
+    public void setMovieList(List<Movie> movieList) {
+        this.movieList = movieList;
     }
 
     @Override

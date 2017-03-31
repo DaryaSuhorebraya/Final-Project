@@ -1,0 +1,22 @@
+.row{
+    margin-left: 155px;
+}
+.menu{
+    display: none;
+}
+.ul-w, .li-w{
+    width: 100%;
+}
+.btn-group .bootstrap-select .show-tick .open{
+    width: 500px;
+}
+.select{
+    width: 500px;
+}
+.panel-text{
+    height: 40px;
+    border: 1px solid lightgray;
+}
+.img-form{
+    display: none;
+}

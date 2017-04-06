@@ -127,3 +127,23 @@ ul{
     vertical-align: top;
     margin-top: 20px;
 }
+.review-block-rate{
+    display: inline-block;
+}
+.review-title{
+    margin-left: 20px;
+    margin-top: 20px;
+}
+.review-text{
+    font-style: italic;
+}
+#user-id{
+    display: none;
+}
+.add-review{
+    display: none;
+}
+.add-star-rating{
+    display: none;
+    margin-bottom: 15px;
+}

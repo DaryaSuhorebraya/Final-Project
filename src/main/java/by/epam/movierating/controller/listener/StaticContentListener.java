@@ -18,26 +18,27 @@ import java.util.List;
  * Created by Даша on 30.03.2017.
  */
 public class StaticContentListener implements ServletContextListener {
-    private static final Logger logger=Logger.getLogger(StaticContentListener.class);
-    private static final String LANGUAGE_EN="en_EN";
-    private static final String LANGUAGE_RU="ru_RU";
+    private static final Logger logger = Logger.getLogger(StaticContentListener.class);
+    private static final String LANGUAGE_EN = "en_EN";
+    private static final String LANGUAGE_RU = "ru_RU";
+
     @Override
     public void contextInitialized(ServletContextEvent servletContextEvent) {
         ServiceFactory serviceFactory = new ServiceFactory();
         GenreService genreService = serviceFactory.getGenreService();
         CountryService countryService = serviceFactory.getCountryService();
 
-        ServletContext servletContext=servletContextEvent.getServletContext();
+        ServletContext servletContext = servletContextEvent.getServletContext();
 
         List<Genre> genreListEn = null;
-        List<Country> countryListEn=null;
-        List<Genre> genreListRu=null;
-        List<Country> countryListRu=null;
+        List<Country> countryListEn = null;
+        List<Genre> genreListRu = null;
+        List<Country> countryListRu = null;
         try {
             genreListEn = genreService.getAllActiveGenre(LANGUAGE_EN);
             countryListEn = countryService.getAllActiveCountries(LANGUAGE_EN);
-            genreListRu=genreService.getAllActiveGenre(LANGUAGE_RU);
-            countryListRu=countryService.getAllActiveCountries(LANGUAGE_RU);
+            genreListRu = genreService.getAllActiveGenre(LANGUAGE_RU);
+            countryListRu = countryService.getAllActiveCountries(LANGUAGE_RU);
 
         } catch (ServiceException e) {
             logger.error(e);

@@ -1,6 +1,7 @@
 package by.epam.movierating.service.impl;
 
 import by.epam.movierating.bean.Genre;
+import by.epam.movierating.bean.dto.StaticticsDTO;
 import by.epam.movierating.dao.GenreDAO;
 import by.epam.movierating.dao.exception.DAOException;
 import by.epam.movierating.dao.factory.DAOFactory;
@@ -44,12 +45,12 @@ public class GenreServiceImpl implements GenreService{
     }
 
     @Override
-    public void deleteGenre(int idGenre) throws ServiceException {
+    public boolean deleteGenre(int idGenre) throws ServiceException {
         Validator.validateIntData(idGenre);
         try {
             DAOFactory daoFactory=DAOFactory.getInstance();
             GenreDAO genreDAO=daoFactory.getGenreDAO();
-            genreDAO.deleteGenre(idGenre);
+            return genreDAO.deleteGenre(idGenre);
         } catch (DAOException e){
             throw new ServiceException(e);
         }
@@ -99,6 +100,32 @@ public class GenreServiceImpl implements GenreService{
             throw new ServiceException(e);
         }
         return genreList;
+    }
+
+    @Override
+    public List<StaticticsDTO> getGenreStatistics(String language)
+            throws ServiceException {
+        Validator.validateLanguage(language);
+        try {
+            DAOFactory daoFactory=DAOFactory.getInstance();
+            GenreDAO genreDAO=daoFactory.getGenreDAO();
+             return genreDAO.getGenreStatistics(language);
+        } catch (DAOException e){
+            throw new ServiceException(e);
+        }
+    }
+
+    @Override
+    public boolean addGenre(String nameRu, String nameEn)
+            throws ServiceException {
+        Validator.validateStringData(nameRu,nameEn);
+        try {
+            DAOFactory daoFactory=DAOFactory.getInstance();
+            GenreDAO genreDAO=daoFactory.getGenreDAO();
+            return genreDAO.addGenre(nameRu,nameEn);
+        } catch (DAOException e){
+            throw new ServiceException(e);
+        }
     }
 }
 

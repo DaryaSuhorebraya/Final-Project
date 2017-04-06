@@ -1,6 +1,7 @@
 package by.epam.movierating.dao;
 
 import by.epam.movierating.bean.User;
+import by.epam.movierating.bean.dto.StaticticsDTO;
 import by.epam.movierating.dao.exception.DAOException;
 
 import java.util.Date;
@@ -21,4 +22,5 @@ public interface UserDAO {
     boolean deleteUser(int idUser) throws DAOException;
     boolean banUser(int idUser) throws DAOException;
     boolean unbanUser(int idUser) throws DAOException;
+    List<StaticticsDTO> getMonthUserCount() throws DAOException;
 }

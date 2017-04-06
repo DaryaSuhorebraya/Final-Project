@@ -11,3 +11,33 @@
 .movie-a{
     color: #0B0A0A;
 }
+.star-rating{
+    display: none;
+}
+.rating-xs {
+    font-size: 1.2em;
+}
+.rating{
+    width: 50%;
+}
+.rating-content{
+    margin-left: 200px;
+}
+.single-star{
+    color: gold;
+    margin-right: 100px;
+    float: right;
+}
+.single-star:hover{
+    color: goldenrod;
+    cursor: pointer;
+}
+.btn-rate{
+    display: none;
+    background-color: #0ab70a;
+    border: 1px solid green;
+    margin-left: 10px;
+}
+.movie-id, #user-id{
+    display: none;
+}

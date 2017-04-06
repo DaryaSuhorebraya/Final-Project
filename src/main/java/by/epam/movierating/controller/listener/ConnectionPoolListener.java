@@ -13,21 +13,21 @@ import javax.servlet.ServletContextListener;
 public class ConnectionPoolListener implements ServletContextListener {
     @Override
     public void contextInitialized(ServletContextEvent servletContextEvent) {
-        ConnectionPool connectionPool=ConnectionPool.getInstance();
+        ConnectionPool connectionPool = ConnectionPool.getInstance();
         try {
             connectionPool.init();
         } catch (ConnectionPoolException e) {
-            throw new RuntimeException("Can not init a pool",e);
+            throw new RuntimeException("Can not init a pool", e);
         }
     }
 
     @Override
     public void contextDestroyed(ServletContextEvent servletContextEvent) {
-        ConnectionPool connectionPool=ConnectionPool.getInstance();
+        ConnectionPool connectionPool = ConnectionPool.getInstance();
         try {
             connectionPool.dispose();
         } catch (ConnectionPoolException e) {
-            throw new RuntimeException("Can not dispose a pool",e);
+            throw new RuntimeException("Can not dispose a pool", e);
         }
     }
 }

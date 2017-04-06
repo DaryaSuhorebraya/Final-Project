@@ -1,6 +1,7 @@
 package by.epam.movierating.service;
 
 import by.epam.movierating.bean.User;
+import by.epam.movierating.bean.dto.StaticticsDTO;
 import by.epam.movierating.service.exception.ServiceException;
 import by.epam.movierating.service.exception.ServiceWrongDataException;
 
@@ -18,4 +19,5 @@ public interface UserService {
                   String isAdmin, String isBanned) throws ServiceException;
     boolean deleteUser(int idUser) throws ServiceException;
     boolean changeBanStatus(int idUser, String status) throws ServiceException;
+    List<StaticticsDTO> getMonthUserCount() throws ServiceException;
 }

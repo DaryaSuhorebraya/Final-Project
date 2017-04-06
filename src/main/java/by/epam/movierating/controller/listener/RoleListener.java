@@ -11,7 +11,7 @@ import javax.servlet.http.HttpSessionListener;
 public class RoleListener implements HttpSessionListener {
     @Override
     public void sessionCreated(HttpSessionEvent httpSessionEvent) {
-        httpSessionEvent.getSession().setAttribute(AttributeName.ROLE,AttributeName.GUEST);
+        httpSessionEvent.getSession().setAttribute(AttributeName.ROLE, AttributeName.GUEST);
     }
 
     @Override

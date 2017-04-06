@@ -21,6 +21,7 @@
     <script src="${pageContext.request.contextPath}/js/star-rating.min.js"></script>
     <script src="${pageContext.request.contextPath}/js/admin-movie-info.js"></script>
     <link href="${pageContext.request.contextPath}/css/movie-info-style.css" rel="stylesheet">
+    <script src="${pageContext.request.contextPath}/js/user-movie-info.js"></script>
 </head>
 <body>
 <c:choose>
@@ -170,25 +171,47 @@
                     </c:if>
                 </div>
             </div>
+            <c:if test="${sessionScope.userId != null}">
+                <p id="user-id">${sessionScope.userId}</p>
+            </c:if>
             <div class="well">
                 <div class="text-right">
-                    <a class="btn btn-success">Leave a Review</a>
+                    <a class="btn btn-success leave-review"><fmt:message bundle="${loc}" key="leave.review"/> </a>
                 </div>
-                <hr>
-                <div class="row review">
-                    <div class="col-md-12">
-                        <h4>Title</h4>
-                        <span class="glyphicon glyphicon-star"></span>
-                        <span class="glyphicon glyphicon-star"></span>
-                        <span class="glyphicon glyphicon-star"></span>
-                        <span class="glyphicon glyphicon-star"></span>
-                        <span class="glyphicon glyphicon-star-empty"></span>
-                        Anonymous
-                        <span class="pull-right">10 days ago</span>
-                        <p>This product was great in terms of quality. I would definitely buy another!</p>
+                <div class="add-review">
+                    <div class="add-star-rating">
+                        <input data-size="xs" data-min="0" data-max="10"
+                               data-step="1" class="rating-loading add-rating">
+                        <button class="btn btn-primary btn-rate" value="Rate">Rate</button>
                     </div>
+                    <form id="form-add-review">
+                        <div class="form-group">
+                            <label for="title"><fmt:message bundle="${loc}" key="title"/> </label>
+                            <input type="text" class="form-control" id="title" name="title"  placeholder=" ">
+                        </div>
+                        <div class="form-group">
+                            <label for="review"><fmt:message bundle="${loc}" key="name.ru"/> </label>
+                            <textarea class="form-control" id="review" name="review" rows="3" required></textarea>
+                        </div>
+                    </form>
+                    <a class="btn btn-success" id="save-review"><fmt:message bundle="${loc}" key="leave.review"/> </a>
                 </div>
                 <hr>
+                <c:forEach var="review" items="${requestScope.reviews}">
+                    <div class="row review">
+                        <div class="col-md-12">
+                            <div class="review-block-rate">
+                                <input class="user-stars rating rating-loading"  data-size="xs" value="${review.rating}" data-min="0" data-max="10" data-step="1">
+                            </div>
+                            ${review.userLogin}
+                            <h4 class="review-title">${review.title}</h4>
+                            <span class="pull-right">${review.publishDate}</span>
+                            <p class="review-text">${review.review}</p>
+                        </div>
+                    </div>
+                    <hr>
+                </c:forEach>
+
             </div>
         </div>
     </div>

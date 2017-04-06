@@ -1,6 +1,7 @@
 package by.epam.movierating.service.impl;
 
 import by.epam.movierating.bean.User;
+import by.epam.movierating.bean.dto.StaticticsDTO;
 import by.epam.movierating.command.constant.ParameterName;
 import by.epam.movierating.dao.UserDAO;
 import by.epam.movierating.dao.UserInfoDAO;
@@ -146,5 +147,18 @@ public class UserServiceImpl implements UserService {
         } catch (DAOException e){
             throw new ServiceException(e);
         }
+    }
+
+    @Override
+    public List<StaticticsDTO> getMonthUserCount() throws ServiceException {
+        List<StaticticsDTO> staticticsDTOList;
+        try {
+            DAOFactory daoFactory=DAOFactory.getInstance();
+            UserDAO userDAO=daoFactory.getUserDAO();
+            staticticsDTOList=userDAO.getMonthUserCount();
+        } catch (DAOException e){
+            throw new ServiceException(e);
+        }
+        return staticticsDTOList;
     }
 }

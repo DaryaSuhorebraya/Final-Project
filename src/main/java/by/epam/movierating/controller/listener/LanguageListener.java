@@ -9,9 +9,10 @@ import javax.servlet.http.HttpSessionListener;
 public class LanguageListener implements HttpSessionListener {
     private static final String LANGUAGE = "language";
     private static final String ENGLISH = "en_EN";
+
     @Override
     public void sessionCreated(HttpSessionEvent httpSessionEvent) {
-        httpSessionEvent.getSession().setAttribute(LANGUAGE,ENGLISH);
+        httpSessionEvent.getSession().setAttribute(LANGUAGE, ENGLISH);
     }
 
     @Override

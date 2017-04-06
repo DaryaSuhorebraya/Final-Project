@@ -8,14 +8,15 @@ import by.epam.movierating.service.impl.*;
  * Created by Даша on 14.02.2017.
  */
 public class ServiceFactory {
-    private static final ServiceFactory instance=new ServiceFactory();
+    private static final ServiceFactory instance = new ServiceFactory();
 
-    private UserService userService=new UserServiceImpl();
-    private MovieService movieService=new MovieServiceImpl();
-    private GenreService genreService=new GenreServiceImpl();
-    private CountryService countryService=new CountryServiceImpl();
-    private ActorService actorService=new ActorServiceImpl();
-    private ReviewService reviewService=new ReviewServiceImpl();
+    private UserService userService = new UserServiceImpl();
+    private MovieService movieService = new MovieServiceImpl();
+    private GenreService genreService = new GenreServiceImpl();
+    private CountryService countryService = new CountryServiceImpl();
+    private ActorService actorService = new ActorServiceImpl();
+    private ReviewService reviewService = new ReviewServiceImpl();
+    private RatingService ratingService = new RatingServiceImpl();
 
     public ServiceFactory() {
     }
@@ -46,5 +47,9 @@ public class ServiceFactory {
 
     public ReviewService getReviewService() {
         return reviewService;
+    }
+
+    public RatingService getRatingService() {
+        return ratingService;
     }
 }

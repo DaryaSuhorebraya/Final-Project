@@ -7,7 +7,8 @@ import java.io.IOException;
  * Created by Даша on 17.02.2017.
  */
 public class EncodingFilter implements Filter {
-    private static final String ENCODING="UTF-8";
+    private static final String ENCODING = "UTF-8";
+
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
 
@@ -20,7 +21,7 @@ public class EncodingFilter implements Filter {
             throws IOException, ServletException {
         servletRequest.setCharacterEncoding(ENCODING);
         servletResponse.setCharacterEncoding(ENCODING);
-        filterChain.doFilter(servletRequest,servletResponse);
+        filterChain.doFilter(servletRequest, servletResponse);
     }
 
     @Override

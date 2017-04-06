@@ -2,8 +2,6 @@ package by.epam.movierating.controller;
 
 import by.epam.movierating.command.Command;
 import by.epam.movierating.command.constant.ParameterName;
-import by.epam.movierating.dao.connectionpool.ConnectionPool;
-import by.epam.movierating.dao.exception.ConnectionPoolException;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -30,7 +28,6 @@ public class Controller extends HttpServlet {
 
     private void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        Provider provider=new Provider();
         String commandString = request.getParameter(ParameterName.COMMAND);
         Command command = CommandProvider.getInstance().getCommand(commandString);
         command.execute(request, response);

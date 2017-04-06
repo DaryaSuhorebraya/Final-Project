@@ -49,7 +49,7 @@ public class UploadUtil {
         uploadedFile.createNewFile();
         item.write(uploadedFile);
 
-        String targetPath = buildTargetPath(entityName,path);
+        String targetPath = buildTargetPath(entityName, path);
         uploadedFile = new File(targetPath);
         //noinspection ResultOfMethodCallIgnored
         uploadedFile.createNewFile();
@@ -68,7 +68,8 @@ public class UploadUtil {
                 return "";
         }
     }
-    private static String buildTargetPath(String entityName, String oldPath){
+
+    private static String buildTargetPath(String entityName, String oldPath) {
         switch (entityName) {
             case ACTOR:
                 return oldPath.replace(WEB_INF, TARGET_ACTOR_PATH);
@@ -78,6 +79,7 @@ public class UploadUtil {
                 return "";
         }
     }
+
     private static String buildPathForEntity(String entityName, String currentName) {
         switch (entityName) {
             case ACTOR:

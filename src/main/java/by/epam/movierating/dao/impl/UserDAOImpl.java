@@ -1,6 +1,7 @@
 package by.epam.movierating.dao.impl;
 
 import by.epam.movierating.bean.User;
+import by.epam.movierating.bean.dto.StaticticsDTO;
 import by.epam.movierating.dao.UserDAO;
 import by.epam.movierating.dao.connectionpool.ConnectionPool;
 import by.epam.movierating.dao.exception.ConnectionPoolException;
@@ -26,6 +27,10 @@ public class UserDAOImpl implements UserDAO{
     private static final String SQL_DELETE_USER="UPDATE user SET is_deleted=1 WHERE id_user=?";
     private static final String SQL_BAN_USER="UPDATE user SET is_banned=1 WHERE id_user=?";
     private static final String SQL_UNBAN_USER="UPDATE user SET is_banned=0 WHERE id_user=?";
+    private static final String SQL_GET_MONTH_COUNT_USER="SELECT count(first_name), date_register  " +
+            "FROM user " +
+            "GROUP BY date_register " +
+            "HAVING date_register> curdate()-90;";
     @Override
     public User getUserByLogin(String login) throws DAOException{
         Connection connection=null;
@@ -177,7 +182,7 @@ public class UserDAOImpl implements UserDAO{
                 user.setLastName(resultSet.getString(3));
                 user.setLogin(resultSet.getString(4));
                 user.setPassword(resultSet.getString(5));
-                user.setDateRegister(resultSet.getDate(6));
+                user.setDateRegister(resultSet.getLabel(6));
                 user.setEmail(resultSet.getString(7));
                 user.setStatus(resultSet.getString(8));
                 user.setAdmin(resultSet.getBoolean(9));
@@ -252,6 +257,35 @@ public class UserDAOImpl implements UserDAO{
             DAOUtil.close(connection,preparedStatement);
         }
     }
+
+    @Override
+    public List<StaticticsDTO> getMonthUserCount() throws DAOException {
+        Connection connection=null;
+        Statement statement=null;
+        ResultSet resultSet=null;
+        List<StaticticsDTO> staticticsDTOList =new ArrayList<>();
+        try {
+            ConnectionPool connectionPool=ConnectionPool.getInstance();
+            connection=connectionPool.getConnection();
+            statement=connection.createStatement();
+            resultSet=statement.executeQuery(SQL_GET_MONTH_COUNT_USER);
+            while (resultSet.next()){
+                StaticticsDTO staticticsDTO =new StaticticsDTO();
+                staticticsDTO.setValue(resultSet.getInt(1));
+                staticticsDTO.setLabel(resultSet.getDate(2).toString());
+                staticticsDTOList.add(staticticsDTO);
+            }
+            return staticticsDTOList;
+        } catch (ConnectionPoolException e) {
+            throw new DAOException("Can not get a connection",e);
+        } catch (SQLException e) {
+            throw new DAOException(e);
+        } finally {
+            DAOUtil.close(connection,statement,resultSet);
+        }
+    }
+
+
 
     private List<User> setUserInfo(ResultSet resultSet) throws SQLException{
         List<User> userList=new ArrayList<>();

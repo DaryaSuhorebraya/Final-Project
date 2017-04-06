@@ -7,6 +7,7 @@ public class JSPPageName {
 
     public static final String WELCOME_PAGE = "index.jsp";
     public static final String REDIRECT_TO_WELC_PAGE = "Controller?command=welcome-page";
+    public static final String REDIRECT_TO_ADMIN_PAGE = "Controller?command=admin-page";
     public static final String REDIRECT_TO_USER_INFO_PAGE = "Controller?command=view-user&userId=";
     public static final String USER_PAGE = "WEB-INF/jsp/user.jsp";
     public static final String ADMIN_PAGE = "WEB-INF/jsp/admin.jsp";

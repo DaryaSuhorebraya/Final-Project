@@ -52,7 +52,6 @@ $(document).ready(function () {
         $currentTitle = $(this);
         input = $currentTitle.siblings();
         text = $.trim($currentTitle.siblings().first().text());
-        //field=$.trim($currentTitle.parent().text()).split(':')[0];
         $('#title-text').replaceWith("<form id='form-title'>" +
             "<input type='text' value=" + text + ">" +
             "</form>");

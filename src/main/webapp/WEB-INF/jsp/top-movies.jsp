@@ -12,6 +12,9 @@
     <link href="${pageContext.request.contextPath}/css/top-movie-style.css" rel="stylesheet">
     <script src="${pageContext.request.contextPath}/js/jquery.min.js"></script>
     <script src="${pageContext.request.contextPath}/js/bootstrap.min.js"></script>
+    <link href="${pageContext.request.contextPath}/css/star-rating.min.css" rel="stylesheet">
+    <script src="${pageContext.request.contextPath}/js/star-rating.min.js"></script>
+    <script src="${pageContext.request.contextPath}/js/user-top-movies.js"></script>
 </head>
 <body>
 <c:if test="${sessionScope.role != null}">
@@ -35,17 +38,31 @@
                     <tr>
                     <th></th>
                     <th><fmt:message bundle="${loc}" key="rank"/>&<fmt:message bundle="${loc}" key="title"/></th>
-                    <th><fmt:message bundle="${loc}" key="rating"/></th>
+                    <th class="rating-content"><fmt:message bundle="${loc}" key="rating"/></th>
                     </tr>
                 </thead>
                 <tbody>
+                    <c:if test="${sessionScope.userId != null}">
+                        <p id="user-id">${sessionScope.userId}</p>
+                    </c:if>
                     <c:forEach var="movie" items="${requestScope.movies}" varStatus="loop">
                         <tr>
                             <td class="td-img"><img class="img-top" src="./${movie.posterPath}" alt="" /></td>
                             <td>${loop.index+1}.&nbsp;
                                 <a class="movie-a" href="Controller?command=view-movie&movieId=${movie.id}"> ${movie.title}</a>
                             </td>
-                            <td>${movie.rating}</td>
+                            <td class="rating">
+                                <div class="rating-content">
+                                    ${movie.rating}
+                                    <a><span class="glyphicon glyphicon-star single-star"></span></a>
+                                </div>
+                                <div class="star-rating">
+                                    <input data-size="xs" data-min="0" data-max="10"
+                                       data-step="1" class="rating-loading input-stars">
+                                    <button class="btn btn-primary btn-rate" value="Rate">Rate</button>
+                                    <p class="movie-id">${movie.id}</p>
+                                </div>
+                            </td>
                         </tr>
                     </c:forEach>
                 </tbody>

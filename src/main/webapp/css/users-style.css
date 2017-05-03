@@ -14,6 +14,22 @@
     margin-left: 40px;
     margin-top: 20px;
 }
-h4{
+.caption{
     text-align: center;
+    margin-top: 20px;
+}
+#for-ban:hover, #edit:hover, #delete:hover{
+    cursor: pointer;
+}
+.affix{
+    margin-left: -30px;
+}
+#select-user, #for-ban, #edit, #delete{
+    text-align: center;
+}
+#message{
+    position: fixed;
+    z-index: 1;
+    width: 90%;
+    margin-left: 15px;
 }

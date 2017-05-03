@@ -1,5 +1,5 @@
 $(document).ready(function () {
-    $(".quote").dotdotdot({
+    $('.quote-box').find(".quote-text").dotdotdot({
         ellipsis: '... '
     });
 });

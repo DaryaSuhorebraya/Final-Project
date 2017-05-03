@@ -1,12 +1,26 @@
 $(document).ready(function () {
     var $url = 'Controller';
+    var lang = $('html').attr("lang");
     var $actorId;
     var $firstName;
     var $lastName;
     var $initials;
+    var deleteMsg;
+    var errorMsg;
+    if (lang === "ru_RU") {
+        deleteMsg="Удалить?";
+        errorMsg="Ошибка в процессе выполнения операции";
+    } else {
+        deleteMsg="Delete?";
+        errorMsg="Error during procedure";
+    }
+
+    function hideMsg(){
+        setTimeout(function(){$('#message').fadeOut()}, 3000);
+    }
 
     $('.delete-actor').click(function () {
-        if (confirm("Delete?")) {
+        if (confirm(deleteMsg)) {
             var idActor = $(this).siblings('.actor-id').text();
             var current = $(this);
             $.ajax({
@@ -14,23 +28,30 @@ $(document).ready(function () {
                 url: $url,
                 data: {command: 'delete-actor', actorId: idActor},
                 success: function (result) {
-                    //TODO confirm action
                     if (result === "true") {
                         current.parent().siblings().first().remove();
                         current.parent().remove();
-                    } else {
-                        //message for error;
+                    }
+                    if (result === "false") {
+                        $('#message').html('<div class="alert alert-danger fade in">' +
+                            '<button type="button" class="close close-alert" data-dismiss="alert"' +
+                            ' aria-hidden="true">×</button>'+errorMsg +
+                            '</div>');
+                        hideMsg();
                     }
                 }
             });
         }
     });
+
     $('.img-edit').click(function () {
         var current = $(this);
         current.parent().find('.form-img').css('display', 'inline-block');
         current.parent().find('.cancel-img').css('display', 'inline-block');
         current.css('display', 'none');
     });
+
+
     $('.cancel-img').click(function () {
         var current = $(this);
         current.parent().find('.form-img').css('display', 'none');
@@ -39,10 +60,10 @@ $(document).ready(function () {
     });
 
 
+
     $('.save-img').click(function () {
         var idActor = $(this).parent().siblings('.actor-id').text();
         var current = $(this);
-        var img;
         $.ajax({
             type: 'POST',
             url: 'UploadServlet',
@@ -50,22 +71,13 @@ $(document).ready(function () {
             upload: true,
             data: {command: 'reload-actor-image', actorId: idActor},
             success: function (result) {
-                //TODO confirm action
-                /*if (result === "true") {
-                 var d = new Date();
-                 $("#myimg").attr("src", "/myimg.jpg?"+d.getTime());
-                 } else {
-                 //message for error;
-                 }*/
                 var filePath = result[0];
-                var d = new Date();
                 current.siblings().attr("src", "./" + filePath);
             }
         });
     });
 
-    $('#edit-modal').on('show.bs.modal', function (event) {
-        var modal = $(this);
+    $('#edit-modal').on('show.bs.modal', function () {
         var form = $('#actorForm');
         var firstName = $.trim(form.find('input[name="firstName"]').val($firstName));
         var lastName = $.trim(form.find('input[name="lastName"]').val($lastName));
@@ -81,7 +93,6 @@ $(document).ready(function () {
     });
     $('.save-edit-actor').click(function () {
         var form = $('#actorForm');
-        //var idActor=$.trim(form.siblings().text());
         var firstName = $.trim(form.find('input[name="firstName"]').val());
         var lastName = $.trim(form.find('input[name="lastName"]').val());
         $.ajax({
@@ -89,13 +100,16 @@ $(document).ready(function () {
             url: $url,
             data: {command: 'edit-actor', actorId: $actorId, firstName: firstName, lastName: lastName},
             success: function (result) {
-                //TODO confirm action
                 if (result === "true") {
                     $('#edit-modal').modal('toggle');
                     $initials.text(firstName + String.fromCharCode(160) + lastName);
-                } else {
-                    modalError("Ошибка", "during add procedure");
-                    //al();
+                }
+                if (result === "false") {
+                    $('#message').html('<div class="alert alert-danger fade in">' +
+                        '<button type="button" class="close close-alert" data-dismiss="alert"' +
+                        ' aria-hidden="true">×</button>'+errorMsg +
+                        '</div>');
+                    hideMsg();
                 }
             }
         });

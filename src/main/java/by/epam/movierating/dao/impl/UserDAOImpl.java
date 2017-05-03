@@ -175,20 +175,6 @@ public class UserDAOImpl implements UserDAO{
             preparedStatement.setBoolean(8,isBanned);
             preparedStatement.setInt(9,idUser);
             preparedStatement.executeUpdate();
-            /*if (resultSet.next()){
-                user=new User();
-                user.setId(resultSet.getInt(1));
-                user.setFirstName(resultSet.getString(2));
-                user.setLastName(resultSet.getString(3));
-                user.setLogin(resultSet.getString(4));
-                user.setPassword(resultSet.getString(5));
-                user.setDateRegister(resultSet.getLabel(6));
-                user.setEmail(resultSet.getString(7));
-                user.setStatus(resultSet.getString(8));
-                user.setAdmin(resultSet.getBoolean(9));
-                user.setBanned(resultSet.getBoolean(10));
-            }*/
-            //return user;
         } catch (ConnectionPoolException e) {
             throw new DAOException("Can not get a connection",e);
         } catch (SQLException e) {

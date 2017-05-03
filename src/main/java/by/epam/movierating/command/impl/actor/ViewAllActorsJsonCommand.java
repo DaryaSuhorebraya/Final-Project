@@ -3,6 +3,7 @@ package by.epam.movierating.command.impl.actor;
 import by.epam.movierating.bean.Actor;
 import by.epam.movierating.command.Command;
 import by.epam.movierating.command.constant.AttributeName;
+import by.epam.movierating.command.constant.JSPPageName;
 import by.epam.movierating.service.ActorService;
 import by.epam.movierating.service.exception.ServiceException;
 import by.epam.movierating.service.factory.ServiceFactory;
@@ -20,7 +21,6 @@ import java.util.List;
  * Created by Даша on 24.03.2017.
  */
 public class ViewAllActorsJsonCommand implements Command {
-
     private static final Logger logger = Logger.getLogger(ViewAllActorsJsonCommand.class);
     private static final String CONTENT_TYPE = "application/json";
     private static final String ENCODING = "UTF-8";
@@ -42,6 +42,7 @@ public class ViewAllActorsJsonCommand implements Command {
             response.getWriter().print(json);
         } catch (ServiceException e) {
             logger.error(e);
+            response.sendRedirect(JSPPageName.ERROR_500_PAGE);
         }
     }
 }

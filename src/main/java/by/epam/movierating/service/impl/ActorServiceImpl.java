@@ -139,4 +139,25 @@ public class ActorServiceImpl implements ActorService {
             throw new ServiceException(e);
         }
     }
+
+    @Override
+    public List<Actor> getAllLimitedActors(String language, int currentPageNumber)
+            throws ServiceException {
+        Validator.validateLanguage(language);
+        List<Actor> actorList;
+        try {
+            DAOFactory daoFactory = DAOFactory.getInstance();
+            ActorDAO actorDAO = daoFactory.getActorDAO();
+            MovieDAO movieDAO = daoFactory.getMovieDAO();
+            actorList = actorDAO.getAllLimitedActors(language, currentPageNumber);
+            for (Actor actor : actorList) {
+                List<Movie> movieList = movieDAO.getMoviesByActorInitial(actor.getFirstName(),
+                        actor.getLastName(), language);
+                actor.setMovieList(movieList);
+            }
+        } catch (DAOException e) {
+            throw new ServiceException(e);
+        }
+        return actorList;
+    }
 }

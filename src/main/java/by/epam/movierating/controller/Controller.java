@@ -13,7 +13,6 @@ import java.io.IOException;
  * Created by Даша on 14.02.2017.
  */
 public class Controller extends HttpServlet {
-
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {

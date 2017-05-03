@@ -17,14 +17,13 @@ import java.util.List;
  */
 public class ReviewServiceImpl implements ReviewService {
     @Override
-    public List<Review> getAllReviewsOrderByDate(String language)
+    public List<Review> getAllReviewsOrderByDate()
             throws ServiceException {
-        Validator.validateLanguage(language);
         List<Review> reviewList;
         try {
             DAOFactory daoFactory = DAOFactory.getInstance();
             ReviewDAO reviewDAO = daoFactory.getReviewDAO();
-            reviewList = reviewDAO.getAllReviewsOrderByDate(language);
+            reviewList = reviewDAO.getAllReviewsOrderByDate();
         } catch (DAOException e) {
             throw new ServiceException(e);
         }
@@ -115,5 +114,34 @@ public class ReviewServiceImpl implements ReviewService {
         } catch (DAOException e) {
             throw new ServiceException(e);
         }
+    }
+
+    @Override
+    public boolean deleteReview(int idMovie, int idUser)
+            throws ServiceException {
+        Validator.validateIntData(idMovie, idUser);
+        try {
+            DAOFactory daoFactory = DAOFactory.getInstance();
+            ReviewDAO reviewDAO = daoFactory.getReviewDAO();
+            return reviewDAO.deleteReview(idMovie, idUser);
+        } catch (DAOException e) {
+            throw new ServiceException(e);
+        }
+    }
+
+    @Override
+    public List<ReviewDTO> getReviewsByUserId(int idUser, String language)
+            throws ServiceException {
+        Validator.validateIntData(idUser);
+        Validator.validateLanguage(language);
+        List<ReviewDTO> reviewList;
+        try {
+            DAOFactory daoFactory = DAOFactory.getInstance();
+            ReviewDAO reviewDAO = daoFactory.getReviewDAO();
+            reviewList = reviewDAO.getReviewsByUserId(idUser, language);
+        } catch (DAOException e) {
+            throw new ServiceException(e);
+        }
+        return reviewList;
     }
 }

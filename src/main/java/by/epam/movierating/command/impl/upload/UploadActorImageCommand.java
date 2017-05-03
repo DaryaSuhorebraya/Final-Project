@@ -27,7 +27,6 @@ public class UploadActorImageCommand implements Command {
     private static final Logger logger = Logger.getLogger(UploadActorImageCommand.class);
     private static final String ACTOR = "actor";
 
-
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {

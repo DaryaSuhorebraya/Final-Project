@@ -13,9 +13,10 @@ public interface GenreDAO {
     List<Genre> getAllGenres(String language) throws DAOException;
     List<Genre> getAllActiveGenres(String language) throws DAOException;
     boolean deleteGenre(int idGenre) throws DAOException;
-    void updateGenre(int idGenre, String name, String language) throws DAOException;
+    boolean editGenre(int idGenre, String name, String language) throws DAOException;
     List<Genre> getGenresByIdMovie(int idMovie, String language) throws DAOException;
     List<Genre> getGenresNotInMovie(int idMovie, String language) throws DAOException;
     List<StaticticsDTO> getGenreStatistics(String language) throws DAOException;
-    boolean addGenre(String nameRu, String nameEn) throws DAOException;
+    int addGenre(String nameRu, String nameEn) throws DAOException;
+    Genre getGenreById(int idGenre, String language) throws DAOException;
 }

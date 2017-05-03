@@ -4,7 +4,7 @@
 
 <fmt:setLocale value="${sessionScope.language}"/>
 <fmt:setBundle basename="localization" var="loc"/>
-<html>
+<html lang="${sessionScope.language}">
 <head>
     <title>ProFilm</title>
     <meta charset="utf-8"/>
@@ -14,7 +14,7 @@
     <script src="${pageContext.request.contextPath}/js/bootstrap.min.js"></script>
     <script src="${pageContext.request.contextPath}/js/scripts.js"></script>
     <link href="${pageContext.request.contextPath}/css/style.css" rel="stylesheet">
-    <link href="${pageContext.request.contextPath}/css/edit-style.css" rel="stylesheet">
+    <link href="${pageContext.request.contextPath}/css/user-info-style.css" rel="stylesheet">
 </head>
 <body>
 <c:import url="template/admin-header.jsp"/>
@@ -87,7 +87,6 @@
         <div class="form-group">
             <div class="col-xs-offset-3 col-xs-9">
                 <input type="submit" class="btn btn-primary" value="<fmt:message bundle="${loc}" key="save"/>">
-                <input type="reset" class="btn btn-default" value="<fmt:message bundle="${loc}" key="reset"/>">
             </div>
         </div>
     </form>

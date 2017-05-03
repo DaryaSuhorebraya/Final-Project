@@ -3,6 +3,8 @@ package by.epam.movierating.command.impl.general;
 import by.epam.movierating.command.Command;
 import by.epam.movierating.command.constant.JSPPageName;
 import by.epam.movierating.command.constant.ParameterName;
+import by.epam.movierating.command.security.RoleType;
+import by.epam.movierating.command.security.SecurityManager;
 import by.epam.movierating.command.util.PagePathUtil;
 
 import javax.servlet.ServletException;
@@ -19,9 +21,30 @@ public class RedirectCommand implements Command {
             throws ServletException, IOException {
         PagePathUtil.setQueryString(request);
         String redirectPage = request.getParameter(ParameterName.REDIRECT);
-        String redirectPagePath = defineRedirectPagePath(redirectPage);
-        request.getRequestDispatcher(redirectPagePath).forward(request, response);
+        if (checkRoles(redirectPage, request, response)) {
+            String redirectPagePath = defineRedirectPagePath(redirectPage);
+            request.getRequestDispatcher(redirectPagePath).forward(request, response);
+        }
+    }
 
+    private boolean checkRoles(String redirectPage,
+                               HttpServletRequest request,
+                               HttpServletResponse response)
+            throws IOException {
+        switch (redirectPage) {
+            case ParameterName.REGISTRATION: {
+                return true;
+            }
+            case ParameterName.ADD_MOVIE: {
+                return SecurityManager.getInstance().checkRoles(request, response, RoleType.ADMIN);
+            }
+            case ParameterName.SUCCESS_ADD_MOVIE: {
+                return SecurityManager.getInstance().checkRoles(request, response, RoleType.ADMIN);
+            }
+            default: {
+                return false;
+            }
+        }
     }
 
     private String defineRedirectPagePath(String redirectPage) {
@@ -32,7 +55,12 @@ public class RedirectCommand implements Command {
             case ParameterName.ADD_MOVIE: {
                 return JSPPageName.ADD_MOVIE_PAGE;
             }
+            case ParameterName.SUCCESS_ADD_MOVIE: {
+                return JSPPageName.SUCCESS_MOVIE_ADD;
+            }
+            default: {
+                return "";
+            }
         }
-        return "";
     }
 }

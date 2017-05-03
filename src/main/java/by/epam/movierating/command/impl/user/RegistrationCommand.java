@@ -50,8 +50,10 @@ public class RegistrationCommand implements Command {
             }
         } catch (ServiceWrongDataException e) {
             logger.error("Wrong input data", e);
+            response.sendRedirect(JSPPageName.ERROR_500_PAGE);
         } catch (ServiceException e) {
             logger.error(e);
+            response.sendRedirect(JSPPageName.ERROR_500_PAGE);
         }
     }
 }

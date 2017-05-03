@@ -27,43 +27,43 @@ public class UserServiceImpl implements UserService {
         Validator.validateLogin(login);
         Validator.validatePassword(password);
         User user;
-        String encodePassword= ServiceUtil.encodePassword(password);
+        String encodePassword = ServiceUtil.encodePassword(password);
         try {
-            DAOFactory daoFactory=DAOFactory.getInstance();
-            UserDAO userDAO=daoFactory.getUserDAO();
-            user=userDAO.getUserByLogin(login);
+            DAOFactory daoFactory = DAOFactory.getInstance();
+            UserDAO userDAO = daoFactory.getUserDAO();
+            user = userDAO.getUserByLogin(login);
             System.out.println(DigestUtils.md5Hex(user.getPassword()));
-            if (user==null){
+            if (user == null) {
                 throw new ServiceWrongDataException("Wrong login");
             }
-            if (!user.getPassword().equals(encodePassword)){
+            if (!user.getPassword().equals(encodePassword)) {
                 throw new ServiceWrongDataException("Wrong password");
             }
-        } catch (DAOException e){
+        } catch (DAOException e) {
             throw new ServiceException(e);
         }
         return user;
     }
 
     @Override
-    public User register(String login, byte[] password,byte[] confirmPassword, String email, String firstName, String lastName)
+    public User register(String login, byte[] password, byte[] confirmPassword, String email, String firstName, String lastName)
             throws ServiceException {
         Validator.validateLogin(login);
-        Validator.validatePassword(password,confirmPassword);
+        Validator.validatePassword(password, confirmPassword);
         Validator.validateEmail(email);
-        Validator.validateStringData( firstName, lastName);
-        String encodePassword=ServiceUtil.encodePassword(password);
+        Validator.validateStringData(firstName, lastName);
+        String encodePassword = ServiceUtil.encodePassword(password);
         User user;
         try {
-            DAOFactory daoFactory=DAOFactory.getInstance();
-            UserDAO userDAO=daoFactory.getUserDAO();
-           // UserInfoDAO userInfoDAO=daoFactory.getUserInfoDAO();
-            user=userDAO.register(login,encodePassword,new Date(),email,firstName,lastName);
+            DAOFactory daoFactory = DAOFactory.getInstance();
+            UserDAO userDAO = daoFactory.getUserDAO();
+            // UserInfoDAO userInfoDAO=daoFactory.getUserInfoDAO();
+            user = userDAO.register(login, encodePassword, new Date(), email, firstName, lastName);
            /* if (user == null){
                 throw new ServiceException("Error during registration");
             }*/
-           // userInfoDAO.register(user.getId(),firstName,lastName);
-        } catch (DAOException e){
+            // userInfoDAO.register(user.getId(),firstName,lastName);
+        } catch (DAOException e) {
             throw new ServiceException(e);
         }
         return user;
@@ -73,10 +73,10 @@ public class UserServiceImpl implements UserService {
     public List<User> getAllUsers() throws ServiceException {
         List<User> userList;
         try {
-            DAOFactory daoFactory=DAOFactory.getInstance();
-            UserDAO userDAO=daoFactory.getUserDAO();
-            userList=userDAO.getAllUsers();
-        } catch (DAOException e){
+            DAOFactory daoFactory = DAOFactory.getInstance();
+            UserDAO userDAO = daoFactory.getUserDAO();
+            userList = userDAO.getAllUsers();
+        } catch (DAOException e) {
             throw new ServiceException(e);
         }
         return userList;
@@ -87,10 +87,10 @@ public class UserServiceImpl implements UserService {
         Validator.validateIntData(idUser);
         User user;
         try {
-            DAOFactory daoFactory=DAOFactory.getInstance();
-            UserDAO userDAO=daoFactory.getUserDAO();
-            user=userDAO.getUserById(idUser);
-        } catch (DAOException e){
+            DAOFactory daoFactory = DAOFactory.getInstance();
+            UserDAO userDAO = daoFactory.getUserDAO();
+            user = userDAO.getUserById(idUser);
+        } catch (DAOException e) {
             throw new ServiceException(e);
         }
         return user;
@@ -104,16 +104,16 @@ public class UserServiceImpl implements UserService {
         Validator.validateIntData(idUser);
         Validator.validateEmail(email);
         Validator.validateLogin(login);
-        Validator.validateStringData(firstName,lastName,status);
-        Date date=Validator.validateDate(dateRegister);
-        boolean isAdmin=Validator.validateAdminString(isAdminString);
-        boolean isBanned=Validator.validateBannedString(isBannedString);
+        Validator.validateStringData(firstName, lastName, status);
+        Date date = Validator.validateDate(dateRegister);
+        boolean isAdmin = Validator.validateAdminString(isAdminString);
+        boolean isBanned = Validator.validateBannedString(isBannedString);
         //User user;
         try {
-            DAOFactory daoFactory=DAOFactory.getInstance();
-            UserDAO userDAO=daoFactory.getUserDAO();
-            userDAO.editUser(idUser,login,firstName,lastName,email,date,status,isAdmin,isBanned);
-        } catch (DAOException e){
+            DAOFactory daoFactory = DAOFactory.getInstance();
+            UserDAO userDAO = daoFactory.getUserDAO();
+            userDAO.editUser(idUser, login, firstName, lastName, email, date, status, isAdmin, isBanned);
+        } catch (DAOException e) {
             throw new ServiceException(e);
         }
         //return user;
@@ -123,10 +123,10 @@ public class UserServiceImpl implements UserService {
     public boolean deleteUser(int idUser) throws ServiceException {
         Validator.validateIntData(idUser);
         try {
-            DAOFactory daoFactory=DAOFactory.getInstance();
-            UserDAO userDAO=daoFactory.getUserDAO();
+            DAOFactory daoFactory = DAOFactory.getInstance();
+            UserDAO userDAO = daoFactory.getUserDAO();
             return userDAO.deleteUser(idUser);
-        } catch (DAOException e){
+        } catch (DAOException e) {
             throw new ServiceException(e);
         }
     }
@@ -136,15 +136,16 @@ public class UserServiceImpl implements UserService {
             throws ServiceException {
         Validator.validateIntData(idUser);
         Validator.validateBanStatus(status);
-        DAOFactory daoFactory=DAOFactory.getInstance();
-        UserDAO userDAO=daoFactory.getUserDAO();
+        DAOFactory daoFactory = DAOFactory.getInstance();
+        UserDAO userDAO = daoFactory.getUserDAO();
         try {
-            if (status.equals(ParameterName.BAN)){
+            if (status.equals(ParameterName.BAN_EN)
+                    || status.equals(ParameterName.BAN_RU)) {
                 return userDAO.banUser(idUser);
             } else {
                 return userDAO.unbanUser(idUser);
             }
-        } catch (DAOException e){
+        } catch (DAOException e) {
             throw new ServiceException(e);
         }
     }
@@ -153,10 +154,10 @@ public class UserServiceImpl implements UserService {
     public List<StaticticsDTO> getMonthUserCount() throws ServiceException {
         List<StaticticsDTO> staticticsDTOList;
         try {
-            DAOFactory daoFactory=DAOFactory.getInstance();
-            UserDAO userDAO=daoFactory.getUserDAO();
-            staticticsDTOList=userDAO.getMonthUserCount();
-        } catch (DAOException e){
+            DAOFactory daoFactory = DAOFactory.getInstance();
+            UserDAO userDAO = daoFactory.getUserDAO();
+            staticticsDTOList = userDAO.getMonthUserCount();
+        } catch (DAOException e) {
             throw new ServiceException(e);
         }
         return staticticsDTOList;

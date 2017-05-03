@@ -27,6 +27,7 @@ public class UploadMoviePosterCommand implements Command {
     private static final Logger logger = Logger.getLogger(UploadMoviePosterCommand.class);
     private static final String MOVIE = "movie";
     private static final String QUERY_STRING = "/Controller?command=redirect&redirectPage=addMovie";
+    private static final String SUCCESS_ADD="Controller?command=redirect&redirectPage=successAdd";
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response)
@@ -49,7 +50,7 @@ public class UploadMoviePosterCommand implements Command {
                     if (result) {
                         String pagePath = PagePathUtil.getPagePath(session);
                         if (pagePath.equals(QUERY_STRING)) {
-                            response.sendRedirect(JSPPageName.SUCCESS_MOVIE_ADD);
+                            response.sendRedirect(SUCCESS_ADD);
                         } else {
                             response.sendRedirect(pagePath);
                         }

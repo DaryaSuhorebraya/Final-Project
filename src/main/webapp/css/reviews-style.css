@@ -51,5 +51,24 @@ h3{
     margin-top: 0px;
 }
 .movie-title{
-    color: #0B0A0A;
+    color
+    : #0B0A0A;
+}
+.delete-review{
+    background-color: #FAFAFA;
+    color: #c9302c;
+    float: right;
+}
+.delete-review:hover{
+    cursor: pointer;
+    color: #ae0000;
+}
+.id-movie, .id-user{
+    display: none;
+}
+#message{
+    position: fixed;
+    z-index: 1;
+    width: 90%;
+    margin-left: 30px;
 }

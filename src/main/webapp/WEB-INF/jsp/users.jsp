@@ -4,7 +4,7 @@
 
 <fmt:setLocale value="${sessionScope.language}"/>
 <fmt:setBundle basename="localization" var="loc"/>
-<html>
+<html lang="${sessionScope.language}">
 <head>
     <title>ProFilm</title>
     <meta charset="utf-8"/>
@@ -20,14 +20,14 @@
 <body>
 <c:import url="template/admin-header.jsp"/>
 <div class="container">
-    <h4>Users</h4>
+    <h4 class="caption"><fmt:message bundle="${loc}" key="users"/> </h4>
     <div class="row">
-        <div class="col-md-9">
+        <div id="message"></div>
+        <div class="col-md-10">
             <div class="table-responsive">
                 <table class="table table-striped table-hover">
     <thead>
     <tr>
-        <!-- <th>№</th> -->
         <th>id</th>
         <th><fmt:message bundle="${loc}" key="firstname"/> </th>
         <th><fmt:message bundle="${loc}" key="lastname"/></th>
@@ -74,11 +74,11 @@
             </div>
         </div>
 
-        <div class="col-md-3">
+        <div class="col-md-2">
             <div class="sidebar-nav-fixed pull-right affix">
                 <div class="well">
                     <ul class="nav ">
-                        <li class="nav-header"><fmt:message bundle="${loc}" key="select.a.user"/></li>
+                        <li class="nav-header" id="select-user"><fmt:message bundle="${loc}" key="select.a.user"/></li>
                         <li><a id="for-ban" type="button" class="ban"></a>
                         </li>
                         <li><a id="edit"><fmt:message bundle="${loc}" key="edit"/></a>
@@ -87,7 +87,6 @@
                         </li>
                     </ul>
                 </div>
-                <!--/.well -->
             </div>
         </div>
         </div>

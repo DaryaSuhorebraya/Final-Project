@@ -1,11 +1,25 @@
 $(document).ready(function () {
-   /* var $editedText = $("#edited_text");
-    var text = $editedText.text();
-    $editedText.text(shorten(text, 400, "...", false));*/
     var $url= 'Controller';
+    var lang = $('html').attr("lang");
+    var errorMsg;
+    var deleteMsg;
+
+    if (lang === "ru_RU") {
+        errorMsg="Ошибка в процессе выполнения операции";
+        deleteMsg="Удалить?";
+    } if (lang === "en_EN") {
+        errorMsg="Error during procedure";
+        deleteMsg="Delete?";
+    }
+
+    function hideMsg(){
+        setTimeout(function(){
+            $('#message').empty();
+        }, 3000);
+    }
 
     $('.delete-movie').click(function (){
-        if(confirm("Delete?")){
+        if(confirm(deleteMsg)){
             var idMovie=$(this).siblings('#id').text();
             var current=$(this);
             $.ajax({
@@ -13,11 +27,14 @@ $(document).ready(function () {
                 url: $url,
                 data: {command:'delete-movie',movieId: idMovie},
                 success: function (result) {
-                    //TODO confirm action
                     if (result==="true"){
                         current.parent().parent().remove()
-                    } else {
-                        //message for error;
+                    } if (result === "false") {
+                        $('#message').html('<div class="alert alert-danger fade in">' +
+                            '<button type="button" class="close close-alert" data-dismiss="alert"' +
+                            ' aria-hidden="true">×</button>'+errorMsg +
+                            '</div>');
+                        hideMsg();
                     }
                 }
             });

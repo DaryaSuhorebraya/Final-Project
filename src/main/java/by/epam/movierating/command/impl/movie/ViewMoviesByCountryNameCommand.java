@@ -41,6 +41,7 @@ public class ViewMoviesByCountryNameCommand implements Command {
             request.getRequestDispatcher(JSPPageName.MOVIES_PAGE).forward(request, response);
         } catch (ServiceException e) {
             logger.error(e);
+            response.sendRedirect(JSPPageName.ERROR_500_PAGE);
         }
     }
 }

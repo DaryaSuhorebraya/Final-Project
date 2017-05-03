@@ -17,6 +17,7 @@ import java.util.List;
  */
 public class GenreDAOImpl implements GenreDAO {
     private static final String SQL_GET_ALL_GENRES = "SELECT id_genre,name_ FROM genre WHERE is_deleted=0";
+    private static final String SQL_GET_GENRE_BY_ID = "SELECT id_genre,name_ FROM genre WHERE is_deleted=0 and id_genre=?";
     private static final String SQL_GET_ALL_ACTIVE_GENRES = "SELECT genre.id_genre, genre.name_ FROM genre " +
             "INNER JOIN movie_genre ON genre.id_genre=movie_genre.id_genre " +
             "WHERE genre.is_deleted=0 " +
@@ -35,7 +36,7 @@ public class GenreDAOImpl implements GenreDAO {
             "FROM movie_genre " +
             "INNER JOIN genre ON movie_genre.id_genre=genre.id_genre " +
             "GROUP BY movie_genre.id_genre";
-    private static final String SQL_ADD_GENRE="INSERT INTO genre (name_ru,name_en) VALUES (?,?)";
+    private static final String SQL_ADD_GENRE = "INSERT INTO genre (name_ru,name_en) VALUES (?,?)";
 
 
     @Override
@@ -105,7 +106,7 @@ public class GenreDAOImpl implements GenreDAO {
     }
 
     @Override
-    public void updateGenre(int idGenre, String name, String language) throws DAOException {
+    public boolean editGenre(int idGenre, String name, String language) throws DAOException {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         try {
@@ -115,7 +116,8 @@ public class GenreDAOImpl implements GenreDAO {
                     localizeStatement(SQL_UPDATE_GENRE, language));
             preparedStatement.setString(1, name);
             preparedStatement.setInt(2, idGenre);
-            preparedStatement.executeUpdate();
+            int updatedRows = preparedStatement.executeUpdate();
+            return updatedRows > 0;
         } catch (ConnectionPoolException e) {
             throw new DAOException("Can not get a connection", e);
         } catch (SQLException e) {
@@ -201,23 +203,52 @@ public class GenreDAOImpl implements GenreDAO {
     }
 
     @Override
-    public boolean addGenre(String nameRu, String nameEn) throws DAOException {
-        Connection connection=null;
-        PreparedStatement statement=null;
+    public int addGenre(String nameRu, String nameEn) throws DAOException {
+        Connection connection = null;
+        PreparedStatement statement = null;
         try {
-            ConnectionPool connectionPool=ConnectionPool.getInstance();
-            connection=connectionPool.getConnection();
-            statement=connection.prepareStatement(SQL_ADD_GENRE);
+            ConnectionPool connectionPool = ConnectionPool.getInstance();
+            connection = connectionPool.getConnection();
+            statement = connection.prepareStatement(SQL_ADD_GENRE, Statement.RETURN_GENERATED_KEYS);
             statement.setString(1, nameRu);
             statement.setString(2, nameEn);
-            int updatedRows=statement.executeUpdate();
-            return updatedRows>0;
+            int updatedRows = statement.executeUpdate();
+            if (updatedRows > 0) {
+                ResultSet generatedKeys = statement.getGeneratedKeys();
+                if (generatedKeys.next()) {
+                    return (int) generatedKeys.getLong(1);
+                }
+            }
         } catch (ConnectionPoolException e) {
-            throw new DAOException("Can not get a connection",e);
+            throw new DAOException("Can not get a connection", e);
         } catch (SQLException e) {
             throw new DAOException(e);
         } finally {
-            DAOUtil.close(connection,statement);
+            DAOUtil.close(connection, statement);
+        }
+        return 0;
+    }
+
+    @Override
+    public Genre getGenreById(int idGenre, String language)
+            throws DAOException {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        try {
+            ConnectionPool connectionPool = ConnectionPool.getInstance();
+            connection = connectionPool.getConnection();
+            preparedStatement = connection.prepareStatement(DAOUtil.
+                    localizeStatement(SQL_GET_GENRE_BY_ID, language));
+            preparedStatement.setInt(1, idGenre);
+            resultSet = preparedStatement.executeQuery();
+            return setGenreInfo(resultSet).get(0);
+        } catch (ConnectionPoolException e) {
+            throw new DAOException("Can not get a connection", e);
+        } catch (SQLException e) {
+            throw new DAOException(e);
+        } finally {
+            DAOUtil.close(connection, preparedStatement, resultSet);
         }
     }
 

@@ -25,17 +25,22 @@ public class CheckRateOpportunityCommand implements Command {
             throws ServletException, IOException {
         HttpSession session = request.getSession();
         response.setContentType("text/plain");
-        int idMovie = Integer.parseInt(request.getParameter(ParameterName.MOVIE_ID));
-        int idUser = (Integer) session.getAttribute(AttributeName.USER_ID);
 
-        ServiceFactory serviceFactory = ServiceFactory.getInstance();
-        RatingService ratingService = serviceFactory.getRatingService();
-        try {
-            boolean result = ratingService.checkRateOpportunity(idMovie, idUser);
-            response.getWriter().print(result);
-        } catch (ServiceException e) {
-            logger.error(e);
-            response.getWriter().print(false);
+        if ((boolean) session.getAttribute(AttributeName.IS_BANNED)) {
+            response.getWriter().print(AttributeName.IS_BANNED);
+        } else {
+            int idMovie = Integer.parseInt(request.getParameter(ParameterName.MOVIE_ID));
+            int idUser = (Integer) session.getAttribute(AttributeName.USER_ID);
+
+            ServiceFactory serviceFactory = ServiceFactory.getInstance();
+            RatingService ratingService = serviceFactory.getRatingService();
+            try {
+                boolean result = ratingService.checkRateOpportunity(idMovie, idUser);
+                response.getWriter().print(result);
+            } catch (ServiceException e) {
+                logger.error(e);
+                response.getWriter().print(false);
+            }
         }
     }
 }

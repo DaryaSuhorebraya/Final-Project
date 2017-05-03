@@ -1,7 +1,10 @@
 package by.epam.movierating.command.impl.movie;
 
 import by.epam.movierating.command.Command;
+import by.epam.movierating.command.constant.JSPPageName;
 import by.epam.movierating.command.constant.ParameterName;
+import by.epam.movierating.command.security.RoleType;
+import by.epam.movierating.command.security.SecurityManager;
 import by.epam.movierating.service.MovieService;
 import by.epam.movierating.service.exception.ServiceException;
 import by.epam.movierating.service.factory.ServiceFactory;
@@ -24,22 +27,26 @@ public class AddMovieCommand implements Command {
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String titleEn = request.getParameter(ParameterName.TITLE_EN);
-        String titleRu = request.getParameter(ParameterName.TITLE_RU);
-        int releseYear = Integer.parseInt(request.getParameter(ParameterName.RELEASE_YEAR));
-        String descrEn = request.getParameter(ParameterName.DESCRIPTION_EN);
-        String descrRu = request.getParameter(ParameterName.DESCRIPTION_RU);
+        if (SecurityManager.getInstance().checkRoles(request, response, RoleType.ADMIN)) {
 
-        ServiceFactory serviceFactory = ServiceFactory.getInstance();
-        MovieService movieService = serviceFactory.getMovieService();
-        try {
-            int id = movieService.addMovie(titleEn, titleRu, releseYear, descrEn, descrRu);
-            String json = new Gson().toJson(id);
-            response.setContentType(CONTENT_TYPE);
-            response.setCharacterEncoding(ENCODING);
-            response.getWriter().print(json);
-        } catch (ServiceException e) {
-            logger.error(e);
+            String titleEn = request.getParameter(ParameterName.TITLE_EN);
+            String titleRu = request.getParameter(ParameterName.TITLE_RU);
+            int releaseYear = Integer.parseInt(request.getParameter(ParameterName.RELEASE_YEAR));
+            String descrEn = request.getParameter(ParameterName.DESCRIPTION_EN);
+            String descrRu = request.getParameter(ParameterName.DESCRIPTION_RU);
+
+            ServiceFactory serviceFactory = ServiceFactory.getInstance();
+            MovieService movieService = serviceFactory.getMovieService();
+            try {
+                int id = movieService.addMovie(titleEn, titleRu, releaseYear, descrEn, descrRu);
+                String json = new Gson().toJson(id);
+                response.setContentType(CONTENT_TYPE);
+                response.setCharacterEncoding(ENCODING);
+                response.getWriter().print(json);
+            } catch (ServiceException e) {
+                logger.error(e);
+                response.sendRedirect(JSPPageName.ERROR_500_PAGE);
+            }
         }
     }
 }

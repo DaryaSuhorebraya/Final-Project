@@ -20,15 +20,15 @@
             </ol>
             <div class="carousel-inner">
                 <div class="item">
-                    <img alt="Carousel Bootstrap First" src="images/main/after_earth_1.jpg">
+                    <img id="first" alt="Carousel Bootstrap First" src="images/main/after_earth4.jpg">
                     <div class="carousel-caption">
                     </div>
                 </div>
                 <div class="item active left">
-                    <img alt="Carousel Bootstrap Second" src="images/main/inception_banner.jpg">
+                    <img id="second" alt="Carousel Bootstrap Second" src="images/main/inception_banner2.jpg">
                 </div>
                 <div class="item next left">
-                    <img alt="Carousel Bootstrap Third" src="images/main/jonh_wick.jpg">
+                    <img alt="Carousel Bootstrap Third" src="images/main/johnwick_poster2.jpg">
                 </div>
             </div> <a class="left carousel-control" href="#carousel-259970" data-slide="prev"><span class="glyphicon glyphicon-chevron-left"></span></a> <a class="right carousel-control" href="#carousel-259970" data-slide="next"><span class="glyphicon glyphicon-chevron-right"></span></a>
         </div>

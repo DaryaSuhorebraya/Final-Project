@@ -43,7 +43,8 @@ public class CountryDAOImpl implements CountryDAO {
         try {
             ConnectionPool connectionPool= ConnectionPool.getInstance();
             connection=connectionPool.getConnection();
-            preparedStatement=connection.prepareStatement(DAOUtil.localizeStatement(SQL_UPDATE_COUNTRY,language));
+            preparedStatement=connection.prepareStatement(DAOUtil.
+                    localizeStatement(SQL_UPDATE_COUNTRY,language));
             preparedStatement.setString(1,name);
             preparedStatement.setString(2,countryCode);
             preparedStatement.executeUpdate();

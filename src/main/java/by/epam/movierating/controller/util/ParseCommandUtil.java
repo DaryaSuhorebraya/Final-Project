@@ -69,8 +69,11 @@ public class ParseCommandUtil {
                 }
                 case "class": {
                     try {
-                        command = (Command) Class.forName(text.toString()).newInstance();
-                    } catch (InstantiationException | IllegalAccessException | ClassNotFoundException e) {
+                        command = (Command) Class.
+                                forName(text.toString()).newInstance();
+                    } catch (InstantiationException |
+                            IllegalAccessException |
+                            ClassNotFoundException e) {
                         logger.error(e);
                     }
                 }

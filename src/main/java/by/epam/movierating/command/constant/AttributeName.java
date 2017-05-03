@@ -16,6 +16,7 @@ public class AttributeName {
     public static final String GUEST="guest";
     public static final String MOVIE="movie";
     public static final String REVIEW="review";
+    public static final String IS_BANNED="isBanned";
 
     public static final String USER_ID="userId";
     public static final String GENRES="genres";
@@ -33,5 +34,6 @@ public class AttributeName {
 
     public static final String PREV_QUERY="prevQuery";
     public static final String REDIRECT_PAGE="redirectPage";
+    public static final String CURRENT_PAGE_NUMBER="curPageNumber";
 
 }

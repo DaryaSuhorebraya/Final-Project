@@ -3,7 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <fmt:setLocale value="${sessionScope.language}"/>
 <fmt:setBundle basename="localization" var="loc"/>
-<html>
+<html lang="${sessionScope.language}">
 <head>
     <title>ProFilm</title>
     <meta charset="utf-8"/>
@@ -13,6 +13,7 @@
     <script src="${pageContext.request.contextPath}/js/bootstrap.min.js"></script>
     <link href="${pageContext.request.contextPath}/css/movie-list-style.css" rel="stylesheet">
     <script type="text/javascript" src="${pageContext.request.contextPath}/js/admin-movies.js"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/js/user-movies.js"></script>
     <script src="${pageContext.request.contextPath}/js/jquery.dotdotdot.min.js" type="text/javascript"></script>
 </head>
 <body>
@@ -27,7 +28,7 @@
 </c:choose>
 </c:if>
 <p></p>
-
+<div id="message"></div>
 <div class="container">
     <div class="well well-sm">
         <strong> <fmt:message bundle="${loc}" key="movies"/> </strong>
@@ -38,6 +39,16 @@
             <a href="#" id="grid" class="btn btn-default btn-sm">
                 <span class="glyphicon glyphicon-th"></span><fmt:message bundle="${loc}" key="grid"/>
             </a>
+        </div>
+        <div id="custom-search-input" class="pull-right">
+            <div class="input-group col-md-12">
+                <input type="text" class="form-control input-sm" id="search-text" placeholder="<fmt:message bundle="${loc}" key="search"/>" />
+                    <span class="input-group-btn">
+                        <button class="btn btn-info btn-sm" type="button" id="search">
+                            <i class="glyphicon glyphicon-search"></i>
+                        </button>
+                    </span>
+            </div>
         </div>
         <c:if test='${sessionScope.role eq "admin"}'>
             <a href="Controller?command=redirect&redirectPage=addMovie" id="addMovie" class="btn btn-default btn-sm pull-right">
@@ -64,7 +75,7 @@
                 </a>
                     <img class="group list-group-image" src="./${movie.posterPath}" alt="" />
                     <div class="caption">
-                        <h4 class="group inner list-group-item-heading">${movie.title} &nbsp;(${movie.releaseYear})</h4>
+                        <h4 class="group inner list-group-item-heading title">${movie.title} &nbsp;(${movie.releaseYear})</h4>
                         <h4 class="group inner list-group-item-heading">${movie.rating}</h4>
                         <p class="group inner list-group-item-text">${movie.description}</p>
                         <div class="row">

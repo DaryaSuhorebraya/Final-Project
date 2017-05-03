@@ -80,5 +80,14 @@
 #addMovie{
     margin-right: 20px;
 }
+#message{
+    position: fixed;
+    z-index: 1;
+    width: 90%;
+    margin-left: 75px;
+}
+#search{
+    padding-bottom: 11px;
+}
 
 

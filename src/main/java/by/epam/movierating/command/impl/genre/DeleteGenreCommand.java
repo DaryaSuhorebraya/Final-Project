@@ -2,6 +2,8 @@ package by.epam.movierating.command.impl.genre;
 
 import by.epam.movierating.command.Command;
 import by.epam.movierating.command.constant.ParameterName;
+import by.epam.movierating.command.security.RoleType;
+import by.epam.movierating.command.security.SecurityManager;
 import by.epam.movierating.service.GenreService;
 import by.epam.movierating.service.exception.ServiceException;
 import by.epam.movierating.service.factory.ServiceFactory;
@@ -21,19 +23,20 @@ public class DeleteGenreCommand implements Command {
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        if (SecurityManager.getInstance().checkRoles(request, response, RoleType.ADMIN)) {
+            response.setContentType("text/plain");
 
-        response.setContentType("text/plain");
+            int idGenre = Integer.parseInt(request.getParameter(ParameterName.GENRE_ID));
 
-        int idGenre = Integer.parseInt(request.getParameter(ParameterName.GENRE_ID));
-
-        ServiceFactory serviceFactory = ServiceFactory.getInstance();
-        GenreService genreService=serviceFactory.getGenreService();
-        try {
-            boolean result = genreService.deleteGenre(idGenre);
-            response.getWriter().print(result);
-        } catch (ServiceException e) {
-            logger.error(e);
-            response.getWriter().print(false);
+            ServiceFactory serviceFactory = ServiceFactory.getInstance();
+            GenreService genreService = serviceFactory.getGenreService();
+            try {
+                boolean result = genreService.deleteGenre(idGenre);
+                response.getWriter().print(result);
+            } catch (ServiceException e) {
+                logger.error(e);
+                response.getWriter().print(false);
+            }
         }
     }
 }

@@ -3,24 +3,25 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <fmt:setLocale value="${sessionScope.language}"/>
 <fmt:setBundle basename="localization" var="loc"/>
-<!DOCTYPE html>
-<html>
+<html lang="${sessionScope.language}">
 <head>
     <title>ProFilm</title>
     <meta charset="utf-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <link href="css/bootstrap.min.css" rel="stylesheet">
-    <script src="js/jquery.min.js"></script>
-    <script src="js/bootstrap.min.js"></script>
-    <script src="js/scripts.js"></script>
-    <link href="css/style.css" rel="stylesheet">
-    <link href="css/registration-style.css" rel="stylesheet">
+    <link href="${pageContext.request.contextPath}/css/bootstrap.min.css" rel="stylesheet">
+    <link href="${pageContext.request.contextPath}/css/bootstrapValidator.min.css" rel="stylesheet">
+    <link href="${pageContext.request.contextPath}/css/style.css" rel="stylesheet">
+    <link href="${pageContext.request.contextPath}/css/registration-style.css" rel="stylesheet">
+    <script src="${pageContext.request.contextPath}/js/jquery.min.js"></script>
+    <script src="${pageContext.request.contextPath}/js/bootstrap.min.js"></script>
+    <script src="${pageContext.request.contextPath}/js/bootstrapValidator.min.js"></script>
+    <script src="${pageContext.request.contextPath}/js/registration.js"></script>
 </head>
 <body>
 <c:import url="template/user-header.jsp"/>
 <div class="container-fluid text-center wrapper">
     <h4><fmt:message bundle="${loc}" key="register"/></h4>
-    <form class="form-horizontal" action="Controller?command=registration" method="post">
+    <form class="form-horizontal" action="Controller?command=registration" method="post" id="registerForm">
         <div class="form-group">
             <label class="control-label col-xs-3" for="login"><fmt:message bundle="${loc}" key="login"/> </label>
             <div class="col-xs-9">
@@ -57,14 +58,7 @@
                 <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" placeholder="<fmt:message bundle="${loc}" key="confirmPassword"/> ">
             </div>
         </div>
-        <div class="form-group">
-            <div class="col-xs-offset-3 col-xs-9">
-                <label class="checkbox-inline">
-                    <input type="checkbox" value="agree"><fmt:message bundle="${loc}" key="iAgreeWith"/>
-                    <a href="#"><fmt:message bundle="${loc}" key="theConditions"/></a>
-                </label>
-            </div>
-        </div>
+
         <br />
         <div class="form-group">
             <div class="col-xs-offset-3 col-xs-9">

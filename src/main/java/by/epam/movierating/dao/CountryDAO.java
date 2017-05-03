@@ -11,7 +11,6 @@ import java.util.List;
  * Created by Даша on 30.01.2017.
  */
 public interface CountryDAO {
-
     void updateCountry(String countryCode, String name, String language) throws DAOException;
     List<Country> getAllCountries(String language) throws DAOException;
     List<Country> getAllActiveCountries(String language) throws DAOException;

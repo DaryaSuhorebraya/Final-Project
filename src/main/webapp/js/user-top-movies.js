@@ -6,7 +6,29 @@ $(document).ready(function () {
     $('.clear-rating').remove();
     $('.rating-xs').css('font-size',' 1.2em');
     $('.rating-container').css('display', 'inline-block');
+    var lang = $('html').attr("lang");
+    var yetRatedMsg;
+    var needAuthMsg;
+    var errorMsg;
+    var bannedUser;
 
+    if (lang === "ru_RU") {
+        yetRatedMsg="Вы уже оценили этот фильм";
+        needAuthMsg="Для этого действия необходимо авторизоваться";
+        errorMsg="Ошибка в процессе выполнения операции";
+        bannedUser="У вас нет прав на совершение данной операции";
+    } if (lang === "en_EN") {
+        yetRatedMsg="You have reviewed this movie yet";
+        needAuthMsg="You have to log in for this action";
+        errorMsg="Error during procedure";
+        bannedUser="You have no rights to do this procedure";
+    }
+
+    function hideMsg(){
+        setTimeout(function(){
+            $('#message').empty();
+        }, 3000);
+    }
     if (document.getElementById('user-login')!==null) {
         var collection = $('.single-star');
         (collection).each(function() {
@@ -40,9 +62,18 @@ $(document).ready(function () {
                 data: {command: 'check-rate-opportunity', movieId: movieId, userId: userId},
                 success: function (result) {
                     if (result === "true") {
-                        //TODO message for error;
-                        alert('you have rated this movie yet');
-                    } else {
+                        $('#message').html('<div class="alert alert-info fade in">' +
+                            '<button type="button" class="close close-alert" data-dismiss="alert"' +
+                            ' aria-hidden="true">×</button>'+yetRatedMsg +
+                            '</div>');
+                        hideMsg();
+                    } if (result=='isBanned'){
+                        $('#message').html('<div class="alert alert-danger fade in">' +
+                            '<button type="button" class="close close-alert" data-dismiss="alert"' +
+                            ' aria-hidden="true">×</button>'+bannedUser +
+                            '</div>');
+                        hideMsg();
+                    }  if (result === "false") {
                         event.stopPropagation();
                         current.css('display','none');
                         current.parent().parent().parent().find(".star-rating").fadeIn(1500).css('display','inline-block');
@@ -51,7 +82,11 @@ $(document).ready(function () {
                 }
             });
         } else {
-            alert("Необходимо зарегистрироваться ");
+            $('#message').html('<div class="alert alert-info fade in">' +
+                '<button type="button" class="close close-alert" data-dismiss="alert"' +
+                ' aria-hidden="true">×</button>'+needAuthMsg +
+                '</div>');
+            hideMsg();
         }
     });
 
@@ -67,9 +102,19 @@ $(document).ready(function () {
                 if (result === "true") {
                     current.css('display','none');
                     $('.star-rating').css('display','none');
-                    $('.single-star').css('display','block').css('color','rgb(242, 56, 6)');
-                } else {
-                    //TODO message for error;
+                    current.parent().parent().find('.single-star').css('display','block').css('color','rgb(242, 56, 6)');
+                } if (result=='isBanned'){
+                    $('#message').html('<div class="alert alert-danger fade in">' +
+                        '<button type="button" class="close close-alert" data-dismiss="alert"' +
+                        ' aria-hidden="true">×</button>'+bannedUser +
+                        '</div>');
+                    hideMsg();
+                }  if (result === "false") {
+                    $('#message').html('<div class="alert alert-danger fade in">' +
+                        '<button type="button" class="close close-alert" data-dismiss="alert"' +
+                        ' aria-hidden="true">×</button>'+errorMsg +
+                        '</div>');
+                    hideMsg();
                 }
             }
         });

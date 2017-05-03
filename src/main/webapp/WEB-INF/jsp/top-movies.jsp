@@ -3,7 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <fmt:setLocale value="${sessionScope.language}"/>
 <fmt:setBundle basename="localization" var="loc"/>
-<html>
+<html lang="${sessionScope.language}">
 <head>
     <title>ProFilm</title>
     <meta charset="utf-8"/>
@@ -30,23 +30,32 @@
 <p></p>
 
 <div class="container">
-
     <div class="row">
+        <div id="message"></div>
         <div class="col-sm-9">
             <table class="table">
                 <thead>
                     <tr>
                     <th></th>
                     <th><fmt:message bundle="${loc}" key="rank"/>&<fmt:message bundle="${loc}" key="title"/></th>
-                    <th class="rating-content"><fmt:message bundle="${loc}" key="rating"/></th>
+                    <th id="rating" class="rating-content">
+                        <fmt:message bundle="${loc}" key="rating"/>
+                        <a href="#" class="btn btn-default btn-xs">
+                        <span class="glyphicon glyphicon-sort-by-order"></span>
+                    </a>
+                        <a href="#" class="btn btn-default btn-xs">
+                            <span class="glyphicon glyphicon-sort-by-order-alt"></span>
+                        </a>
+                    </th>
                     </tr>
                 </thead>
                 <tbody>
                     <c:if test="${sessionScope.userId != null}">
                         <p id="user-id">${sessionScope.userId}</p>
                     </c:if>
+
                     <c:forEach var="movie" items="${requestScope.movies}" varStatus="loop">
-                        <tr>
+                        <tr class="movie-tr">
                             <td class="td-img"><img class="img-top" src="./${movie.posterPath}" alt="" /></td>
                             <td>${loop.index+1}.&nbsp;
                                 <a class="movie-a" href="Controller?command=view-movie&movieId=${movie.id}"> ${movie.title}</a>

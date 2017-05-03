@@ -1,7 +1,10 @@
 package by.epam.movierating.command.impl.actor;
 
 import by.epam.movierating.command.Command;
+import by.epam.movierating.command.constant.JSPPageName;
 import by.epam.movierating.command.constant.ParameterName;
+import by.epam.movierating.command.security.RoleType;
+import by.epam.movierating.command.security.SecurityManager;
 import by.epam.movierating.service.ActorService;
 import by.epam.movierating.service.exception.ServiceException;
 import by.epam.movierating.service.factory.ServiceFactory;
@@ -25,21 +28,25 @@ public class AddActorCommand implements Command {
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String firstNameEn = request.getParameter(ParameterName.FIRST_NAME_EN);
-        String lastNameEn = request.getParameter(ParameterName.LAST_NAME_EN);
-        String firstNameRu = request.getParameter(ParameterName.FIRST_NAME_RU);
-        String lastNameRu = request.getParameter(ParameterName.LAST_NAME_RU);
+        if (SecurityManager.getInstance().checkRoles(request, response, RoleType.ADMIN)) {
 
-        ServiceFactory serviceFactory = ServiceFactory.getInstance();
-        ActorService actorService = serviceFactory.getActorService();
-        try {
-            int id = actorService.addActor(firstNameEn, lastNameEn, firstNameRu, lastNameRu);
-            String json = new Gson().toJson(id);
-            response.setContentType(CONTENT_TYPE);
-            response.setCharacterEncoding(ENCODING);
-            response.getWriter().print(json);
-        } catch (ServiceException e) {
-            logger.error(e);
+            String firstNameEn = request.getParameter(ParameterName.FIRST_NAME_EN);
+            String lastNameEn = request.getParameter(ParameterName.LAST_NAME_EN);
+            String firstNameRu = request.getParameter(ParameterName.FIRST_NAME_RU);
+            String lastNameRu = request.getParameter(ParameterName.LAST_NAME_RU);
+
+            ServiceFactory serviceFactory = ServiceFactory.getInstance();
+            ActorService actorService = serviceFactory.getActorService();
+            try {
+                int id = actorService.addActor(firstNameEn, lastNameEn, firstNameRu, lastNameRu);
+                String json = new Gson().toJson(id);
+                response.setContentType(CONTENT_TYPE);
+                response.setCharacterEncoding(ENCODING);
+                response.getWriter().print(json);
+            } catch (ServiceException e) {
+                logger.error(e);
+                response.sendRedirect(JSPPageName.ERROR_500_PAGE);
+            }
         }
     }
 }

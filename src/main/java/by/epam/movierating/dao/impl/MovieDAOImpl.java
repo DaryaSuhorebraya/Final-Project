@@ -16,9 +16,10 @@ import java.util.List;
  * Created by Даша on 14.02.2017.
  */
 public class MovieDAOImpl implements MovieDAO {
+    //in get all movies  changed inner to left
     private static final String SQL_GET_ALL_MOVIES= "SELECT movie.id_movie, movie.title_, " +
             "movie.release_year, movie.description_, avg(rating.mark) as avg_mark, movie.poster_path FROM movie\n" +
-            "INNER JOIN rating ON movie.id_movie=rating.id_movie " +
+            "LEFT JOIN rating ON movie.id_movie=rating.id_movie " +
             "WHERE movie.is_deleted=0 " +
             "GROUP BY movie.id_movie";
     private static final String SQL_MOVIE_BY_ID= "SELECT movie.id_movie, movie.title_, " +
@@ -94,10 +95,12 @@ public class MovieDAOImpl implements MovieDAO {
     private static final String SQL_GET_NEWEST_MOVIES="SELECT movie.id_movie, movie.title_, " +
             "movie.release_year, movie.description_ , avg(rating.mark) as avg_mark, movie.poster_path FROM movie " +
             "INNER JOIN rating ON movie.id_movie=rating.id_movie " +
-            "WHERE movie.is_deleted=0 " +
+            "WHERE movie.is_deleted=0 and movie.poster_path is not null " +
             "GROUP BY movie.id_movie " +
             "ORDER BY movie.release_year DESC";
     private static final String SQL_UPDATE_MOVIE_POSTER="UPDATE movie SET poster_path =? WHERE id_movie=?";
+    private static final String LIMIT=" LIMIT 4";
+
     @Override
     public List<Movie> getAllMovies(String language)
             throws DAOException {
@@ -228,12 +231,6 @@ public class MovieDAOImpl implements MovieDAO {
             resultSet=statement.executeQuery();
             if (resultSet.next()){
                 movie=createMovie(resultSet);
-               /* movie.setId(resultSet.getInt(1));
-                movie.setTitle(resultSet.getString(2));
-                movie.setReleaseYear(resultSet.getInt(3));
-                movie.setDescription(resultSet.getString(4));
-                movie.setRating(resultSet.getDouble(5));
-                movie.setPosterPath(resultSet.getString(6));*/
             }
             return movie;
         } catch (ConnectionPoolException e) {
@@ -590,6 +587,29 @@ public class MovieDAOImpl implements MovieDAO {
             DAOUtil.close(connection,statement,resultSet);
         }
     }
+    @Override
+    public List<Movie> getNewestLimitedMovies(String language) throws DAOException {
+        Connection connection=null;
+        Statement statement=null;
+        ResultSet resultSet=null;
+        List<Movie> movieList;
+        try {
+            ConnectionPool connectionPool=ConnectionPool.getInstance();
+            connection=connectionPool.getConnection();
+            statement=connection.createStatement();
+            resultSet=statement.executeQuery(DAOUtil.
+                    localizeStatement(SQL_GET_NEWEST_MOVIES+LIMIT,language));
+            movieList=setMovieInfo(resultSet);
+            return movieList;
+        } catch (ConnectionPoolException e) {
+            throw new DAOException("Can not get a connection",e);
+        } catch (SQLException e) {
+            throw new DAOException(e);
+        } finally {
+            DAOUtil.close(connection,statement,resultSet);
+        }
+    }
+
 
     private List<Movie> setMovieInfo(ResultSet resultSet) throws SQLException{
         List<Movie> movieList=new ArrayList<>();

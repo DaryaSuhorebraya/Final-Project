@@ -4,6 +4,9 @@ import by.epam.movierating.bean.Genre;
 import by.epam.movierating.command.Command;
 import by.epam.movierating.command.constant.AttributeName;
 import by.epam.movierating.command.constant.JSPPageName;
+import by.epam.movierating.command.security.RoleType;
+import by.epam.movierating.command.security.SecurityManager;
+import by.epam.movierating.command.util.PagePathUtil;
 import by.epam.movierating.service.GenreService;
 import by.epam.movierating.service.exception.ServiceException;
 import by.epam.movierating.service.factory.ServiceFactory;
@@ -25,17 +28,21 @@ public class AdminPageCommand implements Command {
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        HttpSession session = request.getSession(true);
-        String language = (String) session.getAttribute(AttributeName.LANGUAGE);
-        ServiceFactory serviceFactory = new ServiceFactory();
-        GenreService genreService=serviceFactory.getGenreService();
+        if (SecurityManager.getInstance().checkRoles(request, response, RoleType.ADMIN)) {
+            PagePathUtil.setQueryString(request);
+            HttpSession session = request.getSession(true);
+            String language = (String) session.getAttribute(AttributeName.LANGUAGE);
+            ServiceFactory serviceFactory = new ServiceFactory();
+            GenreService genreService = serviceFactory.getGenreService();
 
-        try {
-            List<Genre> genreList = genreService.getAllGenres(language);
-            request.setAttribute(AttributeName.GENRES, genreList);
-            request.getRequestDispatcher(JSPPageName.ADMIN_PAGE).forward(request, response);
-        } catch (ServiceException e) {
-            logger.error(e);
+            try {
+                List<Genre> genreList = genreService.getAllGenres(language);
+                request.setAttribute(AttributeName.GENRES, genreList);
+                request.getRequestDispatcher(JSPPageName.ADMIN_PAGE).forward(request, response);
+            } catch (ServiceException e) {
+                logger.error(e);
+                response.sendRedirect(JSPPageName.ERROR_500_PAGE);
+            }
         }
     }
 }

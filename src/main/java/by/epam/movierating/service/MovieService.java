@@ -28,4 +28,5 @@ public interface MovieService {
     int addMovie(String nameEn, String nameRu, int releaseYear, String descrEn, String descrRu) throws ServiceException;
     boolean uploadMoviePoster(int idMovie, String imgPath) throws ServiceException;
     List<Movie> getNewestMovies(String language) throws ServiceException;
+    List<Movie> getNewestLimitedMovies(String language) throws ServiceException;
 }

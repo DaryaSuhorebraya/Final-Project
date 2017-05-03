@@ -147,3 +147,9 @@ ul{
     display: none;
     margin-bottom: 15px;
 }
+#message{
+    position: fixed;
+    z-index: 1;
+    width: 90%;
+    margin-left: -150px;
+}

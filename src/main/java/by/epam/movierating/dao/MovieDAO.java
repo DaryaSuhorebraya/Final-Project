@@ -29,4 +29,5 @@ public interface MovieDAO {
     Movie getMovieByTitleEn(String titleEn) throws DAOException;
     boolean uploadMoviePoster(int idMovie, String imgPath) throws DAOException;
     List<Movie> getNewestMovies(String language) throws DAOException;
+    List<Movie> getNewestLimitedMovies(String language) throws DAOException;
 }

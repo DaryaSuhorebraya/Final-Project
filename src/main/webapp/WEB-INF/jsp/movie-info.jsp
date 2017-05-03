@@ -4,7 +4,7 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <fmt:setLocale value="${sessionScope.language}"/>
 <fmt:setBundle basename="localization" var="loc"/>
-<html>
+<html lang="${sessionScope.language}">
 <head>
     <title>ProFilm</title>
     <meta charset="utf-8"/>
@@ -35,6 +35,7 @@
 
 <div class="container">
     <div class="row">
+        <div id="message"></div>
         <div class="col-md-10">
             <div class="thumbnail">
                 <div class="row main">
@@ -46,7 +47,7 @@
                         <form method="post" action="UploadServlet?command=upload-movie-poster&movieId=${movie.id}"
                               enctype='multipart/form-data' class="form-img">
                             <input name='data' type='file'>
-                            <input type="submit">
+                            <input type="submit" value="<fmt:message bundle="${loc}" key="save"/>">
                         </form>
                     </c:if>
                     <p id="movie-id">${movie.id}</p>
@@ -175,35 +176,39 @@
                 <p id="user-id">${sessionScope.userId}</p>
             </c:if>
             <div class="well">
-                <div class="text-right">
-                    <a class="btn btn-success leave-review"><fmt:message bundle="${loc}" key="leave.review"/> </a>
-                </div>
-                <div class="add-review">
-                    <div class="add-star-rating">
-                        <input data-size="xs" data-min="0" data-max="10"
-                               data-step="1" class="rating-loading add-rating">
-                        <button class="btn btn-primary btn-rate" value="Rate">Rate</button>
+                <div class="add-review-block">
+                    <div class="text-right">
+                        <a class="btn btn-success leave-review"><fmt:message bundle="${loc}" key="leave.review"/> </a>
                     </div>
-                    <form id="form-add-review">
-                        <div class="form-group">
-                            <label for="title"><fmt:message bundle="${loc}" key="title"/> </label>
-                            <input type="text" class="form-control" id="title" name="title"  placeholder=" ">
+                    <div class="add-review">
+                        <div class="add-star-rating">
+                            <input data-size="xs" data-min="0" data-max="10"
+                                   data-step="1" class="rating-loading add-rating">
+                            <button class="btn btn-primary btn-rate"><fmt:message bundle="${loc}" key="rate"/></button>
                         </div>
-                        <div class="form-group">
-                            <label for="review"><fmt:message bundle="${loc}" key="name.ru"/> </label>
-                            <textarea class="form-control" id="review" name="review" rows="3" required></textarea>
-                        </div>
-                    </form>
-                    <a class="btn btn-success" id="save-review"><fmt:message bundle="${loc}" key="leave.review"/> </a>
+                        <form id="form-add-review">
+                            <div class="form-group">
+                                <label for="title"><fmt:message bundle="${loc}" key="title"/> </label>
+                                <input type="text" class="form-control" id="title" name="title" placeholder=" ">
+                            </div>
+                            <div class="form-group">
+                                <label for="review"><fmt:message bundle="${loc}" key="name.ru"/> </label>
+                                <textarea class="form-control" id="review" name="review" rows="3" required></textarea>
+                            </div>
+                        </form>
+                        <a class="btn btn-success" id="save-review"><fmt:message bundle="${loc}"
+                                                                                 key="leave.review"/> </a>
+                    </div>
                 </div>
                 <hr>
                 <c:forEach var="review" items="${requestScope.reviews}">
                     <div class="row review">
                         <div class="col-md-12">
                             <div class="review-block-rate">
-                                <input class="user-stars rating rating-loading"  data-size="xs" value="${review.rating}" data-min="0" data-max="10" data-step="1">
+                                <input class="user-stars rating rating-loading" data-size="xs" value="${review.rating}"
+                                       data-min="0" data-max="10" data-step="1">
                             </div>
-                            ${review.userLogin}
+                                ${review.userLogin}
                             <h4 class="review-title">${review.title}</h4>
                             <span class="pull-right">${review.publishDate}</span>
                             <p class="review-text">${review.review}</p>

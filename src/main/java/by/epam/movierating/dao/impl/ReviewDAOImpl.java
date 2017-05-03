@@ -17,12 +17,12 @@ import java.util.List;
  * Created by Даша on 25.03.2017.
  */
 public class ReviewDAOImpl implements ReviewDAO {
-    private static final String SQL_GET_ALL_REVIEWS_ORDER_BY_DATE = "SELECT id_movie, id_user, title_, " +
-            "review_ , publish_date FROM review WHERE is_deleted=0 " +
+    private static final String SQL_GET_ALL_REVIEWS_ORDER_BY_DATE = "SELECT id_movie, id_user, title, " +
+            "review , publish_date FROM review WHERE is_deleted=0 " +
             "ORDER BY publish_date DESC";
     private static final String SQL_GET_ALL_FULL_INFO_REVIEWS_ORDER_BY_DATE = "SELECT review.id_movie, review.id_user, " +
-            "movie.title_, user.login, rating.mark , review.title_, " +
-            "review.review_ , review.publish_date " +
+            "movie.title_, user.login, rating.mark , review.title, " +
+            "review.review , review.publish_date " +
             "FROM review " +
             "LEFT JOIN movie ON review.id_movie=movie.id_movie " +
             "LEFT JOIN user ON review.id_user=user.id_user " +
@@ -30,8 +30,8 @@ public class ReviewDAOImpl implements ReviewDAO {
             "WHERE review.is_deleted=0 " +
             "ORDER BY review.publish_date DESC";
     private static final String SQL_GET_LIMITED_REVIEWS = "SELECT review.id_movie, review.id_user, " +
-            "movie.title_, user.login, rating.mark , review.title_, " +
-            "review.review_ , review.publish_date " +
+            "movie.title_, user.login, rating.mark , review.title, " +
+            "review.review , review.publish_date " +
             "FROM review " +
             "LEFT JOIN movie ON review.id_movie=movie.id_movie " +
             "LEFT JOIN user ON review.id_user=user.id_user " +
@@ -41,23 +41,33 @@ public class ReviewDAOImpl implements ReviewDAO {
             "LIMIT 3";
     private static final String SQL_CHECK_REVIEW_OPPORTUNITY = "SELECT * FROM review WHERE id_movie=? and id_user=?";
     private static final String SQL_GET_REVIEWS_BY_MOVIE_ID = "SELECT review.id_movie, review.id_user, " +
-            "movie.title_, user.login, rating.mark , review.title_, " +
-            "review.review_ , review.publish_date " +
+            "movie.title_, user.login, rating.mark , review.title, " +
+            "review.review , review.publish_date " +
             "FROM review " +
             "LEFT JOIN movie ON review.id_movie=movie.id_movie " +
             "LEFT JOIN user ON review.id_user=user.id_user " +
             "LEFT JOIN rating ON review.id_user=rating.id_user and review.id_movie=rating.id_movie " +
             "WHERE review.is_deleted=0 AND movie.id_movie=? " +
             "ORDER BY review.publish_date DESC";
-    private static final String SQL_REVIEW_MOVIE = "INSERT INTO review (id_movie, id_user, title_ru, review_ru, publish_date) " +
+    private static final String SQL_REVIEW_MOVIE = "INSERT INTO review (id_movie, id_user, title, review, publish_date) " +
             "VALUES(?,?,?,?,?)";
     private static final String SQL_GET_REVIEW_STATISTICS="SELECT count(review.id_movie), movie.title_  " +
             "FROM review " +
             "INNER JOIN movie ON review.id_movie=movie.id_movie " +
             "GROUP BY movie.id_movie ";
+    private static final String SQL_DELETE_REVIEW="UPDATE review SET is_deleted=1 WHERE id_movie=? AND id_user=?";
+    private static final String SQL_GET_REVIEWS_BY_USER_ID="SELECT review.id_movie, review.id_user, " +
+            "movie.title_, user.login, rating.mark , review.title, " +
+            "review.review , review.publish_date " +
+            "FROM review " +
+            "LEFT JOIN movie ON review.id_movie=movie.id_movie " +
+            "LEFT JOIN user ON review.id_user=user.id_user " +
+            "LEFT JOIN rating ON review.id_user=rating.id_user and review.id_movie=rating.id_movie " +
+            "WHERE review.is_deleted=0 and review.id_user=? " +
+            "ORDER BY review.publish_date DESC";
 
     @Override
-    public List<Review> getAllReviewsOrderByDate(String language)
+    public List<Review> getAllReviewsOrderByDate()
             throws DAOException {
         Connection connection = null;
         Statement statement = null;
@@ -67,7 +77,7 @@ public class ReviewDAOImpl implements ReviewDAO {
             ConnectionPool connectionPool = ConnectionPool.getInstance();
             connection = connectionPool.getConnection();
             statement = connection.createStatement();
-            resultSet = statement.executeQuery(DAOUtil.localizeStatement(SQL_GET_ALL_REVIEWS_ORDER_BY_DATE, language));
+            resultSet = statement.executeQuery(SQL_GET_ALL_REVIEWS_ORDER_BY_DATE);
             reviewList = setReviewInfo(resultSet);
             return reviewList;
         } catch (ConnectionPoolException e) {
@@ -229,7 +239,55 @@ public class ReviewDAOImpl implements ReviewDAO {
         }
     }
 
-    private List<Review> setReviewInfo(ResultSet resultSet) throws SQLException {
+    @Override
+    public boolean deleteReview(int idMovie, int idUser)
+            throws DAOException {
+        Connection connection = null;
+        PreparedStatement statement = null;
+        try {
+            ConnectionPool connectionPool = ConnectionPool.getInstance();
+            connection = connectionPool.getConnection();
+            statement = connection.prepareStatement(SQL_DELETE_REVIEW);
+            statement.setInt(1, idMovie);
+            statement.setInt(2, idUser);
+            int updatedRows = statement.executeUpdate();
+            return updatedRows > 0;
+        } catch (ConnectionPoolException e) {
+            throw new DAOException("Can not get a connection", e);
+        } catch (SQLException e) {
+            throw new DAOException(e);
+        } finally {
+            DAOUtil.close(connection, statement);
+        }
+    }
+
+    @Override
+    public List<ReviewDTO> getReviewsByUserId(int idUser, String language)
+            throws DAOException {
+        Connection connection = null;
+        PreparedStatement statement = null;
+        ResultSet resultSet = null;
+        List<ReviewDTO> reviewList;
+        try {
+            ConnectionPool connectionPool = ConnectionPool.getInstance();
+            connection = connectionPool.getConnection();
+            statement = connection.prepareStatement(DAOUtil.
+                    localizeStatement(SQL_GET_REVIEWS_BY_USER_ID, language));
+            statement.setInt(1, idUser);
+            resultSet = statement.executeQuery();
+            reviewList = setReviewDTOInfo(resultSet);
+            return reviewList;
+        } catch (ConnectionPoolException e) {
+            throw new DAOException("Can not get a connection ", e);
+        } catch (SQLException e) {
+            throw new DAOException(e);
+        } finally {
+            DAOUtil.close(connection, statement, resultSet);
+        }
+    }
+
+    private List<Review> setReviewInfo(ResultSet resultSet)
+            throws SQLException {
         List<Review> reviewList = new ArrayList<>();
         while (resultSet.next()) {
             Review review = new Review();

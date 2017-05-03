@@ -6,6 +6,10 @@
 }
 .delete-actor{
     float: right;
+    color: #d9534f;
+}
+.delete-actor:hover{
+    color: #7e3c38;
 }
 .modal-footer-actor{
     border-top-color: white;
@@ -38,10 +42,35 @@
     height: 230px;
 }
 .cancel-img{
-    margin-top: -30px;
+    margin-top: -40px;
     display: none;
+    margin-left: -35px;
 }
 .form-img{
     margin-bottom: 0px;
     display: none;
 }
+#message{
+    position: fixed;
+    z-index: 1;
+    width: 95%;
+}
+.open-modal-edit{
+    background-color: white;
+}
+/*
+.fileinput-button {
+    position: relative;
+    overflow: hidden;
+}
+.fileinput-button input {
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 0;
+    opacity: 0;
+    -ms-filter:'alpha(opacity=0)';
+    font-size: 200px;
+    direction: ltr;
+    cursor: pointer;
+}*/

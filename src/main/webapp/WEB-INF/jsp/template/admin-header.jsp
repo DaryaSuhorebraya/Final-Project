@@ -20,7 +20,7 @@
         <div class="collapse navbar-collapse" id="myNavbar">
 
             <ul class="nav navbar-nav">
-                <li class="active"><a href="Controller?command=welcome-page"><fmt:message bundle="${loc}" key="home"/> </a></li>
+                <li class="active"><a href="Controller?command=admin-page"><fmt:message bundle="${loc}" key="home"/> </a></li>
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                         <fmt:message bundle="${loc}" key="movies"/> <strong class="caret"></strong></a>

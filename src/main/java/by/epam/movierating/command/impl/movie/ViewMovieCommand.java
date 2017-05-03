@@ -57,6 +57,7 @@ public class ViewMovieCommand implements Command {
             request.getRequestDispatcher(JSPPageName.MOVIE_INFO_PAGE).forward(request, response);
         } catch (ServiceException e) {
             logger.error(e);
+            response.sendRedirect(JSPPageName.ERROR_500_PAGE);
         }
     }
 }

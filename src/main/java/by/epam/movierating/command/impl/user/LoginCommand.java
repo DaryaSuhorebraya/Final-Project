@@ -23,7 +23,6 @@ import java.io.IOException;
 public class LoginCommand implements Command {
     private static final Logger logger = Logger.getLogger(LoginCommand.class);
 
-
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -38,6 +37,7 @@ public class LoginCommand implements Command {
             if (user != null) {
                 session.setAttribute(AttributeName.USER_ID, user.getId());
                 session.setAttribute(AttributeName.USER, user);
+                session.setAttribute(AttributeName.IS_BANNED, user.isBanned());
                 if (user.isAdmin()) {
                     session.setAttribute(AttributeName.ROLE, AttributeName.ADMIN);
                     response.sendRedirect(JSPPageName.REDIRECT_TO_ADMIN_PAGE);
@@ -47,11 +47,9 @@ public class LoginCommand implements Command {
                     response.sendRedirect(pagePath);
                 }
             }
-
         } catch (ServiceWrongDataException e) {
-            logger.error(e);
+            logger.error("Wrong input data", e);
             response.sendRedirect(JSPPageName.ERROR_500_PAGE);
-            //
         } catch (ServiceException e) {
             logger.error(e);
             response.sendRedirect(JSPPageName.ERROR_500_PAGE);

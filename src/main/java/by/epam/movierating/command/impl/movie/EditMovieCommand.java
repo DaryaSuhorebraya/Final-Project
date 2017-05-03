@@ -3,6 +3,8 @@ package by.epam.movierating.command.impl.movie;
 import by.epam.movierating.command.Command;
 import by.epam.movierating.command.constant.AttributeName;
 import by.epam.movierating.command.constant.ParameterName;
+import by.epam.movierating.command.security.RoleType;
+import by.epam.movierating.command.security.SecurityManager;
 import by.epam.movierating.service.MovieService;
 import by.epam.movierating.service.exception.ServiceException;
 import by.epam.movierating.service.factory.ServiceFactory;
@@ -23,21 +25,23 @@ public class EditMovieCommand implements Command {
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        HttpSession session = request.getSession();
-        response.setContentType("text/plain");
-        String language = (String) session.getAttribute(AttributeName.LANGUAGE);
-        int idMovie = Integer.parseInt(request.getParameter(ParameterName.MOVIE_ID));
-        String field = request.getParameter(ParameterName.FIELD);
-        String value = request.getParameter(ParameterName.VALUE);
+        if (SecurityManager.getInstance().checkRoles(request, response, RoleType.ADMIN)) {
+            HttpSession session = request.getSession();
+            response.setContentType("text/plain");
+            String language = (String) session.getAttribute(AttributeName.LANGUAGE);
+            int idMovie = Integer.parseInt(request.getParameter(ParameterName.MOVIE_ID));
+            String field = request.getParameter(ParameterName.FIELD);
+            String value = request.getParameter(ParameterName.VALUE);
 
-        ServiceFactory serviceFactory = ServiceFactory.getInstance();
-        MovieService movieService = serviceFactory.getMovieService();
-        try {
-            boolean result = movieService.editMovieField(idMovie, field, value, language);
-            response.getWriter().print(result);
-        } catch (ServiceException e) {
-            logger.error(e);
-            response.getWriter().print(false);
+            ServiceFactory serviceFactory = ServiceFactory.getInstance();
+            MovieService movieService = serviceFactory.getMovieService();
+            try {
+                boolean result = movieService.editMovieField(idMovie, field, value, language);
+                response.getWriter().print(result);
+            } catch (ServiceException e) {
+                logger.error(e);
+                response.getWriter().print(false);
+            }
         }
     }
 }

@@ -303,4 +303,19 @@ public class MovieServiceImpl implements MovieService {
         }
         return movieList;
     }
+
+    @Override
+    public List<Movie> getNewestLimitedMovies(String language)
+            throws ServiceException {
+        Validator.validateLanguage(language);
+        List<Movie> movieList;
+        try {
+            DAOFactory daoFactory=DAOFactory.getInstance();
+            MovieDAO movieDAO=daoFactory.getMovieDAO();
+            movieList=movieDAO.getNewestLimitedMovies(language);
+        } catch (DAOException e){
+            throw new ServiceException(e);
+        }
+        return movieList;
+    }
 }

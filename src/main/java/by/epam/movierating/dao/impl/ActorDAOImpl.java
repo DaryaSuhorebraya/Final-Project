@@ -30,10 +30,18 @@ public class ActorDAOImpl implements ActorDAO {
     private static final String SQL_GET_ALL_ACTORS = "SELECT actor.id_actor, actor.first_name_, actor.last_name_, actor.image_path " +
             "FROM actor " +
             "WHERE actor.is_deleted=0";
+    private static final String SQL_GET_ACTOR_BY_ID = "SELECT actor.id_actor, actor.first_name_, actor.last_name_, actor.image_path " +
+            "FROM actor " +
+            "WHERE actor.is_deleted=0 and actor.id_actor=?";
+    private static final String SQL_GET_ALL_LIMITED_ACTORS = "SELECT actor.id_actor, actor.first_name_, actor.last_name_, actor.image_path " +
+            "FROM actor " +
+            "WHERE actor.is_deleted=0 " +
+            "LIMIT ?,?";
     private static final String SQL_DELETE_ACTOR = "UPDATE actor SET is_deleted=1 WHERE id_actor=?";
     private static final String SQL_EDIT_ACTOR = "UPDATE actor SET first_name_ =?, last_name_=? WHERE id_actor=?";
-    private static final String SQL_UPDATE_ACTOR_IMAGE ="UPDATE actor SET image_path =? WHERE id_actor=?";
-    private static final String SQL_ADD_ACTOR="INSERT INTO actor (first_name_ru,last_name_ru,first_name_en, last_name_en) VALUES (?,?,?,?)";
+    private static final String SQL_UPDATE_ACTOR_IMAGE = "UPDATE actor SET image_path =? WHERE id_actor=?";
+    private static final String SQL_ADD_ACTOR = "INSERT INTO actor (first_name_ru,last_name_ru,first_name_en, last_name_en) VALUES (?,?,?,?)";
+    private static final int LIMIT_ACTOR_COUNT = 4;
 
     @Override
     public List<Actor> getActorsByMovieId(int idMovie, String language)
@@ -152,6 +160,30 @@ public class ActorDAOImpl implements ActorDAO {
     }
 
     @Override
+    public Actor getActorById(int idActor, String language)
+            throws DAOException {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet=null;
+        try {
+            ConnectionPool connectionPool = ConnectionPool.getInstance();
+            connection = connectionPool.getConnection();
+            preparedStatement = connection.prepareStatement(DAOUtil.
+                    localizeStatement(SQL_GET_ACTOR_BY_ID, language));
+            preparedStatement.setInt(1, idActor);
+            resultSet = preparedStatement.executeQuery();
+            List<Actor> actorList=setActorInfo(resultSet);
+            return actorList.get(0);
+        } catch (ConnectionPoolException e) {
+            throw new DAOException("Can not get a connection", e);
+        } catch (SQLException e) {
+            throw new DAOException(e);
+        } finally {
+            DAOUtil.close(connection, preparedStatement,resultSet);
+        }
+    }
+
+    @Override
     public boolean uploadActorImage(int idActor, String filePath)
             throws DAOException {
         Connection connection = null;
@@ -177,31 +209,55 @@ public class ActorDAOImpl implements ActorDAO {
     public int addActor(String firstNameEn, String lastNameEn,
                         String firstNameRu, String lastNameRu)
             throws DAOException {
-        Connection connection=null;
-        PreparedStatement statement=null;
+        Connection connection = null;
+        PreparedStatement statement = null;
         try {
-            ConnectionPool connectionPool=ConnectionPool.getInstance();
-            connection=connectionPool.getConnection();
-            statement=connection.prepareStatement(SQL_ADD_ACTOR, Statement.RETURN_GENERATED_KEYS);
+            ConnectionPool connectionPool = ConnectionPool.getInstance();
+            connection = connectionPool.getConnection();
+            statement = connection.prepareStatement(SQL_ADD_ACTOR, Statement.RETURN_GENERATED_KEYS);
             statement.setString(1, firstNameRu);
             statement.setString(2, lastNameRu);
-            statement.setString(3,firstNameEn);
+            statement.setString(3, firstNameEn);
             statement.setString(4, lastNameEn);
-            int updatedRows=statement.executeUpdate();
-            if (updatedRows>0){
+            int updatedRows = statement.executeUpdate();
+            if (updatedRows > 0) {
                 ResultSet generatedKeys = statement.getGeneratedKeys();
                 if (generatedKeys.next()) {
-                    return (int)generatedKeys.getLong(1);
+                    return (int) generatedKeys.getLong(1);
                 }
             }
         } catch (ConnectionPoolException e) {
-            throw new DAOException("Can not get a connection",e);
+            throw new DAOException("Can not get a connection", e);
         } catch (SQLException e) {
             throw new DAOException(e);
         } finally {
-            DAOUtil.close(connection,statement);
+            DAOUtil.close(connection, statement);
         }
         return 0;
+    }
+
+    @Override
+    public List<Actor> getAllLimitedActors(String language, int currentPageNumber)
+            throws DAOException {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        try {
+            ConnectionPool connectionPool = ConnectionPool.getInstance();
+            connection = connectionPool.getConnection();
+            preparedStatement = connection.prepareStatement(DAOUtil.
+                    localizeStatement(SQL_GET_ALL_LIMITED_ACTORS, language));
+            preparedStatement.setInt(1, LIMIT_ACTOR_COUNT * (currentPageNumber - 1));
+            preparedStatement.setInt(2, LIMIT_ACTOR_COUNT * currentPageNumber - 1);
+            resultSet = preparedStatement.executeQuery();
+            return setActorInfo(resultSet);
+        } catch (ConnectionPoolException e) {
+            throw new DAOException("Can not get a connection", e);
+        } catch (SQLException e) {
+            throw new DAOException(e);
+        } finally {
+            DAOUtil.close(connection, preparedStatement, resultSet);
+        }
     }
 
     private List<Actor> setActorInfo(ResultSet resultSet) throws SQLException {

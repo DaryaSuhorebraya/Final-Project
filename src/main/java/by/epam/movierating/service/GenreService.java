@@ -13,9 +13,9 @@ public interface GenreService {
     List<Genre> getAllGenres(String language) throws ServiceException;
     List<Genre> getAllActiveGenre(String language) throws ServiceException;
     boolean deleteGenre(int idGenre) throws ServiceException;
-    void updateGenre(int idGenre, String name, String language) throws ServiceException;
+    boolean editGenre(int idGenre, String name, String language) throws ServiceException;
     List<Genre> getGenresByIdMovie(int idMovie, String language) throws ServiceException;
     List<Genre> getGenresNotInMovie(int idMovie, String language) throws ServiceException;
     List<StaticticsDTO> getGenreStatistics(String language) throws ServiceException;
-    boolean addGenre(String nameRu, String nameEn) throws ServiceException;
+    int addGenre(String nameRu, String nameEn) throws ServiceException;
 }

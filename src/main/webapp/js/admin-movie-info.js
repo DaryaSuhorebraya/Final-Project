@@ -5,7 +5,22 @@ $(document).ready(function () {
     var $currentTitle;
     var input;
     var text;
+    var lang = $('html').attr("lang");
+    var errorMsg;
+    var deleteMsg;
+    
+    if (lang === "ru_RU") {
+        deleteMsg="Удалить?";
+        errorMsg="Ошибка в процессе выполнения операции";
+    } else {
+        deleteMsg="Delete?";
+        errorMsg="Error during procedure";
+    }
 
+    function hideMsg(){
+        setTimeout(function(){$('#message').fadeOut()}, 3000);
+    }
+    
     $('#input-stars').rating("refresh", {displayOnly: true, stars: 10, disabled: false});
 
     $('#year-edit').click(function () {
@@ -34,8 +49,12 @@ $(document).ready(function () {
                     $currentYear.css("display", "inline-block");
                     $('#save-edit-year').css("display", "none");
                     $('#cancel-edit-year').css("display", "none");
-                } else {
-                    //TODO message for error;
+                } if (result === "false") {
+                    $('#message').html('<div class="alert alert-danger fade in">' +
+                        '<button type="button" class="close close-alert" data-dismiss="alert"' +
+                        ' aria-hidden="true">×</button>'+errorMsg +
+                        '</div>');
+                    hideMsg();
                 }
             }
         });
@@ -72,8 +91,12 @@ $(document).ready(function () {
                     $currentTitle.css("display", "inline-block");
                     $('#save-edit-title').css("display", "none");
                     $('#cancel-edit-title').css("display", "none");
-                } else {
-                    //TODO message for error;
+                } if (result === "false") {
+                    $('#message').html('<div class="alert alert-danger fade in">' +
+                        '<button type="button" class="close close-alert" data-dismiss="alert"' +
+                        ' aria-hidden="true">×</button>'+errorMsg +
+                        '</div>');
+                    hideMsg();
                 }
             }
         });
@@ -90,10 +113,6 @@ $(document).ready(function () {
         $currentTitle = $(this);
         input = $currentTitle.siblings();
         text = $('#description-text').text();
-        //field=$.trim($currentTitle.parent().text()).split(':')[0];
-        /*$('#description-text').replaceWith( "<form id='form-description'>" +
-         "<input type='text' value="+text+">" +
-         "</form>" );*/
         $('#description-text').replaceWith("<textarea id='decr-text-area'></textarea>");
         $('#decr-text-area').val(text);
         $('#save-edit-description').css("display", "inline-block");
@@ -113,8 +132,12 @@ $(document).ready(function () {
                     $currentTitle.css("display", "inline-block");
                     $('#save-edit-description').css("display", "none");
                     $('#cancel-edit-description').css("display", "none");
-                } else {
-                    //TODO message for error;
+                } if (result === "false") {
+                    $('#message').html('<div class="alert alert-danger fade in">' +
+                        '<button type="button" class="close close-alert" data-dismiss="alert"' +
+                        ' aria-hidden="true">×</button>'+errorMsg +
+                        '</div>');
+                    hideMsg();
                 }
             }
         });
@@ -137,7 +160,7 @@ $(document).ready(function () {
         $currentTitle.css("display", "none");
     });
     $('.delete-genre').click(function () {
-        if (confirm("Delete?")) {
+        if (confirm(deleteMsg)) {
             $currentTitle = $(this);
             var name = $.trim($(this).prev().text());
             $.ajax({
@@ -148,8 +171,12 @@ $(document).ready(function () {
                     if (result === "true") {
                         $currentTitle.prev().remove();
                         $currentTitle.remove();
-                    } else {
-                        //TODO message for error;
+                    } if (result === "false") {
+                        $('#message').html('<div class="alert alert-danger fade in">' +
+                            '<button type="button" class="close close-alert" data-dismiss="alert"' +
+                            ' aria-hidden="true">×</button>'+errorMsg +
+                            '</div>');
+                        hideMsg();
                     }
                 }
             });
@@ -194,15 +221,18 @@ $(document).ready(function () {
             data: {command: 'add-genre-for-movie', movieId: movieId, genreName: genreName},
             success: function (result) {
                 var attr = "Controller?command=view-movies-by-genre-name&genreName=" + genreName;
-                //TODO confirm action
                 if (result === "true") {
                     $("<a href=" + attr + ">" + genreName + " " + "</a>").insertBefore("#select-genre");
                     $('#save-edit-genre').css("display", "none");
                     $('#select-genre').css("display", "none");
                     $('.delete-genre').css("display", "inline-block");
                     $('#plus-genre').css("display", "inline-block");
-                } else {
-                    //message for error;
+                } if (result === "false") {
+                    $('#message').html('<div class="alert alert-danger fade in">' +
+                        '<button type="button" class="close close-alert" data-dismiss="alert"' +
+                        ' aria-hidden="true">×</button>'+errorMsg +
+                        '</div>');
+                    hideMsg();
                 }
             }
         });
@@ -219,7 +249,7 @@ $(document).ready(function () {
     });
 
     $('.delete-country').click(function () {
-        if (confirm("Delete?")) {
+        if (confirm(deleteMsg)) {
             $currentTitle = $(this);
             var name = $.trim($(this).prev().text());
             $.ajax({
@@ -230,8 +260,12 @@ $(document).ready(function () {
                     if (result === "true") {
                         $currentTitle.prev().remove();
                         $currentTitle.remove();
-                    } else {
-                        //TODO message for error;
+                    } if (result === "false") {
+                        $('#message').html('<div class="alert alert-danger fade in">' +
+                            '<button type="button" class="close close-alert" data-dismiss="alert"' +
+                            ' aria-hidden="true">×</button>'+errorMsg +
+                            '</div>');
+                        hideMsg();
                     }
                 }
             });
@@ -259,8 +293,12 @@ $(document).ready(function () {
                 }
                 $('#select-country').children().children().last().html(options).selectpicker('refresh');
             },
-            error: function (textStatus) {
-                alert(textStatus);
+            error: function () {
+                $('#message').html('<div class="alert alert-danger fade in">' +
+                    '<button type="button" class="close close-alert" data-dismiss="alert"' +
+                    ' aria-hidden="true">×</button>'+errorMsg +
+                    '</div>');
+                hideMsg();
             }
         });
         $('.delete-country').css("display", "none");
@@ -276,16 +314,18 @@ $(document).ready(function () {
             data: {command: 'add-country-for-movie', movieId: movieId, countryName: countryName},
             success: function (result) {
                 var attr = "Controller?command=view-movies-by-country-name&countryName=" + countryName;
-                //TODO confirm action
                 if (result === "true") {
                     $("<a href=" + attr + ">" + countryName + "</a>").insertBefore("#select-country");
                     $('#save-edit-country').css("display", "none");
                     $('#select-country').css("display", "none");
                     $('.delete-country').css("display", "inline-block");
                     $('#plus-country').css("display", "inline-block");
-                } else {
-                    modalError("Ошибка", "during add procedure");
-                    //al();
+                } if (result === "false") {
+                    $('#message').html('<div class="alert alert-danger fade in">' +
+                        '<button type="button" class="close close-alert" data-dismiss="alert"' +
+                        ' aria-hidden="true">×</button>'+errorMsg +
+                        '</div>');
+                    hideMsg();
                 }
             }
         });
@@ -303,7 +343,7 @@ $(document).ready(function () {
     });
 
     $('.delete-actor').click(function () {
-        if (confirm("Delete?")) {
+        if (confirm(deleteMsg)) {
             $currentTitle = $(this);
             var text = $.trim($(this).prev().text());
             var fName = $.trim(text.split(" ")[0]);
@@ -316,8 +356,12 @@ $(document).ready(function () {
                     if (result === "true") {
                         $currentTitle.prev().remove();
                         $currentTitle.remove();
-                    } else {
-                        //TODO message for error;
+                    } if (result === "false") {
+                        $('#message').html('<div class="alert alert-danger fade in">' +
+                            '<button type="button" class="close close-alert" data-dismiss="alert"' +
+                            ' aria-hidden="true">×</button>'+errorMsg +
+                            '</div>');
+                        hideMsg();
                     }
                 }
             });
@@ -345,8 +389,12 @@ $(document).ready(function () {
                 }
                 $('#select-actor').children().children().last().html(options).selectpicker('refresh');
             },
-            error: function (textStatus) {
-                alert(textStatus);
+            error: function () {
+                $('#message').html('<div class="alert alert-danger fade in">' +
+                    '<button type="button" class="close close-alert" data-dismiss="alert"' +
+                    ' aria-hidden="true">×</button>'+errorMsg +
+                    '</div>');
+                hideMsg();
             }
         });
         $('.delete-actor').css("display", "none");
@@ -364,82 +412,30 @@ $(document).ready(function () {
             data: {command: 'add-actor-for-movie', movieId: movieId, firstName: firstName, lastName: lastName},
             success: function (result) {
                 var attr = "Controller?command=view-movies-by-actor-initial&actorFName=" + firstName + "&actorLName" + lastName;
-                //TODO confirm action
                 if (result === "true") {
                     $("<a href=" + attr + ">" + text + "</a>").insertBefore("#select-actor");
                     $('#save-edit-actor').css("display", "none");
                     $('#select-actor').css("display", "none");
                     $('.delete-actor').css("display", "inline-block");
                     $('#plus-actor').css("display", "inline-block");
-                } else {
-                    modalError("Ошибка", "during add procedure");
-                    //al();
+                } if (result === "false") {
+                    $('#message').html('<div class="alert alert-danger fade in">' +
+                        '<button type="button" class="close close-alert" data-dismiss="alert"' +
+                        ' aria-hidden="true">×</button>'+errorMsg +
+                        '</div>');
+                    hideMsg();
                 }
             }
         });
     });
     $('#img-edit').click(function () {
-        /*var current=$(this);
-         $("<form enctype='multipart/form-data'>" +
-         "<input name='data' type='file'><br>"+
-         "</form>"+
-         "<button id='save-img'>Save</button><br>").insertBefore(current);*/
+        
         var current = $(this);
-        current.parent().find('.form-img').css('display', 'block');
+        current.parent().find('.form-img').css('display', 'inline-block');
         current.css('display', 'none');
-    });
-    $('#save-img').click(function () {
-        $.ajax({
-            type: 'POST',
-            url: 'UploadServlet',
-            data: {movieId: movieId},
-            success: function (result) {
-                //TODO confirm action
-                if (result === "true") {
-
-                } else {
-                    modalError("Ошибка", "during add procedure");
-                    //al();
-                }
-            }
-        });
     });
 
 });
-function modalError(title, message) {
-    var html = '<div id="modalError" class="modal fade" tabindex="-1" role="dialog" modal="shouldBeOpen" >' +
-        '<div class="modal-dialog">' +
-        '<div class="modal-content">' +
-        '<div class="modal-header">' +
-        '<h4 class="modal-title" id="startModalLabel">' + title + '</h4>' +
-        '</div>' +
-        '<div class="modal-body">' + message +
-        '</div>' +
-        '<div class="modal-footer">' +
-        '<button type="button" class="btn btn-primary" data-dismiss="modal">' +
-        '<a href="">продолжить</a>' +
-        '</button>' +
-        '</div>' +
-        '</div>' +
-        '</div>' +
-        '</div>';
-    $('body').append(html);
-    $("#modalError").modal();
-    $('#modalError').on('shown.bs.modal', function () {
-        $(this).find('.modal-dialog').css({
-            'margin-top': function () {
-                return -($(this).outerHeight() / 2);
-            },
-            'margin-left': function () {
-                return -($(this).outerWidth() / 2);
-            },
-            'top': '50%',
-            'left': '50%',
-            'position': 'absolute'
-        });
-    });
-
-}
 function al() {
     var html = '<div class="alert alert-danger">' +
         '<a href="#" class="close" data-dismiss="alert">×</a>' +

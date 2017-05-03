@@ -21,7 +21,6 @@ import java.util.List;
  * Created by Даша on 31.03.2017.
  */
 public class ViewNewestMoviesCommand implements Command {
-
     private static final Logger logger = Logger.getLogger(ViewNewestMoviesCommand.class);
 
     @Override
@@ -39,6 +38,7 @@ public class ViewNewestMoviesCommand implements Command {
             request.getRequestDispatcher(JSPPageName.TOP_MOVIES_PAGE).forward(request, response);
         } catch (ServiceException e) {
             logger.error(e);
+            response.sendRedirect(JSPPageName.ERROR_500_PAGE);
         }
 
     }

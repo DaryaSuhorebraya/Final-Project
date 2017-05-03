@@ -6,7 +6,21 @@ $(document).ready(function () {
     var $descrEn;
     var $descrRu;
     var $movieId;
+    var lang = $('html').attr("lang");
+    var errorMsg;
+    var saveMsg;
 
+    if (lang === "ru_RU") {
+        errorMsg="Ошибка в процессе выполнения операции";
+        saveMsg="Сохранить";
+    } else {
+        errorMsg="Error during procedure";
+        saveMsg="Save";
+    }
+
+    function hideMsg(){
+        setTimeout(function(){$('#message').fadeOut()}, 3000);
+    }
     $('#addMovieBtn').click(function () {
         var dataArray=$('#movieForm').serializeArray();
         $titleEn=$.trim(dataArray[0].value);
@@ -28,16 +42,13 @@ $(document).ready(function () {
                 $('.thumbnail').remove();
                 $movieId=data;
                 $('.menu').css("display", "block");
-                /*$('.img-form').css('display','block').append("<form method='post'" +
-                    "action='UploadServlet?command=upload-movie-image&movieId=" + data + "'" +
-                    "enctype='multipart/form-data'>" +
-                    "<input name='data' type='file'>" +
-                    "<input type='submit'>" +
-                    "</form>");*/
-
             },
-            error: function (textStatus) {
-                alert(textStatus);
+            error: function () {
+                $('#message').html('<div class="alert alert-danger fade in">' +
+                    '<button type="button" class="close close-alert" data-dismiss="alert"' +
+                    ' aria-hidden="true">×</button>'+errorMsg +
+                    '</div>');
+                hideMsg();
             }
         });
     });
@@ -45,9 +56,9 @@ $(document).ready(function () {
         $('.menu').css("display", "none");
         $('.img-form').css('display','block').append("<form method='post'" +
             "action='UploadServlet?command=upload-movie-poster&movieId=" + $movieId + "'" +
-            "enctype='multipart/form-data'>" +
+            "enctype='multipart/form-data' style='margin-top:30px;margin-left:40%'>" +
             "<input name='data' type='file'>" +
-            "<input type='submit'>" +
+            "<input class='btn btn-success' type='submit' style='margin-top:40px;' value='"+saveMsg+"'>" +
             "</form>");
     });
     
@@ -65,8 +76,12 @@ $(document).ready(function () {
                 $('#dropdown-add-country').children().children().children().last().html(options).selectpicker('refresh');
                 $('.bootstrap-select').css("width", "500px");
             },
-            error: function (textStatus) {
-                alert(textStatus);
+            error: function () {
+                $('#message').html('<div class="alert alert-danger fade in">' +
+                    '<button type="button" class="close close-alert" data-dismiss="alert"' +
+                    ' aria-hidden="true">×</button>'+errorMsg +
+                    '</div>');
+                hideMsg();
             }
         });
     });
@@ -82,9 +97,14 @@ $(document).ready(function () {
                     options+="<option>"+data[i].name+"</option>";
                 }
                 $('#dropdown-add-genre').children().children().children().last().html(options).selectpicker('refresh');
+                $('.bootstrap-select').css("width", "500px");
             },
-            error: function (textStatus) {
-                alert(textStatus);
+            error: function () {
+                $('#message').html('<div class="alert alert-danger fade in">' +
+                    '<button type="button" class="close close-alert" data-dismiss="alert"' +
+                    ' aria-hidden="true">×</button>'+errorMsg +
+                    '</div>');
+                hideMsg();
             }
         });
     });
@@ -100,9 +120,14 @@ $(document).ready(function () {
                     options+="<option>"+data[i].firstName+" "+data[i].lastName+"</option>";
                 }
                 $('#dropdown-add-actor').children().children().children().last().html(options).selectpicker('refresh');
+                $('.bootstrap-select').css("width", "500px");
             },
-            error: function (textStatus) {
-                alert(textStatus);
+            error: function () {
+                $('#message').html('<div class="alert alert-danger fade in">' +
+                    '<button type="button" class="close close-alert" data-dismiss="alert"' +
+                    ' aria-hidden="true">×</button>'+errorMsg +
+                    '</div>');
+                hideMsg();
             }
         });
     });
@@ -116,8 +141,13 @@ $(document).ready(function () {
                 data: {command:'add-country-for-movie',movieId: $movieId, countryName: name},
                 success: function (result) {
                     if (result==="true"){
-                    } else {
-                        //message for error;
+                    } 
+                    if (result === "false") {
+                        $('#message').html('<div class="alert alert-danger fade in">' +
+                            '<button type="button" class="close close-alert" data-dismiss="alert"' +
+                            ' aria-hidden="true">×</button>'+errorMsg +
+                            '</div>');
+                        hideMsg();
                     }
                 }
             });
@@ -139,8 +169,13 @@ $(document).ready(function () {
                 data: {command:'add-genre-for-movie',movieId: $movieId, genreName: name},
                 success: function (result) {
                     if (result==="true"){
-                    } else {
-                        //message for error;
+                    }
+                    if (result === "false") {
+                        $('#message').html('<div class="alert alert-danger fade in">' +
+                            '<button type="button" class="close close-alert" data-dismiss="alert"' +
+                            ' aria-hidden="true">×</button>'+errorMsg +
+                            '</div>');
+                        hideMsg();
                     }
                 }
             });
@@ -163,8 +198,13 @@ $(document).ready(function () {
                 data: {command:'add-actor-for-movie',movieId: $movieId, firstName: firstName, lastName: lastName},
                 success: function (result) {
                     if (result==="true"){
-                    } else {
-                        //message for error;
+                    }
+                    if (result === "false") {
+                        $('#message').html('<div class="alert alert-danger fade in">' +
+                            '<button type="button" class="close close-alert" data-dismiss="alert"' +
+                            ' aria-hidden="true">×</button>'+errorMsg +
+                            '</div>');
+                        hideMsg();
                     }
                 }
             });

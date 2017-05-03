@@ -210,6 +210,18 @@
         <name>add-genre</name>
         <class>by.epam.movierating.command.impl.genre.AddGenreCommand</class>
     </command>
+    <command>
+        <name>edit-genre</name>
+        <class>by.epam.movierating.command.impl.genre.EditGenreCommand</class>
+    </command>
+    <command>
+        <name>delete-review</name>
+        <class>by.epam.movierating.command.impl.review.DeleteReviewCommand</class>
+    </command>
+    <command>
+        <name>view-reviews-by-user-id</name>
+        <class>by.epam.movierating.command.impl.review.ViewReviewsByUserIdCommand</class>
+    </command>
 
     <command>
         <name>upload-actor-image</name>

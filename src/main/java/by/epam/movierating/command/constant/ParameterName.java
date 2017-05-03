@@ -16,7 +16,8 @@ public class ParameterName {
     public static final String STATUS = "status";
     public static final String IS_ADMIN = "isAdmin";
     public static final String IS_BANNED = "isBanned";
-    public static final String BAN = "Ban";
+    public static final String BAN_EN = "Ban";
+    public static final String BAN_RU = "Поставить бан";
     public static final String UNBAN = "Unban";
 
     public static final String USER_ID = "userId";
@@ -37,6 +38,7 @@ public class ParameterName {
     public static final String REGISTRATION = "registration";
     public static final String ADD_MOVIE = "addMovie";
     public static final String REDIRECT = "redirectPage";
+    public static final String SUCCESS_ADD_MOVIE="successAdd";
 
     public static final String TITLE_EN = "titleEn";
     public static final String TITLE_RU = "titleRu";
@@ -55,4 +57,6 @@ public class ParameterName {
 
     public static final String NAME_RU="nameRu";
     public static final String NAME_EN="nameEn";
+
+    public static final String CURRENT_PAGE_NUMBER="curPageNumber";
 }

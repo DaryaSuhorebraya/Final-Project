@@ -3,6 +3,8 @@ package by.epam.movierating.command.impl.movie;
 import by.epam.movierating.command.Command;
 import by.epam.movierating.command.constant.AttributeName;
 import by.epam.movierating.command.constant.ParameterName;
+import by.epam.movierating.command.security.RoleType;
+import by.epam.movierating.command.security.SecurityManager;
 import by.epam.movierating.service.MovieService;
 import by.epam.movierating.service.exception.ServiceException;
 import by.epam.movierating.service.factory.ServiceFactory;
@@ -24,20 +26,22 @@ public class AddGenreForMovieCommand implements Command {
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType(CONTENT_TYPE);
-        HttpSession session = request.getSession();
-        String language = (String) session.getAttribute(AttributeName.LANGUAGE);
-        String genreName = request.getParameter(ParameterName.GENRE_NAME);
-        int movieId = Integer.parseInt(request.getParameter(ParameterName.MOVIE_ID));
+        if (SecurityManager.getInstance().checkRoles(request, response, RoleType.ADMIN)) {
+            response.setContentType(CONTENT_TYPE);
+            HttpSession session = request.getSession();
+            String language = (String) session.getAttribute(AttributeName.LANGUAGE);
+            String genreName = request.getParameter(ParameterName.GENRE_NAME);
+            int movieId = Integer.parseInt(request.getParameter(ParameterName.MOVIE_ID));
 
-        ServiceFactory serviceFactory = ServiceFactory.getInstance();
-        MovieService movieService = serviceFactory.getMovieService();
-        try {
-            boolean result = movieService.addGenreForMovie(movieId, genreName, language);
-            response.getWriter().print(result);
-        } catch (ServiceException e) {
-            logger.error(e);
-            response.getWriter().print(false);
+            ServiceFactory serviceFactory = ServiceFactory.getInstance();
+            MovieService movieService = serviceFactory.getMovieService();
+            try {
+                boolean result = movieService.addGenreForMovie(movieId, genreName, language);
+                response.getWriter().print(result);
+            } catch (ServiceException e) {
+                logger.error(e);
+                response.getWriter().print(false);
+            }
         }
     }
 }

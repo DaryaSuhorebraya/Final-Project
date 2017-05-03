@@ -2,6 +2,7 @@ package by.epam.movierating.service;
 
 import by.epam.movierating.bean.Actor;
 import by.epam.movierating.service.exception.ServiceException;
+import by.epam.movierating.service.factory.ServiceFactory;
 
 import java.util.List;
 
@@ -17,4 +18,5 @@ public interface ActorService {
     boolean editActor(int idActor, String firstName, String lastName, String language) throws ServiceException;
     boolean uploadActorImage(int idActor, String filePath) throws ServiceException;
     int addActor(String firstNameEn, String lastNameEn, String firstNameRu, String lastNameRu) throws ServiceException;
+    List<Actor> getAllLimitedActors(String language,int currentPageNumber) throws ServiceException;
 }

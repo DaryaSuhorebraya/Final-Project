@@ -21,7 +21,6 @@ import java.util.List;
  * Created by Даша on 26.03.2017.
  */
 public class ViewLimitedReviewsCommand implements Command {
-    //// TODO: 26.03.2017 no such command
     private static final Logger logger = Logger.getLogger(ViewLimitedReviewsCommand.class);
 
     @Override
@@ -38,6 +37,7 @@ public class ViewLimitedReviewsCommand implements Command {
             request.getRequestDispatcher(JSPPageName.REVIEWS_PAGE).forward(request, response);
         } catch (ServiceException e) {
             logger.error(e);
+            response.sendRedirect(JSPPageName.ERROR_500_PAGE);
         }
     }
 }

@@ -2,6 +2,7 @@ package by.epam.movierating.command.impl.admin;
 
 import by.epam.movierating.bean.dto.StaticticsDTO;
 import by.epam.movierating.command.Command;
+import by.epam.movierating.command.constant.JSPPageName;
 import by.epam.movierating.service.UserService;
 import by.epam.movierating.service.exception.ServiceException;
 import by.epam.movierating.service.factory.ServiceFactory;
@@ -39,6 +40,7 @@ public class GetUserStatisticsCommand implements Command {
             response.getWriter().print(json);
         } catch (ServiceException e) {
             logger.error(e);
+            response.sendRedirect(JSPPageName.ERROR_500_PAGE);
         }
 
     }

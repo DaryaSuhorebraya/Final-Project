@@ -31,6 +31,7 @@
 
 <div class="container">
     <div class="row">
+        <div id="message"></div>
         <div class="col-md-10">
             <div class="thumbnail">
                 <form id="movieForm">
@@ -97,10 +98,12 @@
                         </div>
                     </li>
                 </ul>
-                <button id="3rdStep" class="btn btn-primary"><fmt:message bundle="${loc}" key="next.step"/></button>
+                <button id="3rdStep" class="btn btn-primary th-next"><fmt:message bundle="${loc}" key="next.step"/></button>
             </div>
             <div class="img-form">
                 <h2><fmt:message bundle="${loc}" key="third.step"/></h2>
+                <a href="Controller?command=redirect&redirectPage=successAdd" id="skip-3-step" class="btn btn-success">
+                <fmt:message bundle="${loc}" key="skip.this.step"/> </a>
             </div>
         </div>
     </div>

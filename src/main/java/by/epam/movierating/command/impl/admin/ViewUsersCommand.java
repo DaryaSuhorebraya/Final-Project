@@ -4,6 +4,8 @@ import by.epam.movierating.bean.User;
 import by.epam.movierating.command.Command;
 import by.epam.movierating.command.constant.AttributeName;
 import by.epam.movierating.command.constant.JSPPageName;
+import by.epam.movierating.command.security.RoleType;
+import by.epam.movierating.command.security.SecurityManager;
 import by.epam.movierating.command.util.PagePathUtil;
 import by.epam.movierating.service.UserService;
 import by.epam.movierating.service.exception.ServiceException;
@@ -26,19 +28,20 @@ public class ViewUsersCommand implements Command {
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        if (SecurityManager.getInstance().checkRoles(request, response, RoleType.ADMIN)) {
+            PagePathUtil.setQueryString(request);
+            HttpSession session = request.getSession(true);
 
-        PagePathUtil.setQueryString(request);
-        HttpSession session = request.getSession(true);
-        List<User> userList;
-
-        ServiceFactory serviceFactory = ServiceFactory.getInstance();
-        UserService userService = serviceFactory.getUserService();
-        try {
-            userList = userService.getAllUsers();
-            request.setAttribute(AttributeName.USERS, userList);
-            request.getRequestDispatcher(JSPPageName.USERS_PAGE).forward(request, response);
-        } catch (ServiceException e) {
-            logger.error(e);
+            ServiceFactory serviceFactory = ServiceFactory.getInstance();
+            UserService userService = serviceFactory.getUserService();
+            try {
+                List<User> userList = userService.getAllUsers();
+                request.setAttribute(AttributeName.USERS, userList);
+                request.getRequestDispatcher(JSPPageName.USERS_PAGE).forward(request, response);
+            } catch (ServiceException e) {
+                logger.error(e);
+                response.sendRedirect(JSPPageName.ERROR_500_PAGE);
+            }
         }
     }
 }

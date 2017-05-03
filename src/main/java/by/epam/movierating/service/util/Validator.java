@@ -20,8 +20,10 @@ public class Validator {
 
     private static final String LANGUAGE_EN="en_EN";
     private static final String LANGUAGE_RU="ru_RU";
-    private static final String BAN="Ban";
-    private static final String UNBAN="Unban";
+    private static final String BAN_EN="Ban";
+    private static final String UNBAN_EN="Unban";
+    private static final String BAN_RU="Поставить бан";
+    private static final String UNBAN_RU="Отменить бан";
 
     public static void validateEmail(String email) throws ServiceWrongDataException {
         if(email == null || email.isEmpty() || !email.matches(EMAIL_PATTERN)){
@@ -118,7 +120,8 @@ public class Validator {
     }
     public static void validateBanStatus(String status)
             throws ServiceWrongDataException{
-        if(!status.equals(BAN) && !status.equals(UNBAN)){
+        if(!status.equals(BAN_EN) && !status.equals(UNBAN_EN)
+                && !status.equals(BAN_RU)&& !status.equals(UNBAN_RU)){
             throw new ServiceWrongDataException("Invalid value of a ban status: "+status);
         }
     }

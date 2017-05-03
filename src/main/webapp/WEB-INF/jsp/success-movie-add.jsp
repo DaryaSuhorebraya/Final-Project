@@ -9,7 +9,6 @@
     <meta charset="utf-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <link href="${pageContext.request.contextPath}/css/bootstrap.min.css" rel="stylesheet">
-    <link href="${pageContext.request.contextPath}/css/top-movie-style.css" rel="stylesheet">
     <script src="${pageContext.request.contextPath}/js/jquery.min.js"></script>
     <script src="${pageContext.request.contextPath}/js/bootstrap.min.js"></script>
 </head>
@@ -29,9 +28,15 @@
 <div class="container">
     <div class="row">
         <div class="col-md-10">
-            <h2><fmt:message bundle="${loc}" key="new.movie.add"/></h2>
-            <p><fmt:message bundle="${loc}" key="add.new.movie"/>: <a href="Controller?command=redirect&redirectPage=addMovie"><fmt:message bundle="${loc}" key="home"/></a></p>
-            <p><fmt:message bundle="${loc}" key="go.to.main.page"/>: <a href="Controller?cmd=welcome-page"><fmt:message bundle="${loc}" key="home"/></a></p>
+            <div class="content" style="height: 500px">
+                <h2 style="text-align: center"><fmt:message bundle="${loc}" key="new.movie.add"/></h2>
+                <p><fmt:message bundle="${loc}" key="add.new.movie"/>:
+                    <a
+                        href="Controller?command=redirect&redirectPage=addMovie"><fmt:message bundle="${loc}" key="add.new.movie"/>
+                </a></p>
+                <p><fmt:message bundle="${loc}" key="go.to.main.page"/>:
+                    <a href="Controller?cmd=welcome-page"><fmt:message bundle="${loc}" key="home"/></a></p>
+            </div>
         </div>
     </div>
 </div>

@@ -23,17 +23,22 @@ public class UploadUtil {
     private static final String IMAGES_ACTOR = "images\\actor\\";
     private static final String IMAGES_POSTER = "images\\poster\\";
     private static final String WEB_INF = "\\WEB-INF\\";
+    private static final DiskFileItemFactory factory;
+    private static final int SIZE=1024;
+    private static final int TEN=10;
+    static {
+        factory = new DiskFileItemFactory();
+        factory.setSizeThreshold(SIZE * SIZE);
+    }
 
     public static ServletFileUpload createServletFileUpload(HttpServletRequest request) {
-        DiskFileItemFactory factory = new DiskFileItemFactory();
-        factory.setSizeThreshold(1024 * 1024);
 
         ServletContext servletContext = request.getServletContext();
         File tempDir = (File) servletContext.getAttribute(TEMP_DIR);
         factory.setRepository(tempDir);
 
         ServletFileUpload upload = new ServletFileUpload(factory);
-        upload.setSizeMax(1024 * 1024 * 10);
+        upload.setSizeMax(SIZE * SIZE * TEN);
         return upload;
     }
 

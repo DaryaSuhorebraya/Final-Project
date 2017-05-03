@@ -3,6 +3,7 @@ package by.epam.movierating.command.impl.actor;
 import by.epam.movierating.bean.Actor;
 import by.epam.movierating.command.Command;
 import by.epam.movierating.command.constant.AttributeName;
+import by.epam.movierating.command.constant.JSPPageName;
 import by.epam.movierating.command.constant.ParameterName;
 import by.epam.movierating.service.ActorService;
 import by.epam.movierating.service.exception.ServiceException;
@@ -44,6 +45,7 @@ public class ViewActorsNotInMovieCommand implements Command {
             response.getWriter().print(json);
         } catch (ServiceException e) {
             logger.error(e);
+            response.sendRedirect(JSPPageName.ERROR_500_PAGE);
         }
 
     }

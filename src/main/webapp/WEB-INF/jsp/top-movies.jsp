@@ -68,9 +68,11 @@
                                 <div class="star-rating">
                                     <input data-size="xs" data-min="0" data-max="10"
                                        data-step="1" class="rating-loading input-stars">
-                                    <button class="btn btn-primary btn-rate" value="Rate">Rate</button>
+                                    <button class="btn btn-primary btn-rate" value="<fmt:message bundle="${loc}" key="rate"/>"><fmt:message bundle="${loc}" key="rate"/></button>
+                                    <button class="btn btn-info btn-unrate" ><fmt:message bundle="${loc}" key="rate"/></button>
                                     <p class="movie-id">${movie.id}</p>
                                 </div>
+                                <button class="btn btn-info btn-unrate" ><fmt:message bundle="${loc}" key="remove.rating"/></button>
                             </td>
                         </tr>
                     </c:forEach>

@@ -15,6 +15,7 @@ import java.sql.*;
 public class RatingDAOImpl implements RatingDAO {
     private static final String SQL_RATE_MOVIE = "INSERT INTO rating (id_movie, id_user, mark) VALUES(?,?,?)";
     private static final String SQL_CHECK_RATE_OPPORTUNITY = "SELECT * FROM rating WHERE id_movie=? and id_user=?";
+    private static final String SQL_DELETE_RATING="DELETE FROM rating WHERE id_movie=? and id_user=?";
 
     @Override
     public boolean rateMovie(int idMovie, int idUser, int mark)
@@ -87,6 +88,28 @@ public class RatingDAOImpl implements RatingDAO {
             throw new DAOException(e);
         } finally {
             DAOUtil.close(connection, statement, resultSet);
+        }
+    }
+
+    @Override
+    public boolean deleteRating(int idMovie, int idUser)
+            throws DAOException {
+        Connection connection = null;
+        PreparedStatement statement = null;
+        try {
+            ConnectionPool connectionPool = ConnectionPool.getInstance();
+            connection = connectionPool.getConnection();
+            statement = connection.prepareStatement(SQL_DELETE_RATING);
+            statement.setInt(1, idMovie);
+            statement.setInt(2, idUser);
+            int updatedRows = statement.executeUpdate();
+            return updatedRows > 0;
+        } catch (ConnectionPoolException e) {
+            throw new DAOException("Can not get a connection", e);
+        } catch (SQLException e) {
+            throw new DAOException(e);
+        } finally {
+            DAOUtil.close(connection, statement);
         }
     }
 }

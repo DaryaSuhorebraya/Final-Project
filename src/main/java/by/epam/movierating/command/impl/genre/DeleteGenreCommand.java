@@ -23,20 +23,18 @@ public class DeleteGenreCommand implements Command {
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        if (SecurityManager.getInstance().checkRoles(request, response, RoleType.ADMIN)) {
-            response.setContentType("text/plain");
+        response.setContentType("text/plain");
 
-            int idGenre = Integer.parseInt(request.getParameter(ParameterName.GENRE_ID));
+        int idGenre = Integer.parseInt(request.getParameter(ParameterName.GENRE_ID));
 
-            ServiceFactory serviceFactory = ServiceFactory.getInstance();
-            GenreService genreService = serviceFactory.getGenreService();
-            try {
-                boolean result = genreService.deleteGenre(idGenre);
-                response.getWriter().print(result);
-            } catch (ServiceException e) {
-                logger.error(e);
-                response.getWriter().print(false);
-            }
+        ServiceFactory serviceFactory = ServiceFactory.getInstance();
+        GenreService genreService = serviceFactory.getGenreService();
+        try {
+            boolean result = genreService.deleteGenre(idGenre);
+            response.getWriter().print(result);
+        } catch (ServiceException e) {
+            logger.error(e);
+            response.getWriter().print(false);
         }
     }
 }

@@ -25,27 +25,25 @@ public class RateMovieCommand implements Command {
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        if (SecurityManager.getInstance().checkRoles(request, response, RoleType.ADMIN, RoleType.USER)) {
-            HttpSession session = request.getSession();
-            response.setContentType("text/plain");
+        HttpSession session = request.getSession();
+        response.setContentType("text/plain");
 
-            if ((boolean) session.getAttribute(AttributeName.IS_BANNED)) {
-                response.getWriter().print(AttributeName.IS_BANNED);
-            } else {
+        if ((boolean) session.getAttribute(AttributeName.IS_BANNED)) {
+            response.getWriter().print(AttributeName.IS_BANNED);
+        } else {
 
-                int idMovie = Integer.parseInt(request.getParameter(ParameterName.MOVIE_ID));
-                int idUser = (Integer) session.getAttribute(AttributeName.USER_ID);
-                int mark = Integer.parseInt(request.getParameter(ParameterName.MARK));
+            int idMovie = Integer.parseInt(request.getParameter(ParameterName.MOVIE_ID));
+            int idUser = (Integer) session.getAttribute(AttributeName.USER_ID);
+            int mark = Integer.parseInt(request.getParameter(ParameterName.MARK));
 
-                ServiceFactory serviceFactory = ServiceFactory.getInstance();
-                RatingService ratingService = serviceFactory.getRatingService();
-                try {
-                    boolean result = ratingService.rateMovie(idMovie, idUser, mark);
-                    response.getWriter().print(result);
-                } catch (ServiceException e) {
-                    logger.error(e);
-                    response.getWriter().print(false);
-                }
+            ServiceFactory serviceFactory = ServiceFactory.getInstance();
+            RatingService ratingService = serviceFactory.getRatingService();
+            try {
+                boolean result = ratingService.rateMovie(idMovie, idUser, mark);
+                response.getWriter().print(result);
+            } catch (ServiceException e) {
+                logger.error(e);
+                response.getWriter().print(false);
             }
         }
     }

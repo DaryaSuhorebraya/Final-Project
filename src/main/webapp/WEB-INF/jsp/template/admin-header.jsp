@@ -76,6 +76,10 @@
             </ul>
 
             <ul class="nav navbar-nav navbar-right">
+                <c:if test="${sessionScope.get('user') !=null}">
+                    <li class="dropdown">
+                        <a href="#" id="user-login">${user.login}</a> </li>
+                </c:if>
                 <c:if test="${sessionScope.get('language') eq 'ru_RU' || sessionScope.get('language')==null}">
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">

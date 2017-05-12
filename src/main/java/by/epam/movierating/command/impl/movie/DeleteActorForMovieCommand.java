@@ -25,23 +25,21 @@ public class DeleteActorForMovieCommand implements Command {
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        if (SecurityManager.getInstance().checkRoles(request, response, RoleType.ADMIN)) {
-            response.setContentType("text/plain");
-            HttpSession session = request.getSession();
-            String language = (String) session.getAttribute(AttributeName.LANGUAGE);
-            String firstName = request.getParameter(ParameterName.FIRSTNAME);
-            String lastName = request.getParameter(ParameterName.LASTNAME);
-            int movieId = Integer.parseInt(request.getParameter(ParameterName.MOVIE_ID));
+        response.setContentType("text/plain");
+        HttpSession session = request.getSession();
+        String language = (String) session.getAttribute(AttributeName.LANGUAGE);
+        String firstName = request.getParameter(ParameterName.FIRSTNAME);
+        String lastName = request.getParameter(ParameterName.LASTNAME);
+        int movieId = Integer.parseInt(request.getParameter(ParameterName.MOVIE_ID));
 
-            ServiceFactory serviceFactory = ServiceFactory.getInstance();
-            MovieService movieService = serviceFactory.getMovieService();
-            try {
-                boolean result = movieService.deleteActorForMovie(firstName, lastName, language, movieId);
-                response.getWriter().print(result);
-            } catch (ServiceException e) {
-                logger.error(e);
-                response.getWriter().print(false);
-            }
+        ServiceFactory serviceFactory = ServiceFactory.getInstance();
+        MovieService movieService = serviceFactory.getMovieService();
+        try {
+            boolean result = movieService.deleteActorForMovie(firstName, lastName, language, movieId);
+            response.getWriter().print(result);
+        } catch (ServiceException e) {
+            logger.error(e);
+            response.getWriter().print(false);
         }
     }
 }

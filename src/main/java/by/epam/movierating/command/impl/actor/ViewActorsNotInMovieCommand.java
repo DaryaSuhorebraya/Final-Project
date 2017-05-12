@@ -22,7 +22,6 @@ import java.util.List;
  * Created by Даша on 22.03.2017.
  */
 public class ViewActorsNotInMovieCommand implements Command {
-
     private static final Logger logger = Logger.getLogger(ViewActorsNotInMovieCommand.class);
     private static final String CONTENT_TYPE = "application/json";
     private static final String ENCODING = "UTF-8";

@@ -18,7 +18,7 @@ import java.util.List;
  */
 public class ReviewDAOImpl implements ReviewDAO {
     private static final String SQL_GET_ALL_REVIEWS_ORDER_BY_DATE = "SELECT id_movie, id_user, title, " +
-            "review , publish_date FROM review WHERE is_deleted=0 " +
+            "review , publish_date FROM review " +
             "ORDER BY publish_date DESC";
     private static final String SQL_GET_ALL_FULL_INFO_REVIEWS_ORDER_BY_DATE = "SELECT review.id_movie, review.id_user, " +
             "movie.title_, user.login, rating.mark , review.title, " +
@@ -27,7 +27,6 @@ public class ReviewDAOImpl implements ReviewDAO {
             "LEFT JOIN movie ON review.id_movie=movie.id_movie " +
             "LEFT JOIN user ON review.id_user=user.id_user " +
             "LEFT JOIN rating ON review.id_user=rating.id_user and review.id_movie=rating.id_movie " +
-            "WHERE review.is_deleted=0 " +
             "ORDER BY review.publish_date DESC";
     private static final String SQL_GET_LIMITED_REVIEWS = "SELECT review.id_movie, review.id_user, " +
             "movie.title_, user.login, rating.mark , review.title, " +
@@ -36,7 +35,6 @@ public class ReviewDAOImpl implements ReviewDAO {
             "LEFT JOIN movie ON review.id_movie=movie.id_movie " +
             "LEFT JOIN user ON review.id_user=user.id_user " +
             "LEFT JOIN rating ON review.id_user=rating.id_user and review.id_movie=rating.id_movie " +
-            "WHERE review.is_deleted=0 " +
             "ORDER BY review.publish_date DESC " +
             "LIMIT 3";
     private static final String SQL_CHECK_REVIEW_OPPORTUNITY = "SELECT * FROM review WHERE id_movie=? and id_user=?";
@@ -47,7 +45,7 @@ public class ReviewDAOImpl implements ReviewDAO {
             "LEFT JOIN movie ON review.id_movie=movie.id_movie " +
             "LEFT JOIN user ON review.id_user=user.id_user " +
             "LEFT JOIN rating ON review.id_user=rating.id_user and review.id_movie=rating.id_movie " +
-            "WHERE review.is_deleted=0 AND movie.id_movie=? " +
+            "WHERE movie.id_movie=? " +
             "ORDER BY review.publish_date DESC";
     private static final String SQL_REVIEW_MOVIE = "INSERT INTO review (id_movie, id_user, title, review, publish_date) " +
             "VALUES(?,?,?,?,?)";
@@ -55,7 +53,7 @@ public class ReviewDAOImpl implements ReviewDAO {
             "FROM review " +
             "INNER JOIN movie ON review.id_movie=movie.id_movie " +
             "GROUP BY movie.id_movie ";
-    private static final String SQL_DELETE_REVIEW="UPDATE review SET is_deleted=1 WHERE id_movie=? AND id_user=?";
+    private static final String SQL_DELETE_REVIEW="DELETE FROM review WHERE id_movie=? and id_user=?";
     private static final String SQL_GET_REVIEWS_BY_USER_ID="SELECT review.id_movie, review.id_user, " +
             "movie.title_, user.login, rating.mark , review.title, " +
             "review.review , review.publish_date " +
@@ -63,7 +61,7 @@ public class ReviewDAOImpl implements ReviewDAO {
             "LEFT JOIN movie ON review.id_movie=movie.id_movie " +
             "LEFT JOIN user ON review.id_user=user.id_user " +
             "LEFT JOIN rating ON review.id_user=rating.id_user and review.id_movie=rating.id_movie " +
-            "WHERE review.is_deleted=0 and review.id_user=? " +
+            "WHERE review.id_user=? " +
             "ORDER BY review.publish_date DESC";
 
     @Override

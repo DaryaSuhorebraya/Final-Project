@@ -31,6 +31,7 @@ public class AttributeName {
     public static final String REVIEWS="reviews";
     public static final String GENRE_ID="genreId";
     public static final String MOVIE_ID="movieId";
+    public static final String RATING="rating";
 
     public static final String PREV_QUERY="prevQuery";
     public static final String REDIRECT_PAGE="redirectPage";

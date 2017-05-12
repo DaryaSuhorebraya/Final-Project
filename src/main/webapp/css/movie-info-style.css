@@ -36,6 +36,10 @@ ul{
     display: inline;
     margin-left: 10px;
 }
+.h4-user-rating{
+    display: inline;
+    margin-left: 10px;
+}
 .h4-title{
     display: inline-block;
 }
@@ -135,6 +139,7 @@ ul{
     margin-top: 20px;
 }
 .review-text{
+    width: 89%;
     font-style: italic;
 }
 #user-id{
@@ -152,4 +157,27 @@ ul{
     z-index: 1;
     width: 90%;
     margin-left: -150px;
+}
+.delete-review{
+    float: right;
+    margin-right: 20px;
+    cursor: pointer;
+    color: #d80000;
+    margin-bottom: -20px;
+}
+.delete-review:hover{
+    cursor: pointer;
+    color: #950000;
+}
+.delete-rating{
+    cursor: pointer;
+    color: #d80000;
+    margin-right: -10px;
+}
+.delete-rating:hover{
+    cursor: pointer;
+    color: #950000;
+}
+.rate{
+    margin-left: 20px;
 }

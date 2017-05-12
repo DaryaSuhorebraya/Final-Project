@@ -25,23 +25,21 @@ public class EditGenreCommand implements Command {
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        if (SecurityManager.getInstance().checkRoles(request, response, RoleType.ADMIN)) {
-            response.setContentType("text/plain");
-            HttpSession session = request.getSession(true);
+        response.setContentType("text/plain");
+        HttpSession session = request.getSession(true);
 
-            String language = (String) session.getAttribute(AttributeName.LANGUAGE);
-            int idGenre = Integer.parseInt(request.getParameter(ParameterName.GENRE_ID));
-            String name = request.getParameter(ParameterName.NAME);
+        String language = (String) session.getAttribute(AttributeName.LANGUAGE);
+        int idGenre = Integer.parseInt(request.getParameter(ParameterName.GENRE_ID));
+        String name = request.getParameter(ParameterName.NAME);
 
-            ServiceFactory serviceFactory = ServiceFactory.getInstance();
-            GenreService genreService = serviceFactory.getGenreService();
-            try {
-                boolean result = genreService.editGenre(idGenre, name, language);
-                response.getWriter().print(result);
-            } catch (ServiceException e) {
-                logger.error(e);
-                response.getWriter().print(false);
-            }
+        ServiceFactory serviceFactory = ServiceFactory.getInstance();
+        GenreService genreService = serviceFactory.getGenreService();
+        try {
+            boolean result = genreService.editGenre(idGenre, name, language);
+            response.getWriter().print(result);
+        } catch (ServiceException e) {
+            logger.error(e);
+            response.getWriter().print(false);
         }
     }
 }

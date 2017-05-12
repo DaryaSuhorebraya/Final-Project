@@ -18,10 +18,7 @@
     margin-bottom: 10px;
     margin-left: 14px;
 }
-.item.list-group-item:nth-of-type(odd):hover,.item.list-group-item:hover
-{
-    background: #428bca;
-}
+
 .list-group-item-heading{
     margin-bottom: -10px;
 }
@@ -89,5 +86,6 @@
 #search{
     padding-bottom: 11px;
 }
+
 
 

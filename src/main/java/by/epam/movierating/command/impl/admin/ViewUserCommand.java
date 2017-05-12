@@ -28,21 +28,20 @@ public class ViewUserCommand implements Command {
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        if (SecurityManager.getInstance().checkRoles(request, response, RoleType.ADMIN)) {
-            PagePathUtil.setQueryString(request);
-            HttpSession session = request.getSession(true);
+        PagePathUtil.setQueryString(request);
+        HttpSession session = request.getSession(true);
 
-            int idUser = Integer.parseInt(request.getParameter(ParameterName.USER_ID));
-            ServiceFactory serviceFactory = ServiceFactory.getInstance();
-            UserService userService = serviceFactory.getUserService();
-            try {
-                User user = userService.getUserById(idUser);
-                request.setAttribute(AttributeName.USER, user);
-                request.getRequestDispatcher(JSPPageName.USER_INFO_PAGE).forward(request, response);
-            } catch (ServiceException e) {
-                logger.error(e);
-                response.sendRedirect(JSPPageName.ERROR_500_PAGE);
-            }
+        int idUser = Integer.parseInt(request.getParameter(ParameterName.USER_ID));
+        ServiceFactory serviceFactory = ServiceFactory.getInstance();
+        UserService userService = serviceFactory.getUserService();
+        try {
+            User user = userService.getUserById(idUser);
+            request.setAttribute(AttributeName.USER, user);
+            request.getRequestDispatcher(JSPPageName.USER_INFO_PAGE).forward(request, response);
+        } catch (ServiceException e) {
+            logger.error(e);
+            response.sendRedirect(JSPPageName.ERROR_500_PAGE);
         }
+
     }
 }

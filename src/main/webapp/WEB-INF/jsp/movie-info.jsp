@@ -159,6 +159,19 @@
                                    data-step="1" class="rating rating-loading">
                         </p>
                         <h4 class="h4-rating">${movie.rating}</h4>
+                        <c:choose>
+                           <c:when test="${requestScope.get('rating') !=null}">
+                            <h4 class="h4-user-rating">(
+                                <fmt:message bundle="${loc}" key="your.rating"/> ${rating.mark} </h4>
+                            <span class="btn-label delete-rating">
+                                <i class="glyphicon glyphicon-remove"></i>
+                            </span>
+                            <h4 class="h4-user-rating">)</h4>
+                            </c:when>
+                            <c:otherwise>
+                                <a class="btn btn-success rate"><fmt:message bundle="${loc}" key="rate"/> </a>
+                            </c:otherwise>
+                        </c:choose>
                     </div>
                     <p id="description-text">${movie.description}</p>
                     <c:if test='${sessionScope.role eq "admin"}'>
@@ -188,11 +201,11 @@
                         </div>
                         <form id="form-add-review">
                             <div class="form-group">
-                                <label for="title"><fmt:message bundle="${loc}" key="title"/> </label>
+                                <label for="title"><fmt:message bundle="${loc}" key="header"/> </label>
                                 <input type="text" class="form-control" id="title" name="title" placeholder=" ">
                             </div>
                             <div class="form-group">
-                                <label for="review"><fmt:message bundle="${loc}" key="name.ru"/> </label>
+                                <label for="review"><fmt:message bundle="${loc}" key="revie"/> </label>
                                 <textarea class="form-control" id="review" name="review" rows="3" required></textarea>
                             </div>
                         </form>
@@ -204,11 +217,19 @@
                 <c:forEach var="review" items="${requestScope.reviews}">
                     <div class="row review">
                         <div class="col-md-12">
+                            <c:if test='${sessionScope.role eq "admin"}'>
+                            <span class="btn-label delete-review">
+                                <i class="glyphicon glyphicon-remove"></i>
+                            </span>
+                            </c:if>
                             <div class="review-block-rate">
                                 <input class="user-stars rating rating-loading" data-size="xs" value="${review.rating}"
                                        data-min="0" data-max="10" data-step="1">
                             </div>
-                                ${review.userLogin}
+                                <span class="user-login">
+                                <a href="Controller?command=view-reviews-by-user-id&userId=${review.idUser}">
+                                        ${review.userLogin}
+                                </a></span>
                             <h4 class="review-title">${review.title}</h4>
                             <span class="pull-right">${review.publishDate}</span>
                             <p class="review-text">${review.review}</p>

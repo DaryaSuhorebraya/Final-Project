@@ -18,26 +18,24 @@ import java.io.IOException;
  * Created by Даша on 28.03.2017.
  */
 public class DeleteActorCommand implements Command {
-
     private static final Logger logger = Logger.getLogger(DeleteActorCommand.class);
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        if (SecurityManager.getInstance().checkRoles(request, response, RoleType.ADMIN)) {
-            response.setContentType("text/plain");
+        response.setContentType("text/plain");
 
-            int idActor = Integer.parseInt(request.getParameter(ParameterName.ACTOR_ID));
+        int idActor = Integer.parseInt(request.getParameter(ParameterName.ACTOR_ID));
 
-            ServiceFactory serviceFactory = ServiceFactory.getInstance();
-            ActorService actorService = serviceFactory.getActorService();
-            try {
-                boolean result = actorService.deleteActor(idActor);
-                response.getWriter().print(result);
-            } catch (ServiceException e) {
-                logger.error(e);
-                response.getWriter().print(false);
-            }
+        ServiceFactory serviceFactory = ServiceFactory.getInstance();
+        ActorService actorService = serviceFactory.getActorService();
+        try {
+            boolean result = actorService.deleteActor(idActor);
+            response.getWriter().print(result);
+        } catch (ServiceException e) {
+            logger.error(e);
+            response.getWriter().print(false);
         }
+
     }
 }

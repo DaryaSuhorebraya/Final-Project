@@ -20,6 +20,10 @@ public class ParseCommandUtil {
     private static final Logger logger = Logger.getLogger(ParseCommandUtil.class);
     private static final String COMMANDS_XML_PATH = "/commands.xml";
     private static CommandHandler commandHandler = new CommandHandler();
+    private static final String COMMANDS="commands";
+    private static final String NAME="name";
+    private static final String CLASS="class";
+    private static final String COMMAND="command";
 
     public Map<String, Command> parse() {
 
@@ -54,7 +58,7 @@ public class ParseCommandUtil {
         public void startElement(String uri, String localName, String qName,
                                  Attributes attributes) throws SAXException {
             text = new StringBuilder();
-            if (qName.equals("commands")) {
+            if (qName.equals(COMMANDS)) {
                 commandMap = new HashMap<>();
             }
         }
@@ -63,11 +67,11 @@ public class ParseCommandUtil {
         public void endElement(String uri, String localName, String qName)
                 throws SAXException {
             switch (qName) {
-                case "name": {
+                case NAME: {
                     name = text.toString();
                     break;
                 }
-                case "class": {
+                case CLASS: {
                     try {
                         command = (Command) Class.
                                 forName(text.toString()).newInstance();
@@ -77,7 +81,7 @@ public class ParseCommandUtil {
                         logger.error(e);
                     }
                 }
-                case "command": {
+                case COMMAND: {
                     commandMap.put(name, command);
                 }
             }

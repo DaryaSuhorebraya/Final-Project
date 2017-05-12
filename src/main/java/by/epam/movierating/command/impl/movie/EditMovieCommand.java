@@ -25,23 +25,21 @@ public class EditMovieCommand implements Command {
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        if (SecurityManager.getInstance().checkRoles(request, response, RoleType.ADMIN)) {
-            HttpSession session = request.getSession();
-            response.setContentType("text/plain");
-            String language = (String) session.getAttribute(AttributeName.LANGUAGE);
-            int idMovie = Integer.parseInt(request.getParameter(ParameterName.MOVIE_ID));
-            String field = request.getParameter(ParameterName.FIELD);
-            String value = request.getParameter(ParameterName.VALUE);
+        HttpSession session = request.getSession();
+        response.setContentType("text/plain");
+        String language = (String) session.getAttribute(AttributeName.LANGUAGE);
+        int idMovie = Integer.parseInt(request.getParameter(ParameterName.MOVIE_ID));
+        String field = request.getParameter(ParameterName.FIELD);
+        String value = request.getParameter(ParameterName.VALUE);
 
-            ServiceFactory serviceFactory = ServiceFactory.getInstance();
-            MovieService movieService = serviceFactory.getMovieService();
-            try {
-                boolean result = movieService.editMovieField(idMovie, field, value, language);
-                response.getWriter().print(result);
-            } catch (ServiceException e) {
-                logger.error(e);
-                response.getWriter().print(false);
-            }
+        ServiceFactory serviceFactory = ServiceFactory.getInstance();
+        MovieService movieService = serviceFactory.getMovieService();
+        try {
+            boolean result = movieService.editMovieField(idMovie, field, value, language);
+            response.getWriter().print(result);
+        } catch (ServiceException e) {
+            logger.error(e);
+            response.getWriter().print(false);
         }
     }
 }

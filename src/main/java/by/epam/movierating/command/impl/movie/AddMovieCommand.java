@@ -27,26 +27,23 @@ public class AddMovieCommand implements Command {
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        if (SecurityManager.getInstance().checkRoles(request, response, RoleType.ADMIN)) {
+        String titleEn = request.getParameter(ParameterName.TITLE_EN);
+        String titleRu = request.getParameter(ParameterName.TITLE_RU);
+        int releaseYear = Integer.parseInt(request.getParameter(ParameterName.RELEASE_YEAR));
+        String descrEn = request.getParameter(ParameterName.DESCRIPTION_EN);
+        String descrRu = request.getParameter(ParameterName.DESCRIPTION_RU);
 
-            String titleEn = request.getParameter(ParameterName.TITLE_EN);
-            String titleRu = request.getParameter(ParameterName.TITLE_RU);
-            int releaseYear = Integer.parseInt(request.getParameter(ParameterName.RELEASE_YEAR));
-            String descrEn = request.getParameter(ParameterName.DESCRIPTION_EN);
-            String descrRu = request.getParameter(ParameterName.DESCRIPTION_RU);
-
-            ServiceFactory serviceFactory = ServiceFactory.getInstance();
-            MovieService movieService = serviceFactory.getMovieService();
-            try {
-                int id = movieService.addMovie(titleEn, titleRu, releaseYear, descrEn, descrRu);
-                String json = new Gson().toJson(id);
-                response.setContentType(CONTENT_TYPE);
-                response.setCharacterEncoding(ENCODING);
-                response.getWriter().print(json);
-            } catch (ServiceException e) {
-                logger.error(e);
-                response.sendRedirect(JSPPageName.ERROR_500_PAGE);
-            }
+        ServiceFactory serviceFactory = ServiceFactory.getInstance();
+        MovieService movieService = serviceFactory.getMovieService();
+        try {
+            int id = movieService.addMovie(titleEn, titleRu, releaseYear, descrEn, descrRu);
+            String json = new Gson().toJson(id);
+            response.setContentType(CONTENT_TYPE);
+            response.setCharacterEncoding(ENCODING);
+            response.getWriter().print(json);
+        } catch (ServiceException e) {
+            logger.error(e);
+            response.sendRedirect(JSPPageName.ERROR_500_PAGE);
         }
     }
 }

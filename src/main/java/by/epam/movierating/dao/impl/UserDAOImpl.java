@@ -16,7 +16,7 @@ import java.util.*;
  * Created by Даша on 14.02.2017.
  */
 public class UserDAOImpl implements UserDAO{
-    private static final  String SQL_GET_USER_BY_LOGIN = "SELECT * FROM user WHERE login=? and is_deleted=0";
+    private static final  String SQL_GET_USER_BY_LOGIN = "SELECT * FROM user WHERE login=?";
     private static final String SQL_REGISTER="INSERT INTO user(first_name,last_name,login, password, date_register, email) VALUES(?,?,?,?,?,?)";
     private static final String SQL_GET_ALL_USERS="SELECT * FROM user WHERE is_deleted=0";
     private static final String SQL_LAST_INSERT_ID="SELECT LAST_INSERT_ID()";

@@ -205,7 +205,6 @@
         <name>delete-genre</name>
         <class>by.epam.movierating.command.impl.genre.DeleteGenreCommand</class>
     </command>
-    <!-- 50-->
     <command>
         <name>add-genre</name>
         <class>by.epam.movierating.command.impl.genre.AddGenreCommand</class>
@@ -221,6 +220,15 @@
     <command>
         <name>view-reviews-by-user-id</name>
         <class>by.epam.movierating.command.impl.review.ViewReviewsByUserIdCommand</class>
+    </command>
+    <command>
+        <name>delete-rating</name>
+        <class>by.epam.movierating.command.impl.user.DeleteRatingCommand</class>
+    </command>
+    <!-- 55-->
+    <command>
+        <name>get-user-by-login</name>
+        <class>by.epam.movierating.command.impl.user.GetUserByLogin</class>
     </command>
 
     <command>

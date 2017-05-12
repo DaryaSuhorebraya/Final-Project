@@ -51,4 +51,17 @@ public class RatingServiceImpl implements RatingService {
             throw new ServiceException(e);
         }
     }
+
+    @Override
+    public boolean deleteRating(int idMovie, int idUser)
+            throws ServiceException {
+        Validator.validateIntData(idMovie, idUser);
+        try {
+            DAOFactory daoFactory = DAOFactory.getInstance();
+            RatingDAO ratingDAO = daoFactory.getRatingDAO();
+            return ratingDAO.deleteRating(idMovie, idUser);
+        } catch (DAOException e) {
+            throw new ServiceException(e);
+        }
+    }
 }

@@ -46,3 +46,17 @@ h4{
     width: 60%;
     margin: auto;
 }
+.modal-header{
+    padding-bottom: 0px;
+}
+#myModal .tab-pane .row .form-group{
+    margin-bottom: 5px;
+}
+.auth-form-group{
+    position: relative;
+    display: table;
+    border-collapse: separate;
+}
+small{
+    font-size: 75%;
+}

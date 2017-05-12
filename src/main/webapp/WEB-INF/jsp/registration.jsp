@@ -60,7 +60,7 @@
         </div>
 
         <br />
-        <div class="form-group">
+        <div class="form-group buttons">
             <div class="col-xs-offset-3 col-xs-9">
                 <input type="submit" class="btn btn-primary" value="<fmt:message bundle="${loc}" key="register"/>">
                 <input type="reset" class="btn btn-default" value="<fmt:message bundle="${loc}" key="reset"/>">

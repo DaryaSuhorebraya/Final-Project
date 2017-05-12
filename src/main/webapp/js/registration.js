@@ -101,7 +101,7 @@ $(document).ready(function () {
             password: {
                 validators: {
                     notEmpty: {
-                        message: emailMsg
+                        message: emptyField
                     },
                     stringLength: {
                         min: 4,
@@ -113,12 +113,7 @@ $(document).ready(function () {
             confirmPassword: {
                 validators: {
                     notEmpty: {
-                        message: emailMsg
-                    },
-                    stringLength: {
-                        min: 4,
-                        max: 25,
-                        message: passwordMsgLn
+                        message: emptyField
                     },
                     identical: {
                         field: 'password',
@@ -127,5 +122,13 @@ $(document).ready(function () {
                 }
             }
         }
+    });
+
+    $('small[data-bv-validator="emailAddress"]').remove();
+
+    $( "input:reset" ).click(function () {
+        $('.help-block').css('display','none');
+        $('.form-group').removeClass("has-error has-success");
+        $('.col-xs-9 i').css('display','none');
     });
 });

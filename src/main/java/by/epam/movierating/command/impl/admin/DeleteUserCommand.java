@@ -23,18 +23,17 @@ public class DeleteUserCommand implements Command {
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        if (SecurityManager.getInstance().checkRoles(request, response, RoleType.ADMIN)) {
-            response.setContentType("text/plain");
-            int isUser = Integer.parseInt(request.getParameter(ParameterName.USER_ID));
-            ServiceFactory serviceFactory = ServiceFactory.getInstance();
-            UserService userService = serviceFactory.getUserService();
-            try {
-                boolean result = userService.deleteUser(isUser);
-                response.getWriter().print(result);
-            } catch (ServiceException e) {
-                logger.error(e);
-                response.getWriter().print(false);
-            }
+        response.setContentType("text/plain");
+        int isUser = Integer.parseInt(request.getParameter(ParameterName.USER_ID));
+        ServiceFactory serviceFactory = ServiceFactory.getInstance();
+        UserService userService = serviceFactory.getUserService();
+        try {
+            boolean result = userService.deleteUser(isUser);
+            response.getWriter().print(result);
+        } catch (ServiceException e) {
+            logger.error(e);
+            response.getWriter().print(false);
         }
+
     }
 }

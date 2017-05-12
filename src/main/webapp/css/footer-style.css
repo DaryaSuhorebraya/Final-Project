@@ -5,8 +5,10 @@ footer{
     background-color: black;
     color: whitesmoke;
     height: 50px;
+    flex: 0 0 auto;
 }
 .footer{
     margin-top: 0;
     margin-bottom: 0;
+    flex: 0 0 auto;
 }

@@ -25,27 +25,25 @@ public class ReviewMovieCommand implements Command {
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        if (SecurityManager.getInstance().checkRoles(request, response, RoleType.ADMIN, RoleType.USER)) {
-            HttpSession session = request.getSession();
-            response.setContentType("text/plain");
+        HttpSession session = request.getSession();
+        response.setContentType("text/plain");
 
-            if ((boolean) session.getAttribute(AttributeName.IS_BANNED)) {
-                response.getWriter().print(AttributeName.IS_BANNED);
-            } else {
-                int idMovie = Integer.parseInt(request.getParameter(ParameterName.MOVIE_ID));
-                int idUser = (Integer) session.getAttribute(AttributeName.USER_ID);
-                String title = request.getParameter(ParameterName.TITLE);
-                String review = request.getParameter(ParameterName.REVIEW);
+        if ((boolean) session.getAttribute(AttributeName.IS_BANNED)) {
+            response.getWriter().print(AttributeName.IS_BANNED);
+        } else {
+            int idMovie = Integer.parseInt(request.getParameter(ParameterName.MOVIE_ID));
+            int idUser = (Integer) session.getAttribute(AttributeName.USER_ID);
+            String title = request.getParameter(ParameterName.TITLE);
+            String review = request.getParameter(ParameterName.REVIEW);
 
-                ServiceFactory serviceFactory = ServiceFactory.getInstance();
-                ReviewService reviewService = serviceFactory.getReviewService();
-                try {
-                    boolean result = reviewService.reviewMovie(idMovie, idUser, title, review);
-                    response.getWriter().print(result);
-                } catch (ServiceException e) {
-                    logger.error(e);
-                    response.getWriter().print(false);
-                }
+            ServiceFactory serviceFactory = ServiceFactory.getInstance();
+            ReviewService reviewService = serviceFactory.getReviewService();
+            try {
+                boolean result = reviewService.reviewMovie(idMovie, idUser, title, review);
+                response.getWriter().print(result);
+            } catch (ServiceException e) {
+                logger.error(e);
+                response.getWriter().print(false);
             }
         }
     }

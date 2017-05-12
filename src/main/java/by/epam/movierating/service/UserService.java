@@ -20,4 +20,5 @@ public interface UserService {
     boolean deleteUser(int idUser) throws ServiceException;
     boolean changeBanStatus(int idUser, String status) throws ServiceException;
     List<StaticticsDTO> getMonthUserCount() throws ServiceException;
+    User getUserByLogin(String login) throws ServiceException;
 }

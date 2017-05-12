@@ -27,22 +27,20 @@ public class AddGenreCommand implements Command {
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        if (SecurityManager.getInstance().checkRoles(request, response, RoleType.ADMIN)) {
-            String nameRu = request.getParameter(ParameterName.NAME_RU);
-            String nameEn = request.getParameter(ParameterName.NAME_EN);
+        String nameRu = request.getParameter(ParameterName.NAME_RU);
+        String nameEn = request.getParameter(ParameterName.NAME_EN);
 
-            ServiceFactory serviceFactory = ServiceFactory.getInstance();
-            GenreService genreService = serviceFactory.getGenreService();
-            try {
-                int id = genreService.addGenre(nameRu, nameEn);
-                String json = new Gson().toJson(id);
-                response.setContentType(CONTENT_TYPE);
-                response.setCharacterEncoding(ENCODING);
-                response.getWriter().print(json);
-            } catch (ServiceException e) {
-                logger.error(e);
-                response.sendRedirect(JSPPageName.ERROR_500_PAGE);
-            }
+        ServiceFactory serviceFactory = ServiceFactory.getInstance();
+        GenreService genreService = serviceFactory.getGenreService();
+        try {
+            int id = genreService.addGenre(nameRu, nameEn);
+            String json = new Gson().toJson(id);
+            response.setContentType(CONTENT_TYPE);
+            response.setCharacterEncoding(ENCODING);
+            response.getWriter().print(json);
+        } catch (ServiceException e) {
+            logger.error(e);
+            response.sendRedirect(JSPPageName.ERROR_500_PAGE);
         }
     }
 }

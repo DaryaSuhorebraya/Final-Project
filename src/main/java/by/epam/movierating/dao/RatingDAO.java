@@ -10,4 +10,5 @@ public interface RatingDAO {
     boolean rateMovie(int idMovie, int idUser, int mark) throws DAOException;
     boolean checkRateOpportunity(int idMovie, int idUser) throws DAOException;
     Rating getRatingOnMovieByUserId(int idMovie, int idUser) throws DAOException;
+    boolean deleteRating(int idMovie, int idUser) throws DAOException;
 }

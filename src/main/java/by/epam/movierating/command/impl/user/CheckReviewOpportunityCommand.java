@@ -18,7 +18,6 @@ import java.io.IOException;
  * Created by Даша on 01.04.2017.
  */
 public class CheckReviewOpportunityCommand implements Command {
-
     private static final Logger logger = Logger.getLogger(CheckReviewOpportunityCommand.class);
 
     @Override

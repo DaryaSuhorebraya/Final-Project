@@ -50,3 +50,13 @@
 #rating{
     text-align: center;
 }
+.btn-unrate{
+    margin-left: 240px;
+    display: none;
+    background-color: #de7b5b;
+    border-color: #da8746;
+}
+.btn-unrate:hover{
+    background-color: #ad584d;
+    border-color: #ab6b37;
+}

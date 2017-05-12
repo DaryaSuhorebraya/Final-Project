@@ -31,6 +31,14 @@
         <filter-name>EncodingFilter</filter-name>
         <servlet-name>Controller</servlet-name>
     </filter-mapping>
+    <filter>
+        <filter-name>RoleFilter</filter-name>
+        <filter-class>by.epam.movierating.controller.filter.RoleFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>RoleFilter</filter-name>
+        <servlet-name>Controller</servlet-name>
+    </filter-mapping>
     <listener>
         <listener-class>by.epam.movierating.controller.listener.ConnectionPoolListener</listener-class>
     </listener>

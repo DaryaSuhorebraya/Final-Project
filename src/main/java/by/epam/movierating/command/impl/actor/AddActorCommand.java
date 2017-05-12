@@ -28,25 +28,24 @@ public class AddActorCommand implements Command {
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        if (SecurityManager.getInstance().checkRoles(request, response, RoleType.ADMIN)) {
 
-            String firstNameEn = request.getParameter(ParameterName.FIRST_NAME_EN);
-            String lastNameEn = request.getParameter(ParameterName.LAST_NAME_EN);
-            String firstNameRu = request.getParameter(ParameterName.FIRST_NAME_RU);
-            String lastNameRu = request.getParameter(ParameterName.LAST_NAME_RU);
+        String firstNameEn = request.getParameter(ParameterName.FIRST_NAME_EN);
+        String lastNameEn = request.getParameter(ParameterName.LAST_NAME_EN);
+        String firstNameRu = request.getParameter(ParameterName.FIRST_NAME_RU);
+        String lastNameRu = request.getParameter(ParameterName.LAST_NAME_RU);
 
-            ServiceFactory serviceFactory = ServiceFactory.getInstance();
-            ActorService actorService = serviceFactory.getActorService();
-            try {
-                int id = actorService.addActor(firstNameEn, lastNameEn, firstNameRu, lastNameRu);
-                String json = new Gson().toJson(id);
-                response.setContentType(CONTENT_TYPE);
-                response.setCharacterEncoding(ENCODING);
-                response.getWriter().print(json);
-            } catch (ServiceException e) {
-                logger.error(e);
-                response.sendRedirect(JSPPageName.ERROR_500_PAGE);
-            }
+        ServiceFactory serviceFactory = ServiceFactory.getInstance();
+        ActorService actorService = serviceFactory.getActorService();
+        try {
+            int id = actorService.addActor(firstNameEn, lastNameEn, firstNameRu, lastNameRu);
+            String json = new Gson().toJson(id);
+            response.setContentType(CONTENT_TYPE);
+            response.setCharacterEncoding(ENCODING);
+            response.getWriter().print(json);
+        } catch (ServiceException e) {
+            logger.error(e);
+            response.sendRedirect(JSPPageName.ERROR_500_PAGE);
         }
+
     }
 }

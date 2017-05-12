@@ -24,22 +24,19 @@ public class ChangeBanStatusCommand implements Command {
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        if (SecurityManager.getInstance().checkRoles(request, response, RoleType.ADMIN)) {
-            HttpSession session = request.getSession();
+        HttpSession session = request.getSession();
 
-            response.setContentType("text/plain");
-            int userId = Integer.parseInt(request.getParameter(ParameterName.USER_ID));
-            String status = request.getParameter(ParameterName.STATUS);
-            ServiceFactory serviceFactory = ServiceFactory.getInstance();
-            UserService userService = serviceFactory.getUserService();
-            try {
-                boolean result = userService.changeBanStatus(userId, status);
-                response.getWriter().print(result);
-            } catch (ServiceException e) {
-                logger.error(e);
-                response.getWriter().print(false);
-            }
-
+        response.setContentType("text/plain");
+        int userId = Integer.parseInt(request.getParameter(ParameterName.USER_ID));
+        String status = request.getParameter(ParameterName.STATUS);
+        ServiceFactory serviceFactory = ServiceFactory.getInstance();
+        UserService userService = serviceFactory.getUserService();
+        try {
+            boolean result = userService.changeBanStatus(userId, status);
+            response.getWriter().print(result);
+        } catch (ServiceException e) {
+            logger.error(e);
+            response.getWriter().print(false);
         }
     }
 }

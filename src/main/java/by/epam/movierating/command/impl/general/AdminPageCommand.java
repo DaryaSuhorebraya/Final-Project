@@ -28,21 +28,19 @@ public class AdminPageCommand implements Command {
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        if (SecurityManager.getInstance().checkRoles(request, response, RoleType.ADMIN)) {
-            PagePathUtil.setQueryString(request);
-            HttpSession session = request.getSession(true);
-            String language = (String) session.getAttribute(AttributeName.LANGUAGE);
-            ServiceFactory serviceFactory = new ServiceFactory();
-            GenreService genreService = serviceFactory.getGenreService();
+        PagePathUtil.setQueryString(request);
+        HttpSession session = request.getSession(true);
+        String language = (String) session.getAttribute(AttributeName.LANGUAGE);
+        ServiceFactory serviceFactory = new ServiceFactory();
+        GenreService genreService = serviceFactory.getGenreService();
 
-            try {
-                List<Genre> genreList = genreService.getAllGenres(language);
-                request.setAttribute(AttributeName.GENRES, genreList);
-                request.getRequestDispatcher(JSPPageName.ADMIN_PAGE).forward(request, response);
-            } catch (ServiceException e) {
-                logger.error(e);
-                response.sendRedirect(JSPPageName.ERROR_500_PAGE);
-            }
+        try {
+            List<Genre> genreList = genreService.getAllGenres(language);
+            request.setAttribute(AttributeName.GENRES, genreList);
+            request.getRequestDispatcher(JSPPageName.ADMIN_PAGE).forward(request, response);
+        } catch (ServiceException e) {
+            logger.error(e);
+            response.sendRedirect(JSPPageName.ERROR_500_PAGE);
         }
     }
 }

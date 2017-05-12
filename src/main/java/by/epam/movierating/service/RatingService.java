@@ -10,4 +10,5 @@ public interface RatingService {
     boolean rateMovie(int idMovie, int idUser, int mark) throws ServiceException;
     boolean checkRateOpportunity(int idMovie, int idUser) throws ServiceException;
     Rating getRatingOnMovieByUserId(int idMovie, int idUser) throws ServiceException;
+    boolean deleteRating(int idMovie, int idUser) throws ServiceException;
 }

@@ -1,9 +1,6 @@
 package by.epam.movierating.command.impl.movie;
 
-import by.epam.movierating.bean.Actor;
-import by.epam.movierating.bean.Country;
-import by.epam.movierating.bean.Genre;
-import by.epam.movierating.bean.Movie;
+import by.epam.movierating.bean.*;
 import by.epam.movierating.bean.dto.ReviewDTO;
 import by.epam.movierating.command.Command;
 import by.epam.movierating.command.constant.AttributeName;
@@ -42,6 +39,7 @@ public class ViewMovieCommand implements Command {
         CountryService countryService = serviceFactory.getCountryService();
         ActorService actorService = serviceFactory.getActorService();
         ReviewService reviewService = serviceFactory.getReviewService();
+        RatingService ratingService = serviceFactory.getRatingService();
         try {
             Movie movie = movieService.getMovieById(idMovie, language);
             request.setAttribute(AttributeName.MOVIE, movie);
@@ -53,6 +51,13 @@ public class ViewMovieCommand implements Command {
             request.setAttribute(AttributeName.ACTORS, actorList);
             List<ReviewDTO> reviewList = reviewService.getReviewsByIdMovie(idMovie, language);
             request.setAttribute(AttributeName.REVIEWS, reviewList);
+            if (session.getAttribute(AttributeName.USER_ID) != null) {
+                int idUser = (int) session.getAttribute(AttributeName.USER_ID);
+                Rating rating = ratingService.getRatingOnMovieByUserId(idMovie, idUser);
+                if (rating != null) {
+                    request.setAttribute(AttributeName.RATING, rating);
+                }
+            }
 
             request.getRequestDispatcher(JSPPageName.MOVIE_INFO_PAGE).forward(request, response);
         } catch (ServiceException e) {

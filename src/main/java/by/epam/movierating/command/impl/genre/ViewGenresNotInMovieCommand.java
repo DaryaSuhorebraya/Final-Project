@@ -38,7 +38,6 @@ public class ViewGenresNotInMovieCommand implements Command {
         try {
             GenreService genreService = serviceFactory.getGenreService();
             List<Genre> genreList = genreService.getGenresNotInMovie(idMovie, language);
-
             String json = new Gson().toJson(genreList);
             response.setContentType(CONTENT_TYPE);
             response.setCharacterEncoding(ENCODING);

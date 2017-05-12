@@ -108,11 +108,11 @@ public class UserServiceImpl implements UserService {
         Date date = Validator.validateDate(dateRegister);
         boolean isAdmin = Validator.validateAdminString(isAdminString);
         boolean isBanned = Validator.validateBannedString(isBannedString);
-        //User user;
         try {
             DAOFactory daoFactory = DAOFactory.getInstance();
             UserDAO userDAO = daoFactory.getUserDAO();
-            userDAO.editUser(idUser, login, firstName, lastName, email, date, status, isAdmin, isBanned);
+            userDAO.editUser(idUser, login, firstName, lastName,
+                    email, date, status, isAdmin, isBanned);
         } catch (DAOException e) {
             throw new ServiceException(e);
         }
@@ -161,5 +161,17 @@ public class UserServiceImpl implements UserService {
             throw new ServiceException(e);
         }
         return staticticsDTOList;
+    }
+
+    @Override
+    public User getUserByLogin(String login) throws ServiceException {
+        Validator.validateLogin(login);
+        try {
+            DAOFactory daoFactory = DAOFactory.getInstance();
+            UserDAO userDAO = daoFactory.getUserDAO();
+            return userDAO.getUserByLogin(login);
+        } catch (DAOException e) {
+            throw new ServiceException(e);
+        }
     }
 }

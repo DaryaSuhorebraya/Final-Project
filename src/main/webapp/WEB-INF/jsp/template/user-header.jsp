@@ -7,7 +7,10 @@
 <fmt:message bundle="${loc}" key="username" var="username"/>
 <fmt:message bundle="${loc}" key="password" var="password"/>
 <link href="${pageContext.request.contextPath}/css/header-style.css" rel="stylesheet">
+<link href="${pageContext.request.contextPath}/css/bootstrapValidator.min.css" rel="stylesheet">
 <link href="${pageContext.request.contextPath}/css/bootstrap-submenu.min.css" rel="stylesheet">
+<script src="${pageContext.request.contextPath}/js/bootstrapValidator.min.js"></script>
+<script src="${pageContext.request.contextPath}/js/auth-validation.js"></script>
 <header>
     <div class="navbar navbar-inverse">
         <div class="navbar-header">
@@ -131,33 +134,33 @@
             <div class="modal-body text-center">
                 <div class="tab-content">
                     <div class="tab-pane active" id="profile">
-                        <form action= "Controller" method="get" role="form">
+                        <form action= "Controller" method="get" role="form" id="authForm">
                             <input type="hidden" name="command" value="login">
                             <div class="row">
-                            <div class="input-group">
-						<span class="input-group-addon">
-						<span class="glyphicon glyphicon-user"></span>
-						</span>
+                            <div class="form-group auth-form-group" id="login-div">
+						        <span class="input-group-addon">
+						        <span class="glyphicon glyphicon-user"></span>
+						        </span>
                                 <input type="text" name="login" class="form-control" id="login" placeholder="${username}" required />
                             </div>
                         </div>
-                            <p></p>
+                            <p id="login-p"></p>
                             <div class="row" >
-                                <div class="input-group">
+                                <div class="form-group auth-form-group" id="pass-div">
 						<span class="input-group-addon">
 						<span class="glyphicon glyphicon-lock"></span>
 						</span>
                                     <input type="password" name="password" class="form-control" id="password" placeholder="${password}" required autofocus />
                                 </div>
                             </div>
-                            <p></p>
+                            <p id="pass-p"></p>
                             <fmt:message bundle="${loc}" key="register.question"/>
                             <a href="Controller?command=redirect&redirectPage=registration"><fmt:message bundle="${loc}" key="register"/> </a>
                             <p></p>
                             <div class="row">
                                 <button type="submit" class="btn btn-labeled btn-success">
                                     <span class="btn-label"><i class="glyphicon glyphicon-ok"></i></span>&nbsp<fmt:message bundle="${loc}" key="log.in"/> </button>
-                                <button type="button" class="btn btn-labeled btn-danger">
+                                <button type="button" data-dismiss="modal" class="btn btn-labeled btn-danger">
                                     <span class="btn-label"><i class="glyphicon glyphicon-remove"></i></span>&nbsp<fmt:message bundle="${loc}" key="close"/> </button>
 
                             </div>

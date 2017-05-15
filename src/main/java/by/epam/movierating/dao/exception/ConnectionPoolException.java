@@ -1,7 +1,9 @@
 package by.epam.movierating.dao.exception;
 
+import by.epam.movierating.dao.connectionpool.ConnectionPool;
+
 /**
- * Created by Даша on 27.01.2017.
+ * Exception, which can occurs in {@link ConnectionPool}
  */
 public class ConnectionPoolException extends Exception {
     private static final long serialVersionUID = 1L;

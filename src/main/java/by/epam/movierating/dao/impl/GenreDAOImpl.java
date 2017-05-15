@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by Даша on 22.02.2017.
+ * {@link GenreDAO} implementation, provided DAO-logic for {@link Genre} entity
  */
 public class GenreDAOImpl implements GenreDAO {
     private static final String SQL_GET_ALL_GENRES = "SELECT id_genre,name_ FROM genre WHERE is_deleted=0";
@@ -38,7 +38,12 @@ public class GenreDAOImpl implements GenreDAO {
             "GROUP BY movie_genre.id_genre";
     private static final String SQL_ADD_GENRE = "INSERT INTO genre (name_ru,name_en) VALUES (?,?)";
 
-
+    /**
+     * Returns all genres
+     * @param language a language for data selection
+     * @return {@link List} of {@link Genre} objects
+     * @throws DAOException
+     */
     @Override
     public List<Genre> getAllGenres(String language) throws DAOException {
         Connection connection = null;
@@ -62,6 +67,13 @@ public class GenreDAOImpl implements GenreDAO {
         }
     }
 
+    /**
+     * Returns genres that are in use
+     * (there are relations between genres and movies )
+     * @param language a language for data selection
+     * @return {@link List} of {@link Genre} objects
+     * @throws DAOException
+     */
     @Override
     public List<Genre> getAllActiveGenres(String language) throws DAOException {
         Connection connection = null;
@@ -85,6 +97,13 @@ public class GenreDAOImpl implements GenreDAO {
         }
     }
 
+    /**
+     * Deletes a genre from the data storage
+     * @param idGenre genre id that has to be deleted
+     * @return {@code true} if genre was deleted
+     *         and {@code false} otherwise
+     * @throws DAOException
+     */
     @Override
     public boolean deleteGenre(int idGenre) throws DAOException {
         Connection connection = null;
@@ -105,6 +124,15 @@ public class GenreDAOImpl implements GenreDAO {
         }
     }
 
+    /**
+     * Updates the genre in data storage
+     * @param idGenre genre id which has to be updated
+     * @param name a new name of a genre
+     * @param language a language of data
+     * @return {@code true} if genre was updated
+     *         and {@code false} otherwise
+     * @throws DAOException
+     */
     @Override
     public boolean editGenre(int idGenre, String name, String language) throws DAOException {
         Connection connection = null;
@@ -127,6 +155,14 @@ public class GenreDAOImpl implements GenreDAO {
         }
     }
 
+    /**
+     * Returns {@link List} of genres which has reference
+     * to the required movie id
+     * @param idMovie movie id for search
+     * @param language a language for data selection
+     * @return {@link List} of {@link Genre} objects
+     * @throws DAOException
+     */
     @Override
     public List<Genre> getGenresByIdMovie(int idMovie, String language)
             throws DAOException {
@@ -150,6 +186,14 @@ public class GenreDAOImpl implements GenreDAO {
         }
     }
 
+    /**
+     * Returns {@link List} of genres which has not
+     * reference to the required movie id
+     * @param idMovie movie id for search
+     * @param language a language for data selection
+     * @return {@link List} of {@link Genre} objects
+     * @throws DAOException
+     */
     @Override
     public List<Genre> getGenresNotInMovie(int idMovie, String language)
             throws DAOException {
@@ -173,6 +217,12 @@ public class GenreDAOImpl implements GenreDAO {
         }
     }
 
+    /**
+     * Returns a distribution between genres
+     * @param language a language for data selection
+     * @return {@link List} of {@link StaticticsDTO} objects
+     * @throws DAOException
+     */
     @Override
     public List<StaticticsDTO> getGenreStatistics(String language)
             throws DAOException {
@@ -202,6 +252,13 @@ public class GenreDAOImpl implements GenreDAO {
         }
     }
 
+    /**
+     * Creates a new genre in data storage
+     * @param nameRu a name of new genre in Russian
+     * @param nameEn a name of new genre in English
+     * @return id of a new inserted genre in data storage
+     * @throws DAOException
+     */
     @Override
     public int addGenre(String nameRu, String nameEn) throws DAOException {
         Connection connection = null;
@@ -209,7 +266,8 @@ public class GenreDAOImpl implements GenreDAO {
         try {
             ConnectionPool connectionPool = ConnectionPool.getInstance();
             connection = connectionPool.getConnection();
-            statement = connection.prepareStatement(SQL_ADD_GENRE, Statement.RETURN_GENERATED_KEYS);
+            statement = connection.prepareStatement(SQL_ADD_GENRE,
+                    Statement.RETURN_GENERATED_KEYS);
             statement.setString(1, nameRu);
             statement.setString(2, nameEn);
             int updatedRows = statement.executeUpdate();
@@ -229,6 +287,13 @@ public class GenreDAOImpl implements GenreDAO {
         return 0;
     }
 
+    /**
+     * Returns genre object by its id in data storage
+     * @param idGenre an id of the genre for search
+     * @param language a language for data selection
+     * @return {@link Genre} object
+     * @throws DAOException
+     */
     @Override
     public Genre getGenreById(int idGenre, String language)
             throws DAOException {
@@ -252,6 +317,12 @@ public class GenreDAOImpl implements GenreDAO {
         }
     }
 
+    /**
+     * Setups genres' information
+     * @param resultSet {@link ResultSet} object contains genres' data
+     * @return {@link List} of {@link Genre} objects
+     * @throws SQLException
+     */
     private List<Genre> setGenreInfo(ResultSet resultSet) throws SQLException {
         List<Genre> genreList = new ArrayList<>();
         while (resultSet.next()) {

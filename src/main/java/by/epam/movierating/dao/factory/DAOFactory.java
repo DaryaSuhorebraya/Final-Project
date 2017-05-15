@@ -4,7 +4,7 @@ import by.epam.movierating.dao.*;
 import by.epam.movierating.dao.impl.*;
 
 /**
- * Created by Даша on 14.02.2017.
+ * Provides logic of instancing DAO objects.
  */
 public class DAOFactory {
     private static final DAOFactory instance = new DAOFactory();
@@ -12,7 +12,6 @@ public class DAOFactory {
     private UserDAO userDAO = new UserDAOImpl();
     private MovieDAO movieDAO = new MovieDAOImpl();
     private GenreDAO genreDAO = new GenreDAOImpl();
-    private UserInfoDAO userInfoDAO = new UserInfoImpl();
     private ActorDAO actorDAO = new ActorDAOImpl();
     private ReviewDAO reviewDAO = new ReviewDAOImpl();
     private RatingDAO ratingDAO = new RatingDAOImpl();
@@ -20,38 +19,66 @@ public class DAOFactory {
     public DAOFactory() {
     }
 
+    /**
+     * Returns an instance of DAOFactory
+     * @return {@link DAOFactory} object
+     */
     public static DAOFactory getInstance() {
         return instance;
     }
 
+    /**
+     * Returns an implementation of a CountryDAO interface.
+     * @return {@link CountryDAO} object
+     */
     public CountryDAO getCountryDAO() {
         return countryDAO;
     }
 
+    /**
+     * Returns an implementation of a UserDAO interface.
+     * @return {@link UserDAO} object
+     */
     public UserDAO getUserDAO() {
         return userDAO;
     }
 
+    /**
+     * Returns an implementation of a MovieDAO interface.
+     * @return {@link MovieDAO} object
+     */
     public MovieDAO getMovieDAO() {
         return movieDAO;
     }
 
+    /**
+     * Returns an implementation of a GenreDAO interface.
+     * @return {@link GenreDAO} object
+     */
     public GenreDAO getGenreDAO() {
         return genreDAO;
     }
 
-    public UserInfoDAO getUserInfoDAO() {
-        return userInfoDAO;
-    }
-
+    /**
+     * Returns an implementation of a ActorDAO interface.
+     * @return {@link ActorDAO} object
+     */
     public ActorDAO getActorDAO() {
         return actorDAO;
     }
 
+    /**
+     * Returns an implementation of a ReviewDAO interface.
+     * @return {@link ReviewDAO} object
+     */
     public ReviewDAO getReviewDAO() {
         return reviewDAO;
     }
 
+    /**
+     * Returns an implementation of a RatingDAO interface.
+     * @return {@link RatingDAO} object
+     */
     public RatingDAO getRatingDAO() {
         return ratingDAO;
     }

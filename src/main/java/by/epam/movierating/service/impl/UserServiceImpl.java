@@ -4,7 +4,6 @@ import by.epam.movierating.bean.User;
 import by.epam.movierating.bean.dto.StaticticsDTO;
 import by.epam.movierating.command.constant.ParameterName;
 import by.epam.movierating.dao.UserDAO;
-import by.epam.movierating.dao.UserInfoDAO;
 import by.epam.movierating.dao.exception.DAOException;
 import by.epam.movierating.dao.factory.DAOFactory;
 import by.epam.movierating.service.UserService;
@@ -18,10 +17,17 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * Created by Даша on 14.02.2017.
+ * Provides a business-logic with the {@link User} entity.
  */
 public class UserServiceImpl implements UserService {
-
+    /**
+     * Returns a user who match by the login and password
+     * @param login a login of a user for search
+     * @param password a password of a user for search
+     * @return {@link User} object or {@code null}
+     * @throws ServiceException
+     * @throws ServiceWrongDataException if a login or password are incorrect
+     */
     @Override
     public User login(String login, byte[] password) throws ServiceException {
         Validator.validateLogin(login);
@@ -45,6 +51,18 @@ public class UserServiceImpl implements UserService {
         return user;
     }
 
+    /**
+     * Creates a new user in data storage
+     * @param login a login of a new user
+     * @param password a password of a new user
+     * @param confirmPassword a confirm of the password of a new user
+     * @param email a email of a new user
+     * @param firstName a first name if a new user
+     * @param lastName a last name of a new user
+     * @return {@link User} object
+     * @throws ServiceWrongDataException
+     * @throws ServiceException
+     */
     @Override
     public User register(String login, byte[] password, byte[] confirmPassword, String email, String firstName, String lastName)
             throws ServiceException {
@@ -69,6 +87,11 @@ public class UserServiceImpl implements UserService {
         return user;
     }
 
+    /**
+     * Returns all users
+     * @return {@link List} of {@link User} objects
+     * @throws ServiceException
+     */
     @Override
     public List<User> getAllUsers() throws ServiceException {
         List<User> userList;
@@ -82,6 +105,12 @@ public class UserServiceImpl implements UserService {
         return userList;
     }
 
+    /**
+     * Returns a user by its id
+     * @param idUser an id of a user for search
+     * @return {@link User} object
+     * @throws ServiceException
+     */
     @Override
     public User getUserById(int idUser) throws ServiceException {
         Validator.validateIntData(idUser);
@@ -96,6 +125,19 @@ public class UserServiceImpl implements UserService {
         return user;
     }
 
+    /**
+     * Updates a user in data storage
+     * @param idUser an id of a user that has to be updated
+     * @param login a new login of a user
+     * @param firstName a new first name of a user
+     * @param lastName a new last name of a user
+     * @param email a new email of a user
+     * @param dateRegister a new register date of a user
+     * @param status a new status of a user
+     * @param isAdminString determines admin status
+     * @param isBannedString determines ban status
+     * @throws ServiceException
+     */
     @Override
     public void editUser(int idUser, String login, String firstName,
                          String lastName, String email, String dateRegister,
@@ -116,9 +158,15 @@ public class UserServiceImpl implements UserService {
         } catch (DAOException e) {
             throw new ServiceException(e);
         }
-        //return user;
     }
 
+    /**
+     * Deletes a user in data storage
+     * @param idUser an id of a user that has to be deleted
+     * @return {@code true} if a user was deleted
+     *         and {@code false} otherwise
+     * @throws ServiceException
+     */
     @Override
     public boolean deleteUser(int idUser) throws ServiceException {
         Validator.validateIntData(idUser);
@@ -131,6 +179,14 @@ public class UserServiceImpl implements UserService {
         }
     }
 
+    /**
+     * Changes ban status of a user
+     * @param idUser an id of a user that has to be updated
+     * @param status a new ban status of a user
+     * @return {@code true} if a user was updated
+     *         and {@code false} otherwise
+     * @throws ServiceException
+     */
     @Override
     public boolean changeBanStatus(int idUser, String status)
             throws ServiceException {
@@ -150,6 +206,11 @@ public class UserServiceImpl implements UserService {
         }
     }
 
+    /**
+     * Returns a statistics of registered user on last month
+     * @return {@link List} of {@link StaticticsDTO} objects
+     * @throws ServiceException
+     */
     @Override
     public List<StaticticsDTO> getMonthUserCount() throws ServiceException {
         List<StaticticsDTO> staticticsDTOList;
@@ -163,6 +224,12 @@ public class UserServiceImpl implements UserService {
         return staticticsDTOList;
     }
 
+    /**
+     * Returns a user by its login
+     * @param login a login of a user for search
+     * @return {@link User} object
+     * @throws ServiceException
+     */
     @Override
     public User getUserByLogin(String login) throws ServiceException {
         Validator.validateLogin(login);

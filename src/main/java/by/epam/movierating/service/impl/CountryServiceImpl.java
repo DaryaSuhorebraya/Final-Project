@@ -11,9 +11,15 @@ import by.epam.movierating.service.util.Validator;
 import java.util.List;
 
 /**
- * Created by Даша on 06.03.2017.
+ * Provides a business-logic with the {@link Country} entity.
  */
 public class CountryServiceImpl implements CountryService {
+    /**
+     * Returns all countries
+     * @param language a language for data selection
+     * @return {@link List} of {@link Country} objects
+     * @throws ServiceException
+     */
     @Override
     public List<Country> getAllCountries(String language)
             throws ServiceException {
@@ -29,6 +35,13 @@ public class CountryServiceImpl implements CountryService {
         return countryList;
     }
 
+    /**
+     * Returns countries that are in use
+     * (there are relations between countries and movies )
+     * @param language a language for data selection
+     * @return {@link List} of {@link Country} objects
+     * @throws ServiceException
+     */
     @Override
     public List<Country> getAllActiveCountries(String language)
             throws ServiceException {
@@ -44,6 +57,13 @@ public class CountryServiceImpl implements CountryService {
         return countryList;
     }
 
+    /**
+     * Returns countries that match by movie id
+     * @param idMovie movie id for search
+     * @param language a language for data selection
+     * @return {@link List} of {@link Country} objects
+     * @throws ServiceException
+     */
     @Override
     public List<Country> getCountriesByMovieId(int idMovie, String language)
             throws ServiceException {
@@ -60,6 +80,13 @@ public class CountryServiceImpl implements CountryService {
         return countryList;
     }
 
+    /**
+     * Returns countries that do not match by movie id
+     * @param idMovie movie id for search
+     * @param language a language for data selection
+     * @return {@link List} of {@link Country} objects
+     * @throws ServiceException
+     */
     @Override
     public List<Country> getCountriesNotInMovie(int idMovie, String language)
             throws ServiceException {

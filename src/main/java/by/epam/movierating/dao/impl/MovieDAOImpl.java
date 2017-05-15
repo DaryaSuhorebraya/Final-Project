@@ -8,12 +8,11 @@ import by.epam.movierating.dao.exception.DAOException;
 import by.epam.movierating.dao.util.DAOUtil;
 
 import java.sql.*;
-import java.time.Year;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by Даша on 14.02.2017.
+ * {@link MovieDAO} implementation, provided DAO-logic for {@link Movie} entity
  */
 public class MovieDAOImpl implements MovieDAO {
     //in get all movies  changed inner to left
@@ -101,6 +100,12 @@ public class MovieDAOImpl implements MovieDAO {
     private static final String SQL_UPDATE_MOVIE_POSTER="UPDATE movie SET poster_path =? WHERE id_movie=?";
     private static final String LIMIT=" LIMIT 4";
 
+    /**
+     * Returns all movies
+     * @param language a language for data selection
+     * @return {@link List} of {@link Movie} objects
+     * @throws DAOException
+     */
     @Override
     public List<Movie> getAllMovies(String language)
             throws DAOException {
@@ -125,6 +130,12 @@ public class MovieDAOImpl implements MovieDAO {
         }
     }
 
+    /**
+     * Returns movies ordered by its rating
+     * @param language a language for data selection
+     * @return {@link List} of {@link Movie} objects
+     * @throws DAOException
+     */
     @Override
     public List<Movie> getTopMovies(String language)
             throws DAOException {
@@ -149,6 +160,13 @@ public class MovieDAOImpl implements MovieDAO {
         }
     }
 
+    /**
+     * Returns movies that match by genre ig
+     * @param idGenre a genre id for search
+     * @param language a language for data selection
+     * @return {@link List} of {@link Movie} objects
+     * @throws DAOException
+     */
     @Override
     public List<Movie> getMoviesByGenre(int idGenre, String language)
             throws DAOException {
@@ -173,6 +191,13 @@ public class MovieDAOImpl implements MovieDAO {
         }
     }
 
+    /**
+     * Returns movies by country code
+     * @param countryCode a required country code
+     * @param language a language for data selection
+     * @return {@link List} of {@link Movie} objects
+     * @throws DAOException
+     */
     @Override
     public List<Movie> getMoviesByCountry(String countryCode, String language)
             throws DAOException {
@@ -197,6 +222,13 @@ public class MovieDAOImpl implements MovieDAO {
         }
     }
 
+    /**
+     * Deletes a movie from data storage
+     * @param idMovie movie id that has to be deleted
+     * @return {@code true} if movie was deleted
+     *         and {@code false} otherwise
+     * @throws DAOException
+     */
     @Override
     public boolean deleteMovie(int idMovie) throws DAOException {
         Connection connection=null;
@@ -217,6 +249,13 @@ public class MovieDAOImpl implements MovieDAO {
         }
     }
 
+    /**
+     * Returns a movie by its id
+     * @param idMovie a movie id for search
+     * @param language a language for data selection
+     * @return {@link Movie} object
+     * @throws DAOException
+     */
     @Override
     public Movie getMovieById(int idMovie, String language) throws DAOException {
         Connection connection=null;
@@ -242,6 +281,16 @@ public class MovieDAOImpl implements MovieDAO {
         }
     }
 
+    /**
+     * Updates a required movie's field
+     * @param idMovie a movie id for updating
+     * @param field a required field for updating
+     * @param value a new value of field
+     * @param language a language for data selection
+     * @return {@code true} if movie was updated
+     *         and {@code false} otherwise
+     * @throws DAOException
+     */
     @Override
     public boolean editMovieField(int idMovie, String field, String value, String language)
             throws DAOException {
@@ -271,6 +320,15 @@ public class MovieDAOImpl implements MovieDAO {
         }
     }
 
+    /**
+     * Deletes a genre for movie in data storage
+     * @param genreName a genre name that has to be deleted
+     * @param language a language of genre name
+     * @param idMovie a movie id of a movie that contains a genre
+     * @return {@code true} if genre for movie was deleted
+     *         and {@code false} otherwise
+     * @throws DAOException
+     */
     @Override
     public boolean deleteGenreForMovie(String genreName, String language, int idMovie)
             throws DAOException {
@@ -293,6 +351,15 @@ public class MovieDAOImpl implements MovieDAO {
         }
     }
 
+    /**
+     * Adds a genre for movie in data storage
+     * @param idMovie a movie id that contains a genre
+     * @param genreName a genre name that has to be added
+     * @param language a language of genre name
+     * @return {@code true} if genre for movie was added
+     *         and {@code false} otherwise
+     * @throws DAOException
+     */
     @Override
     public boolean addGenreForMovie(int idMovie, String genreName, String language)
             throws DAOException {
@@ -315,6 +382,13 @@ public class MovieDAOImpl implements MovieDAO {
         }
     }
 
+    /**
+     * Returns movies by genre name
+     * @param genreName a genre name for search
+     * @param language a language for data selection
+     * @return {@link List} of {@link Movie} objects
+     * @throws DAOException
+     */
     @Override
     public List<Movie> getMoviesByGenreName(String genreName, String language)
             throws DAOException {
@@ -339,6 +413,13 @@ public class MovieDAOImpl implements MovieDAO {
         }
     }
 
+    /**
+     * Returns movies by country name
+     * @param countryName a country name for search
+     * @param language a language for data selection
+     * @return {@link List} of {@link Movie} objects
+     * @throws DAOException
+     */
     @Override
     public List<Movie> getMoviesByCountryName(String countryName, String language)
             throws DAOException {
@@ -363,6 +444,14 @@ public class MovieDAOImpl implements MovieDAO {
         }
     }
 
+    /**
+     * Returns movies by actor first name and last name
+     * @param firstName an actor first name for search
+     * @param lastName an actor last name for search
+     * @param language a language for data selection
+     * @return {@link List} of {@link Movie} objects
+     * @throws DAOException
+     */
     @Override
     public List<Movie> getMoviesByActorInitial(String firstName,
                                                String lastName, String language)
@@ -389,6 +478,15 @@ public class MovieDAOImpl implements MovieDAO {
         }
     }
 
+    /**
+     * Deletes a country for movie in data storage
+     * @param countryName a country name that has to be deleted
+     * @param language a language of genre name
+     * @param movieId a movie id of a movie that contains a country
+     * @return {@code true} if a genre for movie was deleted
+     *         and {@code false} otherwise
+     * @throws DAOException
+     */
     @Override
     public boolean deleteCountryForMovie(String countryName, String language, int movieId)
             throws DAOException {
@@ -412,6 +510,15 @@ public class MovieDAOImpl implements MovieDAO {
         }
     }
 
+    /**
+     * Adds a country for movie in data storage
+     * @param idMovie a movie id of a movie that contains a country
+     * @param countryName a country name that has to be added
+     * @param language a language of country name
+     * @return {@code true} if a country for movie was added
+     *         and {@code false} otherwise
+     * @throws DAOException
+     */
     @Override
     public boolean addCountryForMovie(int idMovie, String countryName, String language)
             throws DAOException {
@@ -435,6 +542,16 @@ public class MovieDAOImpl implements MovieDAO {
         }
     }
 
+    /**
+     * Deletes an actor for movie in data storage
+     * @param firstName a first name of an actor that has to be deleted
+     * @param lastName a last name of an actor that has to be deleted
+     * @param language a language of first name and last name
+     * @param movieId a movie id of a movie that contains an actor
+     * @return {@code true} if an actor for movie was deleted
+     *         and {@code false} otherwise
+     * @throws DAOException
+     */
     @Override
     public boolean deleteActorForMovie(String firstName, String lastName,
                                        String language, int movieId)
@@ -460,6 +577,16 @@ public class MovieDAOImpl implements MovieDAO {
         }
     }
 
+    /**
+     * Adds an actor for movie in data storage
+     * @param idMovie a movie id of a movie that contains an actor
+     * @param firstName a first name of an actor that has to be added
+     * @param lastName a last name of an actor that has to be added
+     * @param language a language of first name and last name
+     * @return {@code true} if an actor for movie was added
+     *         and {@code false} otherwise
+     * @throws DAOException
+     */
     @Override
     public boolean addActorForMovie(int idMovie, String firstName,
                                     String lastName, String language)
@@ -485,6 +612,16 @@ public class MovieDAOImpl implements MovieDAO {
         }
     }
 
+    /**
+     * Creates a new movie in data storage
+     * @param titleEn a title of a movie in English
+     * @param titleRu a title of a movie in Russian
+     * @param releaseYear a release year of a movie
+     * @param descrEn a description of a movie in English
+     * @param descrRu a description of a movie in Russian
+     * @return an id of a new inserted movie
+     * @throws DAOException
+     */
     @Override
     public int addMovie(String titleEn, String titleRu,
                           int releaseYear, String descrEn,
@@ -518,6 +655,12 @@ public class MovieDAOImpl implements MovieDAO {
         return 0;
     }
 
+    /**
+     * Returns movie that matches by title in English
+     * @param titleEn a title of a movie in English
+     * @return {@link Movie} object
+     * @throws DAOException
+     */
     @Override
     public Movie getMovieByTitleEn(String titleEn) throws DAOException {
         Connection connection=null;
@@ -543,6 +686,14 @@ public class MovieDAOImpl implements MovieDAO {
         }
     }
 
+    /**
+     * Updates image path of a movie's poster
+     * @param idMovie an id of a movie that has to be updated
+     * @param imgPath a new image path of a movie
+     * @return {@code true} if a movie was updated
+     *         and {@code false} otherwise
+     * @throws DAOException
+     */
     @Override
     public boolean uploadMoviePoster(int idMovie, String imgPath)
             throws DAOException {
@@ -565,6 +716,12 @@ public class MovieDAOImpl implements MovieDAO {
         }
     }
 
+    /**
+     * Returns movies ordered by release year
+     * @param language a language for data selection
+     * @return {@link List} of {@link Movie} objects
+     * @throws DAOException
+     */
     @Override
     public List<Movie> getNewestMovies(String language) throws DAOException {
         Connection connection=null;
@@ -587,6 +744,13 @@ public class MovieDAOImpl implements MovieDAO {
             DAOUtil.close(connection,statement,resultSet);
         }
     }
+
+    /**
+     * Returns limited movies ordered by release year
+     * @param language a language for data selection
+     * @return {@link List} of {@link Movie} objects
+     * @throws DAOException
+     */
     @Override
     public List<Movie> getNewestLimitedMovies(String language) throws DAOException {
         Connection connection=null;
@@ -610,22 +774,28 @@ public class MovieDAOImpl implements MovieDAO {
         }
     }
 
-
+    /**
+     * Setups movies' information
+     * @param resultSet {@link ResultSet} object contains movies' data
+     * @return {@link List} of {@link Movie} objects
+     * @throws SQLException
+     */
     private List<Movie> setMovieInfo(ResultSet resultSet) throws SQLException{
         List<Movie> movieList=new ArrayList<>();
         while (resultSet.next()){
-           /* Movie movie=new Movie();
-            movie.setId(resultSet.getInt(1));
-            movie.setTitle(resultSet.getString(2));
-            movie.setReleaseYear(resultSet.getInt(3));
-            movie.setDescription(resultSet.getString(4));
-            movie.setRating(resultSet.getDouble(5));
-            movie.setPosterPath(resultSet.getString(6));*/
             Movie movie=createMovie(resultSet);
             movieList.add(movie);
         }
         return movieList;
     }
+
+    /**
+     * Instantiates movie
+     * @param resultSet resultSet {@link ResultSet} object
+     *                  contains movie's data
+     * @return {@link Movie} object
+     * @throws SQLException
+     */
     private Movie createMovie(ResultSet resultSet) throws SQLException{
         Movie movie=new Movie();
         movie.setId(resultSet.getInt(1));

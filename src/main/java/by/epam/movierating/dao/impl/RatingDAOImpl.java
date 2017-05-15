@@ -10,13 +10,22 @@ import by.epam.movierating.dao.util.DAOUtil;
 import java.sql.*;
 
 /**
- * Created by Даша on 01.04.2017.
+ * {@link RatingDAO} implementation, provided DAO-logic for {@link Rating} entity
  */
 public class RatingDAOImpl implements RatingDAO {
     private static final String SQL_RATE_MOVIE = "INSERT INTO rating (id_movie, id_user, mark) VALUES(?,?,?)";
     private static final String SQL_CHECK_RATE_OPPORTUNITY = "SELECT * FROM rating WHERE id_movie=? and id_user=?";
     private static final String SQL_DELETE_RATING="DELETE FROM rating WHERE id_movie=? and id_user=?";
 
+    /**
+     * Creates a new rating in data storage
+     * @param idMovie an id of the movie that has to be rated
+     * @param idUser an id of the user that has rated the movie
+     * @param mark a mark of rating
+     * @return {@code true} new rating was created
+     *         and {@code false} otherwise
+     * @throws DAOException
+     */
     @Override
     public boolean rateMovie(int idMovie, int idUser, int mark)
             throws DAOException {
@@ -40,6 +49,14 @@ public class RatingDAOImpl implements RatingDAO {
         }
     }
 
+    /**
+     * Defines rate opportunity of a user on a concrete movie
+     * @param idMovie an id of a movie that has to be checked
+     * @param idUser an id of a user that has to be checked
+     * @return {@code true} if user has not such an opportunity
+     *         and {@code false} otherwise
+     * @throws DAOException
+     */
     @Override
     public boolean checkRateOpportunity(int idMovie, int idUser)
             throws DAOException {
@@ -63,6 +80,13 @@ public class RatingDAOImpl implements RatingDAO {
         }
     }
 
+    /**
+     * Returns a rating of a movie by user id
+     * @param idMovie an id of a movie
+     * @param idUser an id of a movie
+     * @return {@link Rating} object
+     * @throws DAOException
+     */
     @Override
     public Rating getRatingOnMovieByUserId(int idMovie, int idUser)
             throws DAOException {
@@ -91,6 +115,14 @@ public class RatingDAOImpl implements RatingDAO {
         }
     }
 
+    /**
+     * Deletes rating in data storage
+     * @param idMovie an id of a movie that has to be deleted
+     * @param idUser an id of a user who owns a rating
+     * @return {@code true} if a rating was deleted from a data storage
+     *         and {@code false} otherwise
+     * @throws DAOException
+     */
     @Override
     public boolean deleteRating(int idMovie, int idUser)
             throws DAOException {

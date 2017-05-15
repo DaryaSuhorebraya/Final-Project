@@ -13,9 +13,14 @@ import by.epam.movierating.service.util.Validator;
 import java.util.List;
 
 /**
- * Created by Даша on 25.03.2017.
+ * Provides a business-logic with the {@link Review} entity.
  */
 public class ReviewServiceImpl implements ReviewService {
+    /**
+     * Returns all reviews order by publish date
+     * @return {@link List} of {@link Review} objects
+     * @throws ServiceException
+     */
     @Override
     public List<Review> getAllReviewsOrderByDate()
             throws ServiceException {
@@ -30,6 +35,12 @@ public class ReviewServiceImpl implements ReviewService {
         return reviewList;
     }
 
+    /**
+     * Returns reviews that contain full information of a review
+     * @param language a language for data selection
+     * @return {@link List} of {@link ReviewDTO} objects
+     * @throws ServiceException
+     */
     @Override
     public List<ReviewDTO> getAllFullInfoReviewsOrderByDate(String language)
             throws ServiceException {
@@ -45,6 +56,12 @@ public class ReviewServiceImpl implements ReviewService {
         return reviewList;
     }
 
+    /**
+     * Returns limited reviews
+     * @param language a language for data selection
+     * @return {@link List} of {@link ReviewDTO} objects
+     * @throws ServiceException
+     */
     @Override
     public List<ReviewDTO> getLimitedReviews(String language)
             throws ServiceException {
@@ -60,6 +77,14 @@ public class ReviewServiceImpl implements ReviewService {
         return reviewList;
     }
 
+    /**
+     * Defines rate opportunity of a user on a concrete movie
+     * @param idMovie an id of a movie that has to be checked
+     * @param idUser an id of a user that has to be checked
+     * @return {@code true} if user has not such an opportunity
+     *         and {@code false} otherwise
+     * @throws ServiceException
+     */
     @Override
     public boolean checkReviewOpportunity(int idMovie, int idUser)
             throws ServiceException {
@@ -73,6 +98,13 @@ public class ReviewServiceImpl implements ReviewService {
         }
     }
 
+    /**
+     * Returns reviews by id movie
+     * @param idMovie an id of the movie for search
+     * @param language a language for data selection
+     * @return {@link List} of {@link ReviewDTO} objects
+     * @throws ServiceException
+     */
     @Override
     public List<ReviewDTO> getReviewsByIdMovie(int idMovie, String language)
             throws ServiceException {
@@ -89,6 +121,16 @@ public class ReviewServiceImpl implements ReviewService {
         return reviewList;
     }
 
+    /**
+     * Creates a new review in data storage
+     * @param idMovie an id of the movie that has to be reviewed
+     * @param idUser an id of the user that has raviewed the movie
+     * @param title a title of the review
+     * @param review a text of the review
+     * @return {@code true} if a new review was created
+     *         and {@code false} otherwise
+     * @throws ServiceException
+     */
     @Override
     public boolean reviewMovie(int idMovie, int idUser, String title, String review)
             throws ServiceException {
@@ -103,6 +145,12 @@ public class ReviewServiceImpl implements ReviewService {
         }
     }
 
+    /**
+     * Returns the information of the most reviewed movies
+     * @param language a language for data selection
+     * @return {@link List} of {@link StaticticsDTO} objects
+     * @throws ServiceException
+     */
     @Override
     public List<StaticticsDTO> getReviewStatistics(String language)
             throws ServiceException {
@@ -116,6 +164,14 @@ public class ReviewServiceImpl implements ReviewService {
         }
     }
 
+    /**
+     * Deletes a review from data storage
+     * @param idMovie an id of a movie that has to be deleted
+     * @param idUser an if of a user who owns the review
+     * @return {@code true} if the review was deleted
+     *         and {@code false} otherwise
+     * @throws ServiceException
+     */
     @Override
     public boolean deleteReview(int idMovie, int idUser)
             throws ServiceException {
@@ -129,6 +185,13 @@ public class ReviewServiceImpl implements ReviewService {
         }
     }
 
+    /**
+     * Returns reviews by user id
+     * @param idUser an id of a user who owns reviews
+     * @param language a language for data selection
+     * @return {@link List} of {@link ReviewDTO} objects
+     * @throws ServiceException
+     */
     @Override
     public List<ReviewDTO> getReviewsByUserId(int idUser, String language)
             throws ServiceException {

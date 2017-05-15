@@ -1,14 +1,14 @@
 package by.epam.movierating.dao.connectionpool;
 
 /**
- * Created by Даша on 27.01.2017.
+ * Contains constants to instantiate a connection pool
  */
-public final class DBParameter {
+final class DBParameter {
     public DBParameter() {
     }
-    public static final String DB_DRIVER="db.driver";
-    public static final String DB_URL="db.url";
-    public static final String DB_USER="db.user";
-    public static final String DB_PASSWORD="db.password";
-    public static final String DB_POOL_SIZE="db.poolsize";
+    static final String DB_DRIVER="db.driver";
+    static final String DB_URL="db.url";
+    static final String DB_USER="db.user";
+    static final String DB_PASSWORD="db.password";
+    static final String DB_POOL_SIZE="db.poolsize";
 }

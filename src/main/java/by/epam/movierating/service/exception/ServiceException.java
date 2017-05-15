@@ -1,7 +1,7 @@
 package by.epam.movierating.service.exception;
 
 /**
- * Created by Даша on 14.02.2017.
+ * Exception that can occurs in service layer when some error arose
  */
 public class ServiceException extends Exception {
     private static final long serialVersionUID=1L;

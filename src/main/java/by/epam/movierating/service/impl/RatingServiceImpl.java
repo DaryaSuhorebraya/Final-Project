@@ -9,10 +9,19 @@ import by.epam.movierating.service.exception.ServiceException;
 import by.epam.movierating.service.util.Validator;
 
 /**
- * Created by Даша on 01.04.2017.
+ * Provides a business-logic with the {@link Rating} entity.
  */
 public class RatingServiceImpl implements RatingService {
 
+    /**
+     * Creates a new rating in data storage
+     * @param idMovie an id of the movie that has to be rated
+     * @param idUser an id of the user that has rated the movie
+     * @param mark a mark of rating
+     * @return {@code true} new rating was created
+     *         and {@code false} otherwise
+     * @throws ServiceException
+     */
     @Override
     public boolean rateMovie(int idMovie, int idUser, int mark)
             throws ServiceException {
@@ -26,6 +35,14 @@ public class RatingServiceImpl implements RatingService {
         }
     }
 
+    /**
+     * Defines rate opportunity of a user on a concrete movie
+     * @param idMovie an id of a movie that has to be checked
+     * @param idUser an id of a user that has to be checked
+     * @return {@code true} if user has not such an opportunity
+     *         and {@code false} otherwise
+     * @throws ServiceException
+     */
     @Override
     public boolean checkRateOpportunity(int idMovie, int idUser)
             throws ServiceException {
@@ -39,6 +56,13 @@ public class RatingServiceImpl implements RatingService {
         }
     }
 
+    /**
+     * Returns a rating of a movie by user id
+     * @param idMovie an id of a movie
+     * @param idUser an id of a movie
+     * @return {@link Rating} object
+     * @throws ServiceException
+     */
     @Override
     public Rating getRatingOnMovieByUserId(int idMovie, int idUser)
             throws ServiceException {
@@ -52,6 +76,14 @@ public class RatingServiceImpl implements RatingService {
         }
     }
 
+    /**
+     * Deletes rating in data storage
+     * @param idMovie an id of a movie that has to be deleted
+     * @param idUser an id of a user who owns a rating
+     * @return {@code true} if a rating was deleted from a data storage
+     *         and {@code false} otherwise
+     * @throws ServiceException
+     */
     @Override
     public boolean deleteRating(int idMovie, int idUser)
             throws ServiceException {

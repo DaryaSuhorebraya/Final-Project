@@ -12,10 +12,16 @@ import by.epam.movierating.service.util.Validator;
 import java.util.List;
 
 /**
- * Created by Даша on 22.02.2017.
+ * Provides a business-logic with the {@link Genre} entity.
  */
 public class GenreServiceImpl implements GenreService {
 
+    /**
+     * Returns all genres
+     * @param language a language for data selection
+     * @return {@link List} of {@link Genre} objects
+     * @throws ServiceException
+     */
     @Override
     public List<Genre> getAllGenres(String language) throws ServiceException {
         Validator.validateLanguage(language);
@@ -30,6 +36,13 @@ public class GenreServiceImpl implements GenreService {
         return genreList;
     }
 
+    /**
+     * Returns genres that are in use
+     * (there are relations between genres and movies )
+     * @param language a language for data selection
+     * @return {@link List} of {@link Genre} objects
+     * @throws ServiceException
+     */
     @Override
     public List<Genre> getAllActiveGenre(String language) throws ServiceException {
         Validator.validateLanguage(language);
@@ -44,6 +57,13 @@ public class GenreServiceImpl implements GenreService {
         return genreList;
     }
 
+    /**
+     * Deletes a genre from the data storage
+     * @param idGenre genre id that has to be deleted
+     * @return {@code true} if genre was deleted
+     *         and {@code false} otherwise
+     * @throws ServiceException
+     */
     @Override
     public boolean deleteGenre(int idGenre) throws ServiceException {
         Validator.validateIntData(idGenre);
@@ -56,6 +76,15 @@ public class GenreServiceImpl implements GenreService {
         }
     }
 
+    /**
+     * Updates the genre in data storage
+     * @param idGenre genre id which has to be updated
+     * @param name a new name of a genre
+     * @param language a language of data
+     * @return {@code true} if genre was updated
+     *         and {@code false} otherwise
+     * @throws ServiceException
+     */
     @Override
     public boolean editGenre(int idGenre, String name, String language)
             throws ServiceException {
@@ -70,6 +99,13 @@ public class GenreServiceImpl implements GenreService {
         }
     }
 
+    /**
+     * Returns {@link List} of genres which has reference to the required movie id
+     * @param idMovie movie id for search
+     * @param language a language for data selection
+     * @return {@link List} of {@link Genre} objects
+     * @throws ServiceException
+     */
     @Override
     public List<Genre> getGenresByIdMovie(int idMovie, String language)
             throws ServiceException {
@@ -86,6 +122,14 @@ public class GenreServiceImpl implements GenreService {
         return genreList;
     }
 
+    /**
+     * Returns {@link List} of genres which has not
+     * reference to the required movie id
+     * @param idMovie movie id for search
+     * @param language a language for data selection
+     * @return {@link List} of {@link Genre} objects
+     * @throws ServiceException
+     */
     @Override
     public List<Genre> getGenresNotInMovie(int idMovie, String language)
             throws ServiceException {
@@ -102,6 +146,12 @@ public class GenreServiceImpl implements GenreService {
         return genreList;
     }
 
+    /**
+     * Returns a distribution between genres
+     * @param language a language for data selection
+     * @return {@link List} of {@link StaticticsDTO} objects
+     * @throws ServiceException
+     */
     @Override
     public List<StaticticsDTO> getGenreStatistics(String language)
             throws ServiceException {
@@ -115,6 +165,13 @@ public class GenreServiceImpl implements GenreService {
         }
     }
 
+    /**
+     * Creates a new genre in data storage
+     * @param nameRu a name of new genre in Russian
+     * @param nameEn a name of new genre in English
+     * @return id of a new inserted genre in data storage
+     * @throws ServiceException
+     */
     @Override
     public int addGenre(String nameRu, String nameEn)
             throws ServiceException {

@@ -13,7 +13,7 @@ import java.sql.Date;
 import java.util.*;
 
 /**
- * Created by Даша on 14.02.2017.
+ * {@link UserDAO} implementation, provided DAO-logic for {@link User} entity
  */
 public class UserDAOImpl implements UserDAO{
     private static final  String SQL_GET_USER_BY_LOGIN = "SELECT * FROM user WHERE login=?";
@@ -31,6 +31,13 @@ public class UserDAOImpl implements UserDAO{
             "FROM user " +
             "GROUP BY date_register " +
             "HAVING date_register> curdate()-90;";
+
+    /**
+     * Returns a user by its login
+     * @param login a login of a user for search
+     * @return {@link User} object
+     * @throws DAOException
+     */
     @Override
     public User getUserByLogin(String login) throws DAOException{
         Connection connection=null;
@@ -66,8 +73,20 @@ public class UserDAOImpl implements UserDAO{
         }
     }
 
+    /**
+     * Creates a new user in data storage
+     * @param login a login of a new user
+     * @param password a password of a new user
+     * @param date a register date
+     * @param email a email of a new user
+     * @param firstName a first name if a new user
+     * @param lastName a last name of a new user
+     * @return {@link User} object
+     * @throws DAOException
+     */
     @Override
-    public User register(String login, String password, java.util.Date date, String email, String firstName,String lastName)
+    public User register(String login, String password, java.util.Date date,
+                         String email, String firstName,String lastName)
             throws DAOException{
         Connection connection=null;
         PreparedStatement preparedStatement=null;
@@ -95,6 +114,11 @@ public class UserDAOImpl implements UserDAO{
         return null;
     }
 
+    /**
+     * Returns all users
+     * @return {@link List} of {@link User} objects
+     * @throws DAOException
+     */
     @Override
     public List<User> getAllUsers() throws DAOException {
         Connection connection=null;
@@ -117,6 +141,12 @@ public class UserDAOImpl implements UserDAO{
         }
     }
 
+    /**
+     * Returns a user by its id
+     * @param idUser an id of a user for search
+     * @return {@link User} object
+     * @throws DAOException
+     */
     @Override
     public User getUserById(int idUser) throws DAOException {
         Connection connection=null;
@@ -152,6 +182,19 @@ public class UserDAOImpl implements UserDAO{
         }
     }
 
+    /**
+     * Updates a user in data storage
+     * @param idUser an id of a user that has to be updated
+     * @param login a new login of a user
+     * @param firstName a new first name of a user
+     * @param lastName a new last name of a user
+     * @param email a new email of a user
+     * @param dateRegister a new register date of a user
+     * @param status a new status of a user
+     * @param isAdmin determines admin status
+     * @param isBanned determines ban status
+     * @throws DAOException
+     */
     @Override
     public void editUser(int idUser, String login, String firstName,
                          String lastName, String email, java.util.Date dateRegister,
@@ -159,8 +202,6 @@ public class UserDAOImpl implements UserDAO{
             throws DAOException {
         Connection connection=null;
         PreparedStatement preparedStatement=null;
-        ResultSet resultSet=null;
-        User user=null;
         try {
             ConnectionPool connectionPool=ConnectionPool.getInstance();
             connection=connectionPool.getConnection();
@@ -180,10 +221,17 @@ public class UserDAOImpl implements UserDAO{
         } catch (SQLException e) {
             throw new DAOException(e);
         } finally {
-            DAOUtil.close(connection,preparedStatement,resultSet);
+            DAOUtil.close(connection,preparedStatement);
         }
     }
 
+    /**
+     * Deletes a user in data storage
+     * @param idUser an id of a user that has to be deleted
+     * @return {@code true} if a user was deleted
+     *         and {@code false} otherwise
+     * @throws DAOException
+     */
     @Override
     public boolean deleteUser(int idUser) throws DAOException {
         Connection connection=null;
@@ -204,6 +252,13 @@ public class UserDAOImpl implements UserDAO{
         }
     }
 
+    /**
+     * Bans user in data storage
+     * @param idUser an id of a user that has to be banned
+     * @return {@code true} if a user was updated
+     *         and {@code false} otherwise
+     * @throws DAOException
+     */
     @Override
     public boolean banUser(int idUser) throws DAOException {
         Connection connection=null;
@@ -224,6 +279,13 @@ public class UserDAOImpl implements UserDAO{
         }
     }
 
+    /**
+     * Dilutes user in data storage
+     * @param idUser an id of a user that has to be unbanned
+     * @return {@code true} if a user was updated
+     *         and {@code false} otherwise
+     * @throws DAOException
+     */
     @Override
     public boolean unbanUser(int idUser) throws DAOException {
         Connection connection=null;
@@ -244,6 +306,11 @@ public class UserDAOImpl implements UserDAO{
         }
     }
 
+    /**
+     * Returns a statistics of registered user on last month
+     * @return {@link List} of {@link StaticticsDTO} objects
+     * @throws DAOException
+     */
     @Override
     public List<StaticticsDTO> getMonthUserCount() throws DAOException {
         Connection connection=null;
@@ -271,8 +338,12 @@ public class UserDAOImpl implements UserDAO{
         }
     }
 
-
-
+    /**
+     * Initializes user's data
+     * @param resultSet {@link ResultSet} object with users' data
+     * @return {@link List} of {@link User} objects
+     * @throws SQLException
+     */
     private List<User> setUserInfo(ResultSet resultSet) throws SQLException{
         List<User> userList=new ArrayList<>();
         while (resultSet.next()){

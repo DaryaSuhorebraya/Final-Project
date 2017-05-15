@@ -12,7 +12,7 @@ import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
 /**
- * Created by Даша on 27.01.2017.
+ * Stores a limit number of connections
  */
 public class ConnectionPool {
     private static final ConnectionPool instance = new ConnectionPool();
@@ -26,10 +26,18 @@ public class ConnectionPool {
     private ConnectionPool() {
     }
 
+    /**
+     * Returns an instance of ConnectionPool
+     * @return {@link ConnectionPool} object
+     */
     public static ConnectionPool getInstance() {
         return instance;
     }
 
+    /**
+     * Creates a limit number of connections
+     * @throws ConnectionPoolException
+     */
     public void init() throws ConnectionPoolException {
         try {
             lock.lock();
@@ -63,6 +71,11 @@ public class ConnectionPool {
         }
     }
 
+    /**
+     * Gives free connection
+     * @return {@link Connection} object
+     * @throws ConnectionPoolException
+     */
     public Connection getConnection() throws ConnectionPoolException {
         try {
             Connection connection = availableConnections.take();
@@ -73,6 +86,12 @@ public class ConnectionPool {
         }
     }
 
+    /**
+     * Takes the connection from used connections collection
+     * and put is to available connection collection
+     * @param connection {@link Connection} object to free
+     * @throws ConnectionPoolException
+     */
     public void freeConnection(Connection connection) throws ConnectionPoolException {
         if (usedConnections.contains(connection)) {
             usedConnections.remove(connection);
@@ -86,6 +105,10 @@ public class ConnectionPool {
         }
     }
 
+    /**
+     * Close all stored connections
+     * @throws ConnectionPoolException
+     */
     public void dispose() throws ConnectionPoolException {
         try {
             lock.lock();

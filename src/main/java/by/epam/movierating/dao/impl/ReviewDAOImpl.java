@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by Даша on 25.03.2017.
+ * {@link ReviewDAO} implementation, provided DAO-logic for {@link Review} entity
  */
 public class ReviewDAOImpl implements ReviewDAO {
     private static final String SQL_GET_ALL_REVIEWS_ORDER_BY_DATE = "SELECT id_movie, id_user, title, " +
@@ -64,6 +64,11 @@ public class ReviewDAOImpl implements ReviewDAO {
             "WHERE review.id_user=? " +
             "ORDER BY review.publish_date DESC";
 
+    /**
+     * Returns all reviews order by publish date
+     * @return {@link List} of {@link Review} objects
+     * @throws DAOException
+     */
     @Override
     public List<Review> getAllReviewsOrderByDate()
             throws DAOException {
@@ -87,6 +92,12 @@ public class ReviewDAOImpl implements ReviewDAO {
         }
     }
 
+    /**
+     * Returns reviews that contain full information of a review
+     * @param language a language for data selection
+     * @return {@link List} of {@link ReviewDTO} objects
+     * @throws DAOException
+     */
     @Override
     public List<ReviewDTO> getAllFullInfoReviewsOrderByDate(String language)
             throws DAOException {
@@ -111,6 +122,12 @@ public class ReviewDAOImpl implements ReviewDAO {
         }
     }
 
+    /**
+     * Returns limited reviews
+     * @param language a language for data selection
+     * @return {@link List} of {@link ReviewDTO} objects
+     * @throws DAOException
+     */
     @Override
     public List<ReviewDTO> getLimitedReviews(String language)
             throws DAOException {
@@ -135,6 +152,14 @@ public class ReviewDAOImpl implements ReviewDAO {
         }
     }
 
+    /**
+     * Defines rate opportunity of a user on a concrete movie
+     * @param idMovie an id of a movie that has to be checked
+     * @param idUser an id of a user that has to be checked
+     * @return {@code true} if user has not such an opportunity
+     *         and {@code false} otherwise
+     * @throws DAOException
+     */
     @Override
     public boolean checkReviewOpportunity(int idMovie, int idUser)
             throws DAOException {
@@ -158,6 +183,13 @@ public class ReviewDAOImpl implements ReviewDAO {
         }
     }
 
+    /**
+     * Returns reviews by id movie
+     * @param idMovie an id of the movie for search
+     * @param language a language for data selection
+     * @return {@link List} of {@link ReviewDTO} objects
+     * @throws DAOException
+     */
     @Override
     public List<ReviewDTO> getReviewsByIdMovie(int idMovie, String language)
             throws DAOException {
@@ -183,6 +215,16 @@ public class ReviewDAOImpl implements ReviewDAO {
         }
     }
 
+    /**
+     * Creates a new review in data storage
+     * @param idMovie an id of the movie that has to be reviewed
+     * @param idUser an id of the user that has raviewed the movie
+     * @param title a title of the review
+     * @param review a text of the review
+     * @return {@code true} if a new review was created
+     *         and {@code false} otherwise
+     * @throws DAOException
+     */
     @Override
     public boolean reviewMovie(int idMovie, int idUser, String title, String review)
             throws DAOException {
@@ -208,6 +250,12 @@ public class ReviewDAOImpl implements ReviewDAO {
         }
     }
 
+    /**
+     * Returns the information of the most reviewed movies
+     * @param language a language for data selection
+     * @return {@link List} of {@link StaticticsDTO} objects
+     * @throws DAOException
+     */
     @Override
     public List<StaticticsDTO> getReviewStatistics(String language)
             throws DAOException {
@@ -237,6 +285,14 @@ public class ReviewDAOImpl implements ReviewDAO {
         }
     }
 
+    /**
+     * Deletes a review from data storage
+     * @param idMovie an id of a movie that has to be deleted
+     * @param idUser an if of a user who owns the review
+     * @return {@code true} if the review was deleted
+     *         and {@code false} otherwise
+     * @throws DAOException
+     */
     @Override
     public boolean deleteReview(int idMovie, int idUser)
             throws DAOException {
@@ -259,6 +315,13 @@ public class ReviewDAOImpl implements ReviewDAO {
         }
     }
 
+    /**
+     * Returns reviews by user id
+     * @param idUser an id of a user who owns reviews
+     * @param language a language for data selection
+     * @return {@link List} of {@link ReviewDTO} objects
+     * @throws DAOException
+     */
     @Override
     public List<ReviewDTO> getReviewsByUserId(int idUser, String language)
             throws DAOException {
@@ -284,6 +347,12 @@ public class ReviewDAOImpl implements ReviewDAO {
         }
     }
 
+    /**
+     * Setups reviews' information
+     * @param resultSet {@link ResultSet} object contains reviews' data
+     * @return {@link List} of {@link Review} objects
+     * @throws SQLException
+     */
     private List<Review> setReviewInfo(ResultSet resultSet)
             throws SQLException {
         List<Review> reviewList = new ArrayList<>();
@@ -299,6 +368,12 @@ public class ReviewDAOImpl implements ReviewDAO {
         return reviewList;
     }
 
+    /**
+     * Setups dto reviews' information
+     * @param resultSet {@link ResultSet} object contains reviews' data
+     * @return {@link List} of {@link ReviewDTO} objects
+     * @throws SQLException
+     */
     private List<ReviewDTO> setReviewDTOInfo(ResultSet resultSet) throws SQLException {
         List<ReviewDTO> reviewList = new ArrayList<>();
         while (resultSet.next()) {

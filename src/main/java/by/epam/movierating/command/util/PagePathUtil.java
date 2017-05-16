@@ -7,11 +7,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 /**
- * Created by Даша on 24.02.2017.
+ * Saves query strings to session and gives it back
  */
 public class PagePathUtil {
     private static final String WELCOME_PAGE_COMMAND = "/Controller?command=welcome-page";
 
+    /**
+     * Return saved path or null if it does not exist.
+     * @param session current session
+     * @return page's path
+     */
     public static String getPagePath(HttpSession session) {
         String pagePath = (String) session.getAttribute(AttributeName.PREV_QUERY);
         if (pagePath == null) {
@@ -21,6 +26,10 @@ public class PagePathUtil {
         }
     }
 
+    /**
+     * Saves query to session
+     * @param request current request
+     */
     public static void setQueryString(HttpServletRequest request) {
         HttpSession session = request.getSession(true);
         String requestURI = request.getRequestURI();

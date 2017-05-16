@@ -16,7 +16,9 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 /**
- * Created by Даша on 07.05.2017.
+ * Implementation of Command {@link Command}.
+ * Services the receiving the user by its login.
+ * Awaited the request was obtained by ajax.
  */
 public class GetUserByLogin implements Command {
     private static final Logger logger = Logger.getLogger(GetUserByLogin.class);

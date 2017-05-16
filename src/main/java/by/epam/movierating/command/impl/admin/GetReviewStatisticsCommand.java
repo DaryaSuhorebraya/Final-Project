@@ -18,7 +18,9 @@ import java.io.IOException;
 import java.util.List;
 
 /**
- * Created by Даша on 05.04.2017.
+ * Implementation of Command {@link Command}.
+ * Services the receiving of the statistics about reviews.
+ * Awaited the request was obtained by ajax.
  */
 public class GetReviewStatisticsCommand implements Command {
     private static final Logger logger = Logger.getLogger(GetReviewStatisticsCommand.class);

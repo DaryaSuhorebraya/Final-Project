@@ -19,7 +19,8 @@ import java.io.IOException;
 import java.util.List;
 
 /**
- * Created by Даша on 20.04.2017.
+ * Implementation of Command {@link Command}.
+ * Services the receiving the reviews by user id.
  */
 public class ViewReviewsByUserIdCommand implements Command {
     private static final Logger logger = Logger.getLogger(ViewAllReviewsOrderByDate.class);

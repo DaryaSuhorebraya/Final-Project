@@ -4,8 +4,6 @@ import by.epam.movierating.bean.Genre;
 import by.epam.movierating.command.Command;
 import by.epam.movierating.command.constant.AttributeName;
 import by.epam.movierating.command.constant.JSPPageName;
-import by.epam.movierating.command.security.RoleType;
-import by.epam.movierating.command.security.SecurityManager;
 import by.epam.movierating.command.util.PagePathUtil;
 import by.epam.movierating.service.GenreService;
 import by.epam.movierating.service.exception.ServiceException;
@@ -20,7 +18,8 @@ import java.io.IOException;
 import java.util.List;
 
 /**
- * Created by Даша on 06.04.2017.
+ * Implementation of Command {@link Command}.
+ * Redirects to admin page.
  */
 public class AdminPageCommand implements Command {
     private final static Logger logger = Logger.getLogger(AdminPageCommand.class);

@@ -16,9 +16,10 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.List;
-
 /**
- * Created by Даша on 24.03.2017.
+ * Implementation of Command {@link Command}.
+ * Services the receiving all actors.
+ * Awaited the request was obtained by ajax.
  */
 public class ViewAllActorsJsonCommand implements Command {
     private static final Logger logger = Logger.getLogger(ViewAllActorsJsonCommand.class);

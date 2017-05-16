@@ -15,7 +15,9 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 /**
- * Created by Даша on 06.05.2017.
+ * Implementation of Command {@link Command}.
+ * Services the deleting the rating.
+ * Awaited the request was obtained by ajax.
  */
 public class DeleteRatingCommand implements Command {
     private static final Logger logger = Logger.getLogger(RateMovieCommand.class);

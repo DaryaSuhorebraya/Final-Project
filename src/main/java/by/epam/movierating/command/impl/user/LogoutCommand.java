@@ -11,7 +11,8 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 /**
- * Created by Даша on 14.02.2017.
+ * Implementation of Command {@link Command}.
+ * Services the request to log out from the system.
  */
 public class LogoutCommand implements Command {
     private static final Logger logger = Logger.getLogger(LogoutCommand.class);

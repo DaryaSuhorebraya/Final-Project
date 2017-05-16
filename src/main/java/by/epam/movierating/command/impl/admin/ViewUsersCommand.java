@@ -4,8 +4,6 @@ import by.epam.movierating.bean.User;
 import by.epam.movierating.command.Command;
 import by.epam.movierating.command.constant.AttributeName;
 import by.epam.movierating.command.constant.JSPPageName;
-import by.epam.movierating.command.security.RoleType;
-import by.epam.movierating.command.security.SecurityManager;
 import by.epam.movierating.command.util.PagePathUtil;
 import by.epam.movierating.service.UserService;
 import by.epam.movierating.service.exception.ServiceException;
@@ -20,7 +18,8 @@ import java.io.IOException;
 import java.util.List;
 
 /**
- * Created by Даша on 02.03.2017.
+ * Implementation of Command {@link Command}.
+ * Services the receiving list of the users.
  */
 public class ViewUsersCommand implements Command {
     private final static Logger logger = Logger.getLogger(ViewUsersCommand.class);

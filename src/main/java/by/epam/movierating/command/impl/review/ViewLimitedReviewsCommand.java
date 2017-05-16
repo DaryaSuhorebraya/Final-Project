@@ -18,7 +18,8 @@ import java.io.IOException;
 import java.util.List;
 
 /**
- * Created by Даша on 26.03.2017.
+ * Implementation of Command {@link Command}.
+ * Services the receiving the limited list of reviews.
  */
 public class ViewLimitedReviewsCommand implements Command {
     private static final Logger logger = Logger.getLogger(ViewLimitedReviewsCommand.class);

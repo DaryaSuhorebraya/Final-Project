@@ -4,7 +4,7 @@ import javax.servlet.*;
 import java.io.IOException;
 
 /**
- * Created by Даша on 17.02.2017.
+ * This filter set a encoding for all pairs request/response
  */
 public class EncodingFilter implements Filter {
     private static final String ENCODING = "UTF-8";

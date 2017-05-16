@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
- * Created by Даша on 14.02.2017.
+ * Main servlet for services all requests.
  */
 public class Controller extends HttpServlet {
     @Override

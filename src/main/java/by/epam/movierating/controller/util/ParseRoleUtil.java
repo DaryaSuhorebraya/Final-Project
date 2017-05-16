@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Created by Даша on 04.05.2017.
+ * Parses role.xml and instantiates its Map
  */
 public class ParseRoleUtil {
     private static final Logger logger = Logger.getLogger(ParseCommandUtil.class);
@@ -24,6 +24,10 @@ public class ParseRoleUtil {
     private static final String GUEST="guest";
     private static final String COMMAND="command";
 
+    /**
+     * Returns {@link Map} of the parsed roles
+     * @return {@link Map} object
+     */
     public  Map<String,List<String>> parse() {
 
         InputSource inputSource = new InputSource(getClass().getResourceAsStream(ROLES_XML_PATH));
@@ -43,6 +47,11 @@ public class ParseRoleUtil {
         return roleList;
     }
 
+    /**
+     * Puts users' roles to {@link List}
+     * @param root root of the document
+     * @return {@link List} object with users' roles
+     */
     private List<String> getUserRoles(Element root) {
         List<String> userRoles = new ArrayList<>();
         NodeList nodeList = root.getElementsByTagName(USER);
@@ -57,6 +66,11 @@ public class ParseRoleUtil {
         return userRoles;
     }
 
+    /**
+     * Puts guests' roles to {@link List}
+     * @param root root of the document
+     * @return {@link List} object with guests' roles
+     */
     private List<String> getGuestRoles(Element root) {
         List<String> guestRoles = new ArrayList<>();
         NodeList nodeList = root.getElementsByTagName(GUEST);
@@ -71,6 +85,12 @@ public class ParseRoleUtil {
         return guestRoles;
     }
 
+    /**
+     * Returns all children for current element with determined children's name
+     * @param element element for retrieving the children
+     * @param childName name of the children
+     * @return {@link List<Element>} object
+     */
     private List<Element> getChildren(Element element, String childName) {
         NodeList nodeList = element.getElementsByTagName(childName);
         List<Element> elements = new ArrayList<>();

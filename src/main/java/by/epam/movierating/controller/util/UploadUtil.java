@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 
 /**
- * Created by Даша on 29.03.2017.
+ * Provides functional to upload files
  */
 public class UploadUtil {
     private static final String TEMP_DIR = "javax.servlet.context.tempdir";
@@ -31,6 +31,11 @@ public class UploadUtil {
         factory.setSizeThreshold(SIZE * SIZE);
     }
 
+    /**
+     * Instantiates and initializes ServletFileUpload object
+     * @param request {@link HttpServletRequest} object
+     * @return {@link ServletFileUpload} object
+     */
     public static ServletFileUpload createServletFileUpload(HttpServletRequest request) {
 
         ServletContext servletContext = request.getServletContext();
@@ -42,6 +47,15 @@ public class UploadUtil {
         return upload;
     }
 
+    /**
+     * Writes the file and creates file's name to store this in data storage
+     * @param item Represents a file or form item that was received within a
+     * multipart/form-data POST request.
+     * @param servletContext {@link ServletContext} object
+     * @param entityName name of the entity wants to save a file in
+     * @return path to this file
+     * @throws Exception
+     */
     public static String processUploadedFile(FileItem item, ServletContext servletContext,
                                              String entityName)
             throws Exception {
@@ -63,6 +77,12 @@ public class UploadUtil {
         return buildPathForEntity(entityName, item.getName());
     }
 
+    /**
+     * Constructs path to this file in project's scope
+     * @param entityName name of the entity who owns this file
+     * @param oldPath recent path to the file
+     * @return new path to the file in project's scope
+     */
     private static String buildProgramImagePath(String entityName, String oldPath) {
         switch (entityName) {
             case ACTOR:
@@ -74,6 +94,12 @@ public class UploadUtil {
         }
     }
 
+    /**
+     * Constructs path to this file in target's scope
+     * @param entityName name of the entity who owns this file
+     * @param oldPath recent path to the file
+     * @return new path to the file in target's scope
+     */
     private static String buildTargetPath(String entityName, String oldPath) {
         switch (entityName) {
             case ACTOR:
@@ -85,6 +111,12 @@ public class UploadUtil {
         }
     }
 
+    /**
+     * Constructs path to this file in data storage
+     * @param entityName name of the entity who owns this file
+     * @param currentName name of the file to store
+     * @return path to this file
+     */
     private static String buildPathForEntity(String entityName, String currentName) {
         switch (entityName) {
             case ACTOR:

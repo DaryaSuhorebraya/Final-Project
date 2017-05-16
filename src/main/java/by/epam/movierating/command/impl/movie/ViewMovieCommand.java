@@ -20,7 +20,8 @@ import java.io.IOException;
 import java.util.List;
 
 /**
- * Created by Даша on 17.03.2017.
+ * Implementation of Command {@link Command}.
+ * Services the receiving movie.
  */
 public class ViewMovieCommand implements Command {
     private final static Logger logger = Logger.getLogger(ViewMovieCommand.class);

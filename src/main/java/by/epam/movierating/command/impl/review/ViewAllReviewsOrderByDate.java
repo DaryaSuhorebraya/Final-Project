@@ -18,7 +18,8 @@ import java.io.IOException;
 import java.util.List;
 
 /**
- * Created by Даша on 25.03.2017.
+ * Implementation of Command {@link Command}.
+ * Services the receiving the list of all reviews order by date.
  */
 public class ViewAllReviewsOrderByDate implements Command {
     private static final Logger logger = Logger.getLogger(ViewAllReviewsOrderByDate.class);

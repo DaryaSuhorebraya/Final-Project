@@ -19,7 +19,8 @@ import java.io.IOException;
 import java.util.List;
 
 /**
- * Created by Даша on 17.02.2017.
+ * Implementation of Command {@link Command}.
+ * Redirect on welcome page.
  */
 public class WelcomePageCommand implements Command {
     private final static Logger logger = Logger.getLogger(WelcomePageCommand.class);

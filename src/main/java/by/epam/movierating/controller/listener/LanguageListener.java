@@ -4,7 +4,8 @@ import javax.servlet.http.HttpSessionEvent;
 import javax.servlet.http.HttpSessionListener;
 
 /**
- * Created by Даша on 21.02.2017.
+ * Listener on a session creation.
+ * Setups the default language.
  */
 public class LanguageListener implements HttpSessionListener {
     private static final String LANGUAGE = "language";

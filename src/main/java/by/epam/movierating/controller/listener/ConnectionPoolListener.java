@@ -8,7 +8,8 @@ import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 
 /**
- * Created by Даша on 17.02.2017.
+ * Listener on a servlet context creation.
+ * Initialize and destroys the Connection Pool.
  */
 public class ConnectionPoolListener implements ServletContextListener {
     @Override

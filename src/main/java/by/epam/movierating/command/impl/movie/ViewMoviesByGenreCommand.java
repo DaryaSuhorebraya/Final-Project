@@ -19,7 +19,8 @@ import java.io.IOException;
 import java.util.List;
 
 /**
- * Created by Даша on 23.02.2017.
+ * Implementation of Command {@link Command}.
+ * Services the receiving list of movies by genre id.
  */
 public class ViewMoviesByGenreCommand implements Command {
     private static final Logger logger = Logger.getLogger(ViewMoviesByGenreCommand.class);

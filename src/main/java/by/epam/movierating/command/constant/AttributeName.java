@@ -1,7 +1,7 @@
 package by.epam.movierating.command.constant;
 
 /**
- * Created by Даша on 21.02.2017.
+ * Contains attributes names
  */
 public class AttributeName {
     public static final String ENGLISH = "en_EN";

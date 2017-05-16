@@ -18,9 +18,10 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.List;
 
-
 /**
- * Created by Даша on 20.03.2017.
+ * Implementation of Command {@link Command}.
+ * Services the receiving list of the genres that not include in movie.
+ * Awaited the request was obtained by ajax.
  */
 public class ViewGenresNotInMovieCommand implements Command {
     private static final Logger logger = Logger.getLogger(ViewGenresNotInMovieCommand.class);

@@ -18,7 +18,8 @@ import java.io.IOException;
 import java.util.List;
 
 /**
- * Created by Даша on 31.03.2017.
+ * Implementation of Command {@link Command}.
+ * Services the receiving list of the newest movies.
  */
 public class ViewNewestMoviesCommand implements Command {
     private static final Logger logger = Logger.getLogger(ViewNewestMoviesCommand.class);

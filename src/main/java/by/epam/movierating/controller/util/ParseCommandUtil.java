@@ -14,7 +14,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Created by Даша on 01.04.2017.
+ * Provides parsing of the commands.xml and instantiates its Map
  */
 public class ParseCommandUtil {
     private static final Logger logger = Logger.getLogger(ParseCommandUtil.class);
@@ -25,6 +25,10 @@ public class ParseCommandUtil {
     private static final String CLASS="class";
     private static final String COMMAND="command";
 
+    /**
+     * Returns {@link Map} of the parsed commands.
+     * @return {@link Map} object
+     */
     public Map<String, Command> parse() {
 
         InputSource inputSource = new InputSource(getClass().getResourceAsStream(COMMANDS_XML_PATH));
@@ -38,6 +42,9 @@ public class ParseCommandUtil {
         return commandHandler.getCommandMap();
     }
 
+    /**
+     * Class for handling events while parsing commands.
+     */
     private static class CommandHandler extends DefaultHandler {
         private StringBuilder text;
         private String name;

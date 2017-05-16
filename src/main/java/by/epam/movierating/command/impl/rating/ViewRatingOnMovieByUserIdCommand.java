@@ -16,7 +16,9 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
- * Created by Даша on 03.04.2017.
+ * Implementation of Command {@link Command}.
+ * Services the receiving the rating on movie by user id.
+ * Awaited the request was obtained by ajax.
  */
 public class ViewRatingOnMovieByUserIdCommand implements Command {
     private static final Logger logger = Logger.getLogger(ViewRatingOnMovieByUserIdCommand.class);

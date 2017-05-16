@@ -6,7 +6,8 @@ import javax.servlet.http.HttpSessionEvent;
 import javax.servlet.http.HttpSessionListener;
 
 /**
- * Created by Даша on 02.03.2017.
+ * Listener on a session creation.
+ * Setups the default user's role
  */
 public class RoleListener implements HttpSessionListener {
     @Override

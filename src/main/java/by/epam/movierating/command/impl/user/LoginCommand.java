@@ -18,7 +18,8 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 /**
- * Created by Даша on 14.02.2017.
+ * Implementation of Command {@link Command}.
+ * Services the request from the log in form.
  */
 public class LoginCommand implements Command {
     private static final Logger logger = Logger.getLogger(LoginCommand.class);

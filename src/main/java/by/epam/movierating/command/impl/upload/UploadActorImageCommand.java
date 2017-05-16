@@ -21,7 +21,8 @@ import java.io.IOException;
 import java.util.List;
 
 /**
- * Created by Даша on 29.03.2017.
+ * Implementation of Command {@link Command}.
+ * Services the uploading new file belonging to actor.
  */
 public class UploadActorImageCommand implements Command {
     private static final Logger logger = Logger.getLogger(UploadActorImageCommand.class);

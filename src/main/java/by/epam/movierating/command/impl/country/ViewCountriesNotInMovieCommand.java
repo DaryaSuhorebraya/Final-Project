@@ -19,7 +19,9 @@ import java.io.IOException;
 import java.util.List;
 
 /**
- * Created by Даша on 22.03.2017.
+ * Implementation of Command {@link Command}.
+ * Services the receiving list of countries that not include in movie.
+ * Awaited the request was obtained by ajax.
  */
 public class ViewCountriesNotInMovieCommand implements Command {
     private static final Logger logger = Logger.getLogger(ViewCountriesNotInMovieCommand.class);

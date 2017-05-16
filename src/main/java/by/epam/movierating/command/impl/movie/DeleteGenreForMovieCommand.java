@@ -3,8 +3,6 @@ package by.epam.movierating.command.impl.movie;
 import by.epam.movierating.command.Command;
 import by.epam.movierating.command.constant.AttributeName;
 import by.epam.movierating.command.constant.ParameterName;
-import by.epam.movierating.command.security.RoleType;
-import by.epam.movierating.command.security.SecurityManager;
 import by.epam.movierating.service.MovieService;
 import by.epam.movierating.service.exception.ServiceException;
 import by.epam.movierating.service.factory.ServiceFactory;
@@ -17,7 +15,9 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 /**
- * Created by Даша on 20.03.2017.
+ * Implementation of Command {@link Command}.
+ * Services the deleting genre for movie.
+ * Awaited the request was obtained by ajax.
  */
 public class DeleteGenreForMovieCommand implements Command {
     private static final Logger logger = Logger.getLogger(DeleteGenreForMovieCommand.class);

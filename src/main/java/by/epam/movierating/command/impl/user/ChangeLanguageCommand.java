@@ -12,7 +12,8 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 /**
- * Created by Даша on 16.02.2017.
+ * Implementation of Command {@link Command}.
+ * Services the changing the language.
  */
 public class ChangeLanguageCommand implements Command {
     private static final Logger logger = Logger.getLogger(ChangeLanguageCommand.class);

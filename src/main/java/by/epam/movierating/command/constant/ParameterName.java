@@ -2,7 +2,7 @@ package by.epam.movierating.command.constant;
 
 
 /**
- * Created by Даша on 27.02.2017.
+ * Contains parameters' names
  */
 public class ParameterName {
     public static final String COMMAND = "command";

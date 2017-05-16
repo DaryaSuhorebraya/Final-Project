@@ -15,7 +15,9 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 /**
- * Created by Даша on 01.04.2017.
+ * Implementation of Command {@link Command}.
+ * Services the checking the opportunity to review movie by user.
+ * Awaited the request was obtained by ajax.
  */
 public class CheckReviewOpportunityCommand implements Command {
     private static final Logger logger = Logger.getLogger(CheckReviewOpportunityCommand.class);

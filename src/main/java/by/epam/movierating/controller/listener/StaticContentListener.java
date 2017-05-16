@@ -15,7 +15,8 @@ import javax.servlet.ServletContextListener;
 import java.util.List;
 
 /**
- * Created by Даша on 30.03.2017.
+ * Listener on a servlet context creation.
+ * Setups static constant content.
  */
 public class StaticContentListener implements ServletContextListener {
     private static final Logger logger = Logger.getLogger(StaticContentListener.class);

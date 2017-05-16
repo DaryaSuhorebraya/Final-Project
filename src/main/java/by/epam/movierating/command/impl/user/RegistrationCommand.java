@@ -19,7 +19,8 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 /**
- * Created by Даша on 24.02.2017.
+ * Implementation of Command {@link Command}.
+ * Services the registration of new user.
  */
 public class RegistrationCommand implements Command {
     private static final Logger logger = Logger.getLogger(RegistrationCommand.class);

@@ -17,7 +17,9 @@ import java.io.IOException;
 import java.util.List;
 
 /**
- * Created by Даша on 04.04.2017.
+ * Implementation of Command {@link Command}.
+ * Services the receiving statistics about users.
+ * Awaited the request was obtained by ajax.
  */
 public class GetUserStatisticsCommand implements Command {
     private static final Logger logger = Logger.getLogger(GetUserStatisticsCommand.class);

@@ -5,7 +5,7 @@ import javax.servlet.jsp.tagext.SimpleTagSupport;
 import java.io.Writer;
 
 /**
- * Created by Даша on 25.04.2017.
+ * Custom tag for pagination on jsp page
  */
 public class PaginationTag extends SimpleTagSupport {
     private String uri;
@@ -14,10 +14,18 @@ public class PaginationTag extends SimpleTagSupport {
     private static final int PAGE_COUNT=3;
     private int currentPage;
 
+    /**
+     * Returns an instance of {@link Writer} object
+     * @return {@link Writer} object
+     */
     private Writer getWriter() {
         return getJspContext().getOut();
     }
 
+    /**
+     * Processes this tag
+     * @throws JspException
+     */
     @Override
     public void doTag() throws JspException {
         Writer out = getWriter();
@@ -36,6 +44,11 @@ public class PaginationTag extends SimpleTagSupport {
             throw new JspException("Error in pagination tag", ex);
         }
     }
+
+    /**
+     * Builds previous link
+     * @return representation of previous link
+     */
     private String constructPrevLink(){
         StringBuilder link = new StringBuilder("<li");
         if (currentPage<=1){
@@ -46,6 +59,11 @@ public class PaginationTag extends SimpleTagSupport {
 
         return link.toString();
     }
+
+    /**
+     * Builds next link
+     * @return representation of next link
+     */
     private String constructNextLink(){
         StringBuilder link = new StringBuilder("<li");
         if (currentPage>=PAGE_COUNT){
@@ -57,6 +75,11 @@ public class PaginationTag extends SimpleTagSupport {
         return link.toString();
     }
 
+    /**
+     * Builds link
+     * @param page the page of this link
+     * @return representation of this link
+     */
     private String constructLink(int page) {
         StringBuilder link = new StringBuilder("<li");
         if ((page+1)==currentPage){

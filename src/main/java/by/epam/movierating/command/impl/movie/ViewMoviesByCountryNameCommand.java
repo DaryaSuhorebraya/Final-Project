@@ -19,7 +19,8 @@ import java.io.IOException;
 import java.util.List;
 
 /**
- * Created by Даша on 21.03.2017.
+ * Implementation of Command {@link Command}.
+ * Services the receiving list of movies by country name.
  */
 public class ViewMoviesByCountryNameCommand implements Command {
     private static final Logger logger = Logger.getLogger(ViewMoviesByCountryCommand.class);

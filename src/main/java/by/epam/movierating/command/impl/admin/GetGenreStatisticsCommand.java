@@ -18,7 +18,9 @@ import java.io.IOException;
 import java.util.List;
 
 /**
- * Created by Даша on 05.04.2017.
+ * Implementation of Command {@link Command}.
+ * Services the receiving statistics about genres.
+ * Awaited the request was obtained by ajax.
  */
 public class GetGenreStatisticsCommand implements Command {
 

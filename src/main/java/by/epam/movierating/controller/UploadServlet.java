@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
- * Created by Даша on 27.03.2017.
+ * Servlet for uploading files
  */
 public class UploadServlet extends HttpServlet {
     private static final Logger logger = Logger.getLogger(UploadServlet.class);

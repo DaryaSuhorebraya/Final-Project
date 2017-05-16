@@ -7,7 +7,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Created by Даша on 31.03.2017.
+ * Initializes command's map and provides its instance
  */
 class CommandProvider {
     private static final Logger logger = Logger.getLogger(CommandProvider.class);
@@ -20,10 +20,19 @@ class CommandProvider {
         repository = new ParseCommandUtil().parse();
     }
 
+    /**
+     * Returns an instance of CommandProvider
+     * @return {@link CommandProvider} object
+     */
     public static CommandProvider getInstance() {
         return instance;
     }
 
+    /**
+     * Returns Command object by its name
+     * @param name tha name for invocation this command
+     * @return {@link Command} object
+     */
     Command getCommand(String name) {
         Command command = null;
         try {

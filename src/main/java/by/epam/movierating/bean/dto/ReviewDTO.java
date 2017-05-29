@@ -3,9 +3,6 @@ package by.epam.movierating.bean.dto;
 import java.io.Serializable;
 import java.util.Date;
 
-/**
- * Created by Даша on 25.03.2017.
- */
 public class ReviewDTO implements Serializable {
     private static final long serialVersionUID = 1L;
 
@@ -83,5 +80,54 @@ public class ReviewDTO implements Serializable {
 
     public void setPublishDate(Date publishDate) {
         this.publishDate = publishDate;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+
+        ReviewDTO reviewDTO = (ReviewDTO) o;
+
+        if (idMovie != reviewDTO.idMovie) {
+            return false;
+        }
+        if (idUser != reviewDTO.idUser) {
+            return false;
+        }
+        if (rating != reviewDTO.rating) {
+            return false;
+        }
+        if (movieTitle != null ? !movieTitle.equals(reviewDTO.movieTitle) : reviewDTO.movieTitle != null) {
+            return false;
+        }
+        if (userLogin != null ? !userLogin.equals(reviewDTO.userLogin) : reviewDTO.userLogin != null) {
+            return false;
+        }
+        if (title != null ? !title.equals(reviewDTO.title) : reviewDTO.title != null) {
+            return false;
+        }
+        if (review != null ? !review.equals(reviewDTO.review) : reviewDTO.review != null) {
+            return false;
+        }
+        return publishDate != null ? publishDate.equals(reviewDTO.publishDate) : reviewDTO.publishDate == null;
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = idMovie;
+        result = 31 * result + idUser;
+        result = 31 * result + (movieTitle != null ? movieTitle.hashCode() : 0);
+        result = 31 * result + (userLogin != null ? userLogin.hashCode() : 0);
+        result = 31 * result + rating;
+        result = 31 * result + (title != null ? title.hashCode() : 0);
+        result = 31 * result + (review != null ? review.hashCode() : 0);
+        result = 31 * result + (publishDate != null ? publishDate.hashCode() : 0);
+        return result;
     }
 }

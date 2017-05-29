@@ -4,9 +4,6 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
-/**
- * Created by Даша on 25.01.2017.
- */
 public class User implements Serializable {
     private static final long serialVersionUID = 1L;
 

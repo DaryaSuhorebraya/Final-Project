@@ -3,9 +3,6 @@ package by.epam.movierating.bean;
 import java.io.Serializable;
 import java.util.Date;
 
-/**
- * Created by Даша on 25.01.2017.
- */
 public class Review implements Serializable {
     private static final long serialVersionUID = 1L;
 

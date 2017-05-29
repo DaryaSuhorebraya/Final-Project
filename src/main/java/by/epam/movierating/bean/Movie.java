@@ -2,9 +2,7 @@ package by.epam.movierating.bean;
 
 import java.io.Serializable;
 import java.util.List;
-/**
- * Created by Даша on 25.01.2017.
- */
+
 public class Movie implements Serializable {
     private static final long serialVersionUID = 1L;
 

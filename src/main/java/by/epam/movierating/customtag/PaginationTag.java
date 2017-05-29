@@ -11,6 +11,7 @@ public class PaginationTag extends SimpleTagSupport {
     private String uri;
     private String previous = "Previous";
     private String next = "Next";
+    private int pageCount;
     private static final int PAGE_COUNT=3;
     private int currentPage;
 
@@ -34,7 +35,7 @@ public class PaginationTag extends SimpleTagSupport {
             out.write("<nav style=\"text-align: center;\">");
             out.write("<ul class=\"pagination\">");
             out.write(constructPrevLink());
-            for (int i=0;i<PAGE_COUNT;i++){
+            for (int i=0;i<pageCount;i++){
                 out.write(constructLink(i));
             }
             out.write(constructNextLink());
@@ -66,7 +67,7 @@ public class PaginationTag extends SimpleTagSupport {
      */
     private String constructNextLink(){
         StringBuilder link = new StringBuilder("<li");
-        if (currentPage>=PAGE_COUNT){
+        if (currentPage>=pageCount){
             link.append(" class=\"disabled\"");
         }
         link.append("><a href=").append(uri).append("&curPageNumber=").
@@ -123,5 +124,13 @@ public class PaginationTag extends SimpleTagSupport {
 
     public int getCurrentPage() {
         return currentPage;
+    }
+
+    public int getPageCount() {
+        return pageCount;
+    }
+
+    public void setPageCount(int pageCount) {
+        this.pageCount = pageCount;
     }
 }

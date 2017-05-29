@@ -27,15 +27,15 @@
 
 <div class="container">
     <div class="row">
-        <div class="col-md-10">
-            <div class="content" style="height: 500px">
+        <div class="col-md-12">
+            <div class="content" style="height: 80%">
                 <h2 style="text-align: center"><fmt:message bundle="${loc}" key="new.movie.add"/></h2>
-                <p><fmt:message bundle="${loc}" key="add.new.movie"/>:
+                <p class="text-center"><fmt:message bundle="${loc}" key="add.new.movie"/>:
                     <a
                         href="Controller?command=redirect&redirectPage=addMovie"><fmt:message bundle="${loc}" key="add.new.movie"/>
                 </a></p>
-                <p><fmt:message bundle="${loc}" key="go.to.main.page"/>:
-                    <a href="Controller?cmd=welcome-page"><fmt:message bundle="${loc}" key="home"/></a></p>
+                <p class="text-center"><fmt:message bundle="${loc}" key="go.to.main.page"/>:
+                    <a href="Controller?command=admin-page"><fmt:message bundle="${loc}" key="home"/></a></p>
             </div>
         </div>
     </div>

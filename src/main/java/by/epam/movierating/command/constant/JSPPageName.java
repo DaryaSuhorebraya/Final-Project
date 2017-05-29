@@ -23,4 +23,5 @@ public class JSPPageName {
     public static final String ERROR_404_PAGE = "error-404.jsp";
     public static final String ADD_MOVIE_PAGE = "WEB-INF/jsp/add-movie.jsp";
     public static final String SUCCESS_MOVIE_ADD = "WEB-INF/jsp/success-movie-add.jsp";
+    public static final String SUBMOVIES_PAGE = "WEB-INF/jsp/submovies.jsp";
 }

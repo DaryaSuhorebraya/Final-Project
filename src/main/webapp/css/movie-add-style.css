@@ -4,6 +4,7 @@
 .menu{
     display: none;
     height: 500px;
+    margin-top: 20px;
 }
 .ul-w, .li-w{
     width: 100%;

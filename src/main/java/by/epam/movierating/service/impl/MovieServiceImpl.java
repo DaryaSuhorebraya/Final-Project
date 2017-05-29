@@ -37,6 +37,29 @@ public class MovieServiceImpl implements MovieService {
     }
 
     /**
+     * Returns all limited number of movies
+     * @param language a language for data selection
+     * @param currentPageNumber number of current page for pagination
+     * @return {@link List} of {@link Movie} objects
+     * @throws ServiceException
+     */
+    @Override
+    public List<Movie> getLimitedMovies(String language, int currentPageNumber)
+            throws ServiceException {
+        Validator.validateIntData(currentPageNumber);
+        Validator.validateLanguage(language);
+        List<Movie> movieList;
+        try {
+            DAOFactory daoFactory=DAOFactory.getInstance();
+            MovieDAO movieDAO=daoFactory.getMovieDAO();
+            movieList=movieDAO.getLimitedMovies(language, currentPageNumber);
+        } catch (DAOException e){
+            throw new ServiceException(e);
+        }
+        return movieList;
+    }
+
+    /**
      * Returns movies ordered by its rating
      * @param language a language for data selection
      * @return {@link List} of {@link Movie} objects

@@ -10,8 +10,14 @@
     <link href="css/image-style.css" rel="stylesheet">
 </head>
 <body>
-<div id="error-500">
-    <img src="./images/error/error_500.png">
+<div>
+    <img src="./images/error/error_500.jpg" style="margin-left: auto;margin-right: auto;display: block;">
 </div>
+<h1 style="text-align: center;font-family: Verdana;">
+    <fmt:message bundle="${loc}" key="error.500.caption"/>
+</h1>
+<h2 style="text-align: center;font-family: Verdana;">
+    <a href="Controller?cmd=welcome-page"  style="color: black;"><fmt:message bundle="${loc}" key="home"/> </a>
+</h2>
 </body>
 </html>

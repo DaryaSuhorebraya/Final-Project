@@ -17,7 +17,6 @@ public class User implements Serializable {
     private String password;
     private Date dateRegister;
     private String email;
-    //TODO think of status, add id to equals and hashcode;
     private String status;
     private boolean isAdmin;
     private boolean isBanned;
@@ -123,5 +122,68 @@ public class User implements Serializable {
         this.status = status;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
 
+        User user = (User) o;
+
+        if (id != user.id) {
+            return false;
+        }
+        if (isAdmin != user.isAdmin) {
+            return false;
+        }
+        if (isBanned != user.isBanned) {
+            return false;
+        }
+        if (firstName != null ? !firstName.equals(user.firstName) : user.firstName != null) {
+            return false;
+        }
+        if (lastName != null ? !lastName.equals(user.lastName) : user.lastName != null) {
+            return false;
+        }
+        if (login != null ? !login.equals(user.login) : user.login != null) {
+            return false;
+        }
+        if (password != null ? !password.equals(user.password) : user.password != null) {
+            return false;
+        }
+        if (dateRegister != null ? !dateRegister.equals(user.dateRegister) : user.dateRegister != null) {
+            return false;
+        }
+        if (email != null ? !email.equals(user.email) : user.email != null) {
+            return false;
+        }
+        if (status != null ? !status.equals(user.status) : user.status != null) {
+            return false;
+        }
+        if (reviewList != null ? !reviewList.equals(user.reviewList) : user.reviewList != null) {
+            return false;
+        }
+        return ratingList != null ? ratingList.equals(user.ratingList) : user.ratingList == null;
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id;
+        result = 31 * result + (firstName != null ? firstName.hashCode() : 0);
+        result = 31 * result + (lastName != null ? lastName.hashCode() : 0);
+        result = 31 * result + (login != null ? login.hashCode() : 0);
+        result = 31 * result + (password != null ? password.hashCode() : 0);
+        result = 31 * result + (dateRegister != null ? dateRegister.hashCode() : 0);
+        result = 31 * result + (email != null ? email.hashCode() : 0);
+        result = 31 * result + (status != null ? status.hashCode() : 0);
+        result = 31 * result + (isAdmin ? 1 : 0);
+        result = 31 * result + (isBanned ? 1 : 0);
+        result = 31 * result + (reviewList != null ? reviewList.hashCode() : 0);
+        result = 31 * result + (ratingList != null ? ratingList.hashCode() : 0);
+        return result;
+    }
 }

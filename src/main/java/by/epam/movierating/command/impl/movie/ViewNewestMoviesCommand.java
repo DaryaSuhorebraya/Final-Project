@@ -36,7 +36,7 @@ public class ViewNewestMoviesCommand implements Command {
         try {
             List<Movie> movieList = movieService.getNewestMovies(language);
             request.setAttribute(AttributeName.MOVIES, movieList);
-            request.getRequestDispatcher(JSPPageName.TOP_MOVIES_PAGE).forward(request, response);
+            request.getRequestDispatcher(JSPPageName.SUBMOVIES_PAGE).forward(request, response);
         } catch (ServiceException e) {
             logger.error(e);
             response.sendRedirect(JSPPageName.ERROR_500_PAGE);

@@ -98,7 +98,15 @@ public class MovieDAOImpl implements MovieDAO {
             "GROUP BY movie.id_movie " +
             "ORDER BY movie.release_year DESC";
     private static final String SQL_UPDATE_MOVIE_POSTER="UPDATE movie SET poster_path =? WHERE id_movie=?";
-    private static final String LIMIT=" LIMIT 4";
+    private static final String SQL_GET_ALL_LIMITED_MOVIES="SELECT movie.id_movie, movie.title_, " +
+            "movie.release_year, movie.description_, avg(rating.mark) as avg_mark, movie.poster_path FROM movie " +
+            "LEFT JOIN rating ON movie.id_movie=rating.id_movie " +
+            "WHERE movie.is_deleted=0 " +
+            "GROUP BY movie.id_movie "+
+            "LIMIT ?,?";
+    private static final String MAIN_LIMIT_NEWEST_MOVIE=" LIMIT 4";
+    private static final String LIMIT_NEWEST_MOVIE=" LIMIT 6";
+    private static final int LIMIT_MOVIE_COUNT = 6;
 
     /**
      * Returns all movies
@@ -127,6 +135,37 @@ public class MovieDAOImpl implements MovieDAO {
             throw new DAOException(e);
         } finally {
             DAOUtil.close(connection,statement,resultSet);
+        }
+    }
+
+    /**
+     * Returns all limited number of movies
+     * @param language a language for data selection
+     * @param currentPageNumber number of current page for pagination
+     * @return {@link List} of {@link Movie} objects
+     * @throws DAOException
+     */
+    @Override
+    public List<Movie> getLimitedMovies(String language, int currentPageNumber)
+            throws DAOException {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        try {
+            ConnectionPool connectionPool = ConnectionPool.getInstance();
+            connection = connectionPool.getConnection();
+            preparedStatement = connection.prepareStatement(DAOUtil.
+                    localizeStatement(SQL_GET_ALL_LIMITED_MOVIES, language));
+            preparedStatement.setInt(1, LIMIT_MOVIE_COUNT * (currentPageNumber - 1));
+            preparedStatement.setInt(2, LIMIT_MOVIE_COUNT);
+            resultSet = preparedStatement.executeQuery();
+            return setMovieInfo(resultSet);
+        } catch (ConnectionPoolException e) {
+            throw new DAOException("Can not get a connection", e);
+        } catch (SQLException e) {
+            throw new DAOException(e);
+        } finally {
+            DAOUtil.close(connection, preparedStatement, resultSet);
         }
     }
 
@@ -399,7 +438,8 @@ public class MovieDAOImpl implements MovieDAO {
         try {
             ConnectionPool connectionPool=ConnectionPool.getInstance();
             connection=connectionPool.getConnection();
-            statement=connection.prepareStatement(DAOUtil.localizeStatement(SQL_GET_MOVIES_BY_GENRE_NAME,language));
+            statement=connection.prepareStatement(DAOUtil.
+                    localizeStatement(SQL_GET_MOVIES_BY_GENRE_NAME,language));
             statement.setString(1,genreName);
             resultSet=statement.executeQuery();
             movieList=setMovieInfo(resultSet);
@@ -430,7 +470,8 @@ public class MovieDAOImpl implements MovieDAO {
         try {
             ConnectionPool connectionPool=ConnectionPool.getInstance();
             connection=connectionPool.getConnection();
-            statement=connection.prepareStatement(DAOUtil.localizeStatement(SQL_GET_MOVIES_BY_COUNTRY_NAME,language));
+            statement=connection.prepareStatement(DAOUtil.
+                    localizeStatement(SQL_GET_MOVIES_BY_COUNTRY_NAME,language));
             statement.setString(1,countryName);
             resultSet=statement.executeQuery();
             movieList=setMovieInfo(resultSet);
@@ -463,7 +504,8 @@ public class MovieDAOImpl implements MovieDAO {
         try {
             ConnectionPool connectionPool=ConnectionPool.getInstance();
             connection=connectionPool.getConnection();
-            statement=connection.prepareStatement(DAOUtil.localizeStatement(SQL_GET_MOVIES_BY_ACTOR_INITIAL,language));
+            statement=connection.prepareStatement(DAOUtil.
+                    localizeStatement(SQL_GET_MOVIES_BY_ACTOR_INITIAL,language));
             statement.setString(1,firstName);
             statement.setString(2, lastName);
             resultSet=statement.executeQuery();
@@ -733,7 +775,7 @@ public class MovieDAOImpl implements MovieDAO {
             connection=connectionPool.getConnection();
             statement=connection.createStatement();
             resultSet=statement.executeQuery(DAOUtil.
-                    localizeStatement(SQL_GET_NEWEST_MOVIES,language));
+                    localizeStatement(SQL_GET_NEWEST_MOVIES+LIMIT_NEWEST_MOVIE,language));
             movieList=setMovieInfo(resultSet);
             return movieList;
         } catch (ConnectionPoolException e) {
@@ -762,7 +804,7 @@ public class MovieDAOImpl implements MovieDAO {
             connection=connectionPool.getConnection();
             statement=connection.createStatement();
             resultSet=statement.executeQuery(DAOUtil.
-                    localizeStatement(SQL_GET_NEWEST_MOVIES+LIMIT,language));
+                    localizeStatement(SQL_GET_NEWEST_MOVIES+MAIN_LIMIT_NEWEST_MOVIE,language));
             movieList=setMovieInfo(resultSet);
             return movieList;
         } catch (ConnectionPoolException e) {

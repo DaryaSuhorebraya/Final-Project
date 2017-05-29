@@ -18,6 +18,15 @@ public interface MovieDAO {
     List<Movie> getAllMovies(String language) throws DAOException;
 
     /**
+     * Returns all limited number of movies
+     * @param language a language for data selection
+     * @param currentPageNumber number of current page for pagination
+     * @return {@link List} of {@link Movie} objects
+     * @throws DAOException
+     */
+    List<Movie> getLimitedMovies(String language, int currentPageNumber) throws DAOException;
+
+    /**
      * Returns movies ordered by its rating
      * @param language a language for data selection
      * @return {@link List} of {@link Movie} objects

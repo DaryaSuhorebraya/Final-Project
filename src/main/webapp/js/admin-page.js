@@ -73,6 +73,7 @@ $(document).ready(function () {
             alert('err');
         }
     });
+    //$(".col-sm-6").on("click", ".list-group .list-group-item .delete-genre", function () {
     $(".list-group-item").on("click", ".delete-genre", function () {
         if (confirm(deleteMsg)) {
             var current = $(this);
@@ -82,7 +83,6 @@ $(document).ready(function () {
                 url: $url,
                 data: {command: 'delete-genre', genreId: idGenre},
                 success: function (result) {
-                    //TODO confirm action
                     if (result === "true") {
                         current.parent().remove();
                     } if (result === "false") {

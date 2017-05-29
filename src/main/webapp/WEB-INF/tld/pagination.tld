@@ -31,6 +31,12 @@
             <type>int</type>
         </attribute>
         <attribute>
+            <name>pageCount</name>
+            <required>true</required>
+            <rtexprvalue>true</rtexprvalue>
+            <type>int</type>
+        </attribute>
+        <attribute>
             <name>uri</name>
             <required>true</required>
             <rtexprvalue>true</rtexprvalue>

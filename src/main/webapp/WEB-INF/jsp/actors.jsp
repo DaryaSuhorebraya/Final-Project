@@ -1,6 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
 <%@ taglib prefix="pgn" uri="/WEB-INF/tld/pagination.tld" %>
 <fmt:setLocale value="${sessionScope.language}"/>
@@ -165,6 +166,7 @@
         </div>
     </div>
     <pgn:paginate uri="Controller?command=view-all-actors" currentPage="${curPageNumber}"
+                  pageCount="3"
                   next="&raquo;" previous="&laquo;" />
 </div>
 <c:import url="template/footer.jsp"/>

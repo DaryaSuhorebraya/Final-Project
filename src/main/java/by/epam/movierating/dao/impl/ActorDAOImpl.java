@@ -56,7 +56,6 @@ public class ActorDAOImpl implements ActorDAO {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
-
         try {
             ConnectionPool connectionPool = ConnectionPool.getInstance();
             connection = connectionPool.getConnection();
@@ -64,9 +63,7 @@ public class ActorDAOImpl implements ActorDAO {
             preparedStatement = connection.prepareStatement(DAOUtil.
                     localizeStatement(SQL_GET_ACTORS_BY_ID_MOVIE, language));
             preparedStatement.setInt(1, idMovie);
-
             resultSet = preparedStatement.executeQuery();
-
             return setActorInfo(resultSet);
         } catch (ConnectionPoolException e) {
             throw new DAOException("Can not get a connection", e);
@@ -318,7 +315,7 @@ public class ActorDAOImpl implements ActorDAO {
             preparedStatement = connection.prepareStatement(DAOUtil.
                     localizeStatement(SQL_GET_ALL_LIMITED_ACTORS, language));
             preparedStatement.setInt(1, LIMIT_ACTOR_COUNT * (currentPageNumber - 1));
-            preparedStatement.setInt(2, LIMIT_ACTOR_COUNT * currentPageNumber - 1);
+            preparedStatement.setInt(2, LIMIT_ACTOR_COUNT);
             resultSet = preparedStatement.executeQuery();
             return setActorInfo(resultSet);
         } catch (ConnectionPoolException e) {

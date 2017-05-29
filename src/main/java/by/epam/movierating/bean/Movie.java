@@ -12,7 +12,6 @@ public class Movie implements Serializable {
     private String title;
     private int releaseYear;
     private String description;
-   // private String description_en;
     private double rating;
     private String posterPath;
     private boolean isDeleted;
@@ -65,21 +64,6 @@ public class Movie implements Serializable {
     public void setPosterPath(String posterPath) {
         this.posterPath = posterPath;
     }
-    /* public String getTitle_en() {
-        return title_en;
-    }
-
-    public void setTitle_en(String title_en) {
-        this.title_en = title_en;
-    }
-
-    public String getDescription_en() {
-        return description_en;
-    }
-
-    public void setDescription_en(String description_en) {
-        this.description_en = description_en;
-    }*/
 
     public boolean isDeleted() {
         return isDeleted;

@@ -9,9 +9,7 @@ public class Country implements Serializable {
     private static final long serialVersionUID = 1L;
     private String code;
     private String name;
-   // private String name_ru;
 
-    //TODO override equals for name_ru
     public Country() {
     }
 
@@ -30,14 +28,6 @@ public class Country implements Serializable {
     public void setName(String name) {
         this.name = name;
     }
-
-   /* public String getName_ru() {
-        return name_ru;
-    }
-
-    public void setName_ru(String name_ru) {
-        this.name_ru = name_ru;
-    }*/
 
     @Override
     public boolean equals(Object o) {

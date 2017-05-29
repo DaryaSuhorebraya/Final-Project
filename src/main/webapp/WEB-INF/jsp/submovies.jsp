@@ -82,9 +82,6 @@
         </c:forEach>
     </c:if>
     </div>
-    <pgn:paginate uri="Controller?command=view-all-movies" currentPage="${curPageNumber}"
-                  pageCount="3"
-                  next="&raquo;" previous="&laquo;" />
 </div>
 <c:import url="template/footer.jsp"/>
 </body>

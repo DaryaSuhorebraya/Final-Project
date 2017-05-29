@@ -10,7 +10,6 @@ public class Genre implements Serializable {
 
     private int id;
     private String name;
-   // private String name_en;
 
     public Genre() {
     }
@@ -30,14 +29,6 @@ public class Genre implements Serializable {
     public void setName(String name) {
         this.name = name;
     }
-
-   /* public String getName() {
-        return name_en;
-    }
-
-    public void setName(String name_en) {
-        this.name_en = name_en;
-    }*/
 
     @Override
     public boolean equals(Object o) {
